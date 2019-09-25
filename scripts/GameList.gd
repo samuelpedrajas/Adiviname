@@ -24,5 +24,10 @@ func setup(result):
 	for i in range(0, results.size()):
 		var game_info = results[i]
 		var game_list_item = GameListItem.instance()
-		game_list_item.setup(game_info["title"], game_info["description"])
+
+		game_list_item.setup(
+			game_info["title"], 
+			game_info["description"], 
+			game_info["expressions"]
+		)
 		$GameListBg/GameContainer/VBoxContainer.add_child(game_list_item)
