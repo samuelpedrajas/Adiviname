@@ -6,4 +6,4 @@ const GameMode = {
 	SINGING = 2
 }
 
-const API_URL = "http://127.0.0.1:8000/api/v1/game/"
+const API_URL = "http://192.168.2.251:8000/api/v1/game/"
