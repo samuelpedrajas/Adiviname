@@ -15,4 +15,5 @@ func setup(title, description, expressions):
 
 
 func _on_Button_pressed():
-	Global.load_game(title, description, expressions)
+	if not get_parent().get_parent().swiping:
+		Global.load_game(title, description, expressions)

@@ -1,6 +1,6 @@
 extends Control
 
-var countdown = 5
+var countdown = 6
 var remaining_time = 60
 var current_expression
 var pending_expressions = []
@@ -11,7 +11,6 @@ var blocked = true
 
 
 func _ready():
-	$Countdown.set_text(str(countdown))
 	set_next_expression()
 
 
