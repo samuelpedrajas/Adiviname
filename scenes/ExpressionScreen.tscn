@@ -64,7 +64,6 @@ autostart = true
 
 [node name="NextExpressionTimer" type="Timer" parent="."]
 one_shot = true
-autostart = true
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_CountdownTimer_timeout"]
 [connection signal="timeout" from="NextExpressionTimer" to="." method="_on_NextExpressionTimer_timeout"]

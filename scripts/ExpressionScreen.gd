@@ -70,3 +70,4 @@ func _on_CountdownTimer_timeout():
 		$GameControls.show()
 		$CountdownTimer.stop()
 		$GameTimer.start()
+		blocked = false
