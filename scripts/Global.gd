@@ -6,7 +6,6 @@ var title
 var description
 var expressions
 
-var main_scene = preload("res://scenes/Main.tscn")
 var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 
 
@@ -16,18 +15,38 @@ func _ready():
 
 
 func load_game(title, description, expressions):
+	current_scene = "expression_screen"
+
 	self.title = title
 	self.description = description
 	self.expressions = expressions
 
-	current_scene = "expression_screen"
-	get_tree().change_scene_to(expression_screen_scene)
+	var expression_screen = expression_screen_scene.instance()
+
+	var game_screen = get_tree().get_root().get_node("Main/GameScreen")
+	game_screen.add_child(expression_screen)
+
+	var main_menu = get_tree().get_root().get_node("Main/MainMenu")
+	main_menu.hide()
+
 	OS.set_screen_orientation(0)
 
 
-func load_main_scene():
+func load_main():
 	current_scene = "main"
-	get_tree().change_scene_to(main_scene)
+
+	self.title = null
+	self.description = null
+	self.expressions = []
+
+	var main_menu = get_tree().get_root().get_node("Main/MainMenu")
+	main_menu.show()
+
+	var game_screen = get_tree().get_root().get_node("Main/GameScreen")
+	var screens = game_screen.get_children()
+	for screen in screens:
+		screen.finish()
+
 	OS.set_screen_orientation(1)
 
 
@@ -38,11 +57,11 @@ func quit_game():
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		if current_scene != "main":
-			load_main_scene()
+			load_main()
 		else:
 			quit_game()
 	elif what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST:
 		if current_scene != "main":
-			load_main_scene()
+			load_main()
 		else:
 			quit_game()

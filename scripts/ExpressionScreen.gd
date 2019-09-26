@@ -1,6 +1,6 @@
 extends Control
 
-var countdown = 6
+var countdown = 5
 var remaining_time = 60
 var current_expression
 var pending_expressions = []
@@ -19,7 +19,7 @@ func _process(delta):
 		return
 	var gyro = Input.get_gyroscope()
 
-	if gyro[1] + gyro[2] < 1:
+	if abs(gyro[1] + gyro[2]) < Const.GyroAnswer.YZ_THRESHOLD:
 		if  Const.GyroAnswer.MIN_CORRECT < gyro[0] and gyro[0] < Const.GyroAnswer.MAX_CORRECT:
 			$CorrectBg.show()
 			answer(true)
@@ -40,6 +40,12 @@ func set_next_expression():
 		pending_expressions.shuffle()
 
 	current_expression = pending_expressions.pop_front()
+
+	# this can happen if pending_expressions was empty and we had bad luck when shuffling
+	if displayed.size() > 0 and displayed.back() == current_expression:
+		pending_expressions.append(current_expression)
+		current_expression = pending_expressions.pop_front()
+
 	displayed.append(current_expression)
 
 	$GameControls/Expression.set_text(current_expression)
@@ -49,7 +55,7 @@ func _on_GameTimer_timeout():
 	remaining_time -= 1
 	$GameControls/Time.set_text(str(remaining_time))
 	if remaining_time < 1:
-		Global.load_main_scene()
+		Global.load_main()
 
 
 func _on_NextExpressionTimer_timeout():
@@ -71,3 +77,9 @@ func _on_CountdownTimer_timeout():
 		$CountdownTimer.stop()
 		$GameTimer.start()
 		blocked = false
+
+
+func finish():
+	$GameTimer.stop()
+	$NextExpressionTimer.stop()
+	queue_free()
