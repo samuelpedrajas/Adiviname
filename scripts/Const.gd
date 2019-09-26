@@ -14,4 +14,4 @@ const GyroAnswer = {
 	YZ_THRESHOLD = 1
 }
 
-const API_URL = "http://192.168.2.251:8000/api/v1/game/"
+const API_URL = "https://adiviname.herokuapp.com/api/v1/game/"
