@@ -3,6 +3,7 @@ extends Control
 var GameListItem = preload("res://scenes/GameListItem.tscn")
 var next_request
 
+
 func _ready():
 	$HTTPRequest.connect("request_completed", self, "_on_HTTPRequest_request_completed")
 	$HTTPRequest.request(Const.API_URL, PoolStringArray([]), false)
