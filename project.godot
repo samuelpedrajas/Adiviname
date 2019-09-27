@@ -25,6 +25,7 @@ config/quit_on_go_back=false
 Const="*res://scripts/Const.gd"
 Global="*res://scripts/Global.gd"
 DB="*res://scripts/DB.gd"
+ApiRequest="*res://scripts/ApiRequest.gd"
 
 [display]
 

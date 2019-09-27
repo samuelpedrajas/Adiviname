@@ -1,27 +1,23 @@
 extends Control
 
 var GameListItem = preload("res://scenes/GameListItem.tscn")
-var next_request
 
 
 func _ready():
-	$HTTPRequest.connect("request_completed", self, "_on_HTTPRequest_request_completed")
-	$HTTPRequest.request(Const.API_URL, PoolStringArray([]), false)
+	ApiRequest.connect("api_request_completed", self, "_api_request_completed")
+	ApiRequest.send_request(Const.API_GAME_ENDPOINT)
 
 
-func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	if(response_code == 200):
-		var json_response = JSON.parse(body.get_string_from_utf8())
-		if json_response.error != OK:
-			print("Some error while parsing the JSON")
-			return
-		setup(json_response.result)
+func _api_request_completed(result, status_code):
+	if status_code != 200:
+		print("Status code different than 200: " + str(status_code))
+	else:
+		setup(result)
 
 
-func setup(result):
+func setup(results):
 	$LoadingIcon.hide()
-	next_request = result["next"]
-	var results = result["results"]
+
 	for i in range(0, results.size()):
 		var game_info = results[i]
 		var game_list_item = GameListItem.instance()

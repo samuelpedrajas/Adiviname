@@ -5,7 +5,6 @@ var remaining_time = 60
 var current_expression
 var pending_expressions = []
 var displayed = []
-var answers = {}
 
 var blocked = true
 
@@ -30,7 +29,14 @@ func _process(delta):
 
 func answer(correct):
 	blocked = true
-	answers[current_expression] = correct
+
+	if displayed.size() < 1:
+		print("There was some error in the answer function")
+		return
+
+	var last_displayed = displayed.back()
+	last_displayed["correct"] = correct
+
 	$NextExpressionTimer.start()
 
 
@@ -42,11 +48,11 @@ func set_next_expression():
 	current_expression = pending_expressions.pop_front()
 
 	# this can happen if pending_expressions was empty and we had bad luck when shuffling
-	if displayed.size() > 0 and displayed.back() == current_expression:
+	if displayed.size() > 0 and displayed.back()["text"] == current_expression:
 		pending_expressions.append(current_expression)
 		current_expression = pending_expressions.pop_front()
 
-	displayed.append(current_expression)
+	displayed.append({ "text": current_expression, "correct": false })
 
 	$GameControls/Expression.set_text(current_expression)
 
