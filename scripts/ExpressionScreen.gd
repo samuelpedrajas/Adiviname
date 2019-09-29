@@ -1,5 +1,9 @@
 extends Control
 
+var title
+var description
+var expressions
+
 var countdown = 5
 var remaining_time = 60
 var current_expression
@@ -42,7 +46,7 @@ func answer(correct):
 
 func set_next_expression():
 	if pending_expressions.empty():
-		pending_expressions = Global.expressions.duplicate()
+		pending_expressions = expressions.duplicate()
 		pending_expressions.shuffle()
 
 	current_expression = pending_expressions.pop_front()
@@ -61,7 +65,7 @@ func _on_GameTimer_timeout():
 	remaining_time -= 1
 	$GameControls/Time.set_text(str(remaining_time))
 	if remaining_time < 1:
-		Global.load_main()
+		Main.load_main()
 
 
 func _on_NextExpressionTimer_timeout():

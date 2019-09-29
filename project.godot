@@ -23,9 +23,10 @@ config/quit_on_go_back=false
 [autoload]
 
 Const="*res://scripts/Const.gd"
-Global="*res://scripts/Global.gd"
 DB="*res://scripts/DB.gd"
 ApiRequest="*res://scripts/ApiRequest.gd"
+Main="*res://scripts/Main.gd"
+Status="*res://scripts/Status.gd"
 
 [display]
 
