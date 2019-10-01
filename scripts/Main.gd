@@ -1,6 +1,7 @@
 extends Node
 
 var root
+var vibration
 
 var current_scene = "main"
 
@@ -10,9 +11,17 @@ var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 func _ready():
 	get_viewport().set_disable_input(true)
 
+	if Engine.has_singleton("Vibration"):
+		vibration = Engine.get_singleton("Vibration")
+
 
 func setup():
 	root = get_tree().get_root()
+
+
+func vibrate(duration):
+	if vibration:
+		vibration.vibrate(duration)
 
 
 func load_game(game_id):

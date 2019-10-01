@@ -1,5 +1,8 @@
 extends Control
 
+const vibration_time = 300
+const vibration_threshold = 5
+
 var game_id
 var title
 var description
@@ -68,6 +71,9 @@ func _on_GameTimer_timeout():
 	$GameControls/Time.set_text(str(remaining_time))
 	if remaining_time < 1:
 		Main.load_main()
+
+	if remaining_time <= vibration_threshold:
+		Main.vibrate(vibration_time)
 
 
 func _on_NextExpressionTimer_timeout():
