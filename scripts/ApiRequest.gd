@@ -1,13 +1,18 @@
 extends HTTPRequest
 
 var next_request
+var method = HTTPClient.METHOD_GET
+var requesting = false
 
+signal api_request_progress(result, response_code)
 signal api_request_completed(result, response_code)
+signal api_request_failed(message, response_code)
 
 
-func send_request(url, params={}, headers=PoolStringArray([])):
+func send_request(url, params={}, headers=PoolStringArray([]), method=HTTPClient.METHOD_GET):
+	requesting = true
 	connect("request_completed", self, "_on_HTTPRequest_request_completed")
-	request(url + dict_to_qstring(params), headers, false)
+	request(url + dict_to_qstring(params), headers, false, method)
 
 
 func dict_to_qstring(dict):
@@ -19,16 +24,27 @@ func dict_to_qstring(dict):
 			url_params += "?"
 		else:
 			url_params += "&"
-		url_params += key + "=" + dict[key]
+		url_params += key + "=" + str(dict[key])
 	return url_params
 	
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var api_result = null
 	if(response_code == 200):
 		var json_response = JSON.parse(body.get_string_from_utf8())
 
-		if json_response.error != OK:
-			print("Some error while parsing the JSON")
-			return
-		next_request = json_response.result["next"]
-		emit_signal("api_request_completed", json_response.result["results"], response_code)
+		if json_response != null:
+			if json_response.error != OK:
+				print("Some error while parsing the JSON")
+			elif json_response.result != null:
+				if json_response.result.has("results"):
+					api_result = json_response.result["results"]
+	
+				if json_response.result["next"] != null:
+					emit_signal("api_request_progress", api_result, response_code)
+					# handle pagination
+				else:
+					emit_signal("api_request_completed", api_result, response_code)
+	else:
+		print("Status different than 200: ", response_code)
+		emit_signal("api_request_failed", [], response_code)

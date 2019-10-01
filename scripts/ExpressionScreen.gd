@@ -1,11 +1,12 @@
 extends Control
 
+var game_id
 var title
 var description
 var expressions
 
 var countdown = 5
-var remaining_time = 60
+var remaining_time = 10
 var current_expression
 var pending_expressions = []
 var displayed = []
@@ -14,6 +15,7 @@ var blocked = true
 
 
 func _ready():
+	$GameControls/Time.set_text(str(remaining_time))
 	set_next_expression()
 
 
@@ -49,7 +51,7 @@ func set_next_expression():
 		pending_expressions = expressions.duplicate()
 		pending_expressions.shuffle()
 
-	current_expression = pending_expressions.pop_front()
+	current_expression = pending_expressions.pop_front()["text"]
 
 	# this can happen if pending_expressions was empty and we had bad luck when shuffling
 	if displayed.size() > 0 and displayed.back()["text"] == current_expression:
@@ -90,6 +92,12 @@ func _on_CountdownTimer_timeout():
 
 
 func finish():
+	ApiRequest.send_request(
+		Const.API_GAME_CLICK_ENDPOINT + str(game_id),
+		{},
+		PoolStringArray([]),
+		HTTPClient.METHOD_POST
+	)
 	$GameTimer.stop()
 	$NextExpressionTimer.stop()
 	queue_free()
