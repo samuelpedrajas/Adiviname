@@ -8,7 +8,6 @@ var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 
 func setup():
 	root = get_tree().get_root()
-	current_scene = root.get_child( root.get_child_count() -1 )
 
 
 func load_game(game_id):

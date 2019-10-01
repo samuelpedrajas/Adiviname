@@ -54,4 +54,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				emit_signal("api_request_completed", api_result, response_code)
 	else:
 		print("Status different than 200: ", response_code)
-		emit_signal("api_request_failed", [], response_code)
+		emit_signal("api_request_failed", "Cannot update", response_code)
