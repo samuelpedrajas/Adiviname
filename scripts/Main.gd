@@ -6,6 +6,11 @@ var current_scene = "main"
 
 var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 
+
+func _ready():
+	get_viewport().set_disable_input(true)
+
+
 func setup():
 	root = get_tree().get_root()
 

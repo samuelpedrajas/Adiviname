@@ -22,6 +22,10 @@ func handle_partial_update_response(result, status_code):
 		if not ok:
 			print("There was an error during the DB update")
 
+	$LoadingScreen.grow_bar(
+		(ApiRequest.request_count / ApiRequest.total_requests) * 100
+	)
+
 
 func handle_failed_response(message, status_code):
 	print(message)
@@ -47,3 +51,6 @@ func load_games():
 
 	var stored_games = DB.get_games_ordered_by_clicks()
 	$"MainMenu/GameList".setup(stored_games)
+
+	$LoadingScreen.hide()
+	get_viewport().set_disable_input(false)

@@ -4,8 +4,6 @@ var GameListItem = preload("res://scenes/GameListItem.tscn")
 
 
 func setup(results):
-	$LoadingIcon.hide()
-
 	for i in range(0, results.size()):
 		var game_info = results[i]
 		var game_list_item = GameListItem.instance()

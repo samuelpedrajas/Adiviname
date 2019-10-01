@@ -28,6 +28,11 @@ ApiRequest="*res://scripts/ApiRequest.gd"
 Main="*res://scripts/Main.gd"
 Status="*res://scripts/Status.gd"
 
+[debug]
+
+gdscript/warnings/enable=false
+gdscript/warnings/unused_argument=false
+
 [display]
 
 window/size/width=1080

@@ -1,6 +1,7 @@
 extends HTTPRequest
 
-var remaining_requests = 0
+var total_requests = 0
+var request_count = 0
 var method = HTTPClient.METHOD_GET
 
 signal api_request_progress(result, response_code)
@@ -13,6 +14,7 @@ func _ready():
 
 
 func send_request(url, params={}, headers=PoolStringArray([]), method=HTTPClient.METHOD_GET):
+	request_count = 0
 	request(url + dict_to_qstring(params), headers, false, method)
 
 
@@ -42,16 +44,15 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 			if json_response.result["next"] != null:
 				var count = json_response.result["count"]
-				if remaining_requests == 0:
-					remaining_requests = ceil(count / api_result.size())
-				else:
-					remaining_requests -= 1
-				print("Remaining requests: ", remaining_requests)
+				if request_count == 0:
+					total_requests = ceil(count / api_result.size())
+				request_count += 1
+				print("Remaining requests: ", request_count)
 				emit_signal("api_request_progress", api_result, response_code)
-				send_request(json_response.result["next"])
+				request(json_response.result["next"])
 			else:
-				remaining_requests = null
 				emit_signal("api_request_completed", api_result, response_code)
 	else:
+
 		print("Status different than 200: ", response_code)
 		emit_signal("api_request_failed", "Cannot update", response_code)
