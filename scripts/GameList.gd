@@ -1,8 +1,6 @@
 extends Control
 
 var GameListItem = preload("res://scenes/GameListItem.tscn")
-var recently_modified
-var recently_added
 
 
 func setup(results):

@@ -6,9 +6,6 @@ var db
 var db_source = "res://DB.db"
 var db_name = "user://DB.db"
 
-var game_table = "Game"
-var expression_table = "Expression"
-
 var recently_added = []
 var recently_modified = []
 
@@ -38,13 +35,13 @@ func open_db():
 
 func get_games_ordered_by_clicks():
 	return db.fetch_array(
-		"SELECT * FROM " + game_table + " ORDER BY game_order;"
+		"SELECT * FROM Game ORDER BY game_order desc;"
 	)
 
 
 func get_game(game_id):
 	var result = db.fetch_array(
-		"SELECT * FROM " + game_table + " where game_id=" + str(game_id) + ";"
+		"SELECT * FROM Game where game_id=" + str(game_id) + ";"
 	)
 	if result.empty():
 		return null
@@ -53,7 +50,7 @@ func get_game(game_id):
 
 func get_game_expressions(game_id):
 	return db.fetch_array(
-		"SELECT expression_text as text FROM " + game_table + " JOIN " + expression_table + " ON (game_id=expression_game_id) where game_id=" + str(game_id) + ";"
+		"SELECT expression_text as text FROM Game JOIN Expression ON (game_id=expression_game_id) where game_id=" + str(game_id) + ";"
 	)
 
 
@@ -98,6 +95,9 @@ func insert_game(game):
 
 
 func insert_expressions(expressions, game_id):
+	if expressions.empty():
+		print("No expressions to insert")
+		return true
 	print("Inserting new expressions...")
 	var ok
 	for expression in expressions:
@@ -124,7 +124,7 @@ func update_database(games):
 		var game = games[i]
 		if game.id == null:
 			continue
-		game.order = i
+		game.order = game.clicks
 		print("Processing game %s..." % game.id)
 		var ok
 		var stored_game = get_game(game.id)

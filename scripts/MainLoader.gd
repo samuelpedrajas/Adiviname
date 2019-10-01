@@ -11,13 +11,19 @@ func _ready():
 
 func check_for_updates():
 	ApiRequest.connect("api_request_completed", self, "handle_update_response")
+	ApiRequest.connect("api_request_progress", self, "handle_partial_update_response")
 	ApiRequest.send_request(Const.API_GAME_ENDPOINT, {"since_datetime": Status.last_update_timestamp})
+
+
+func handle_partial_update_response(result, status_code):
+	if typeof(result) == TYPE_ARRAY and result.size() > 0:
+		var ok = DB.update_database(result)
+		if not ok:
+			print("There was an error during the DB update")
 
 
 func handle_update_response(result, status_code):
 	ApiRequest.disconnect("api_request_completed", self, "handle_update_response")
-	if status_code != 200:
-		print("Status code different than 200: " + str(status_code))
 
 	Status.last_update_timestamp = OS.get_unix_time()
 	if typeof(result) == TYPE_ARRAY and result.size() > 0:
@@ -27,5 +33,8 @@ func handle_update_response(result, status_code):
 		else:
 			print ("Saving status...")
 			Status.save_status()
+	load_games()
+
+func load_games():
 	var stored_games = DB.get_games_ordered_by_clicks()
 	$"MainMenu/GameList".setup(stored_games)
