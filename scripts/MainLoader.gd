@@ -1,5 +1,7 @@
 extends Control
 
+onready var filters = $MainMenu/Filters
+
 
 func _ready():
 	randomize()
@@ -10,6 +12,7 @@ func _ready():
 
 
 func check_for_updates():
+	filters.connect("filters_changed", self, "load_games")
 	ApiRequest.connect("api_request_completed", self, "handle_update_response")
 	ApiRequest.connect("api_request_progress", self, "handle_partial_update_response")
 	ApiRequest.connect("api_request_failed", self, "handle_failed_response")
@@ -29,6 +32,7 @@ func handle_partial_update_response(result, status_code):
 
 func handle_failed_response(message, status_code):
 	print(message)
+	_finish_loading()
 	load_games()
 
 
@@ -41,16 +45,19 @@ func handle_update_response(result, status_code):
 		else:
 			print ("Saving status...")
 			Status.save_status()
+	_finish_loading()
 	load_games()
 
 
-func load_games():
+func _finish_loading():
 	ApiRequest.disconnect("api_request_completed", self, "handle_update_response")
 	ApiRequest.disconnect("api_request_progress", self, "handle_partial_update_response")
 	ApiRequest.disconnect("api_request_failed", self, "handle_failed_response")
-
-	var stored_games = DB.get_games_ordered_by_clicks()
-	$"MainMenu/GameList".setup(stored_games)
-
+	filters.set_home_filter()
 	$LoadingScreen.hide()
 	get_viewport().set_disable_input(false)
+
+
+func load_games():
+	var stored_games = filters.get_games()  # set to home by default
+	$"MainMenu/GameList".setup(stored_games)

@@ -16,7 +16,9 @@ font_data = ExtResource( 3 )
 size = 30
 font_data = ExtResource( 3 )
 
-[node name="GameListItem" type="Control"]
+[node name="GameListItem" type="Control" groups=[
+"main_list_item",
+]]
 margin_right = 1080.0
 margin_bottom = 200.0
 rect_min_size = Vector2( 1080, 220 )

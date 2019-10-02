@@ -39,6 +39,33 @@ func get_games_ordered_by_clicks():
 	)
 
 
+func get_games_ordered_by_creation_date():
+	return db.fetch_array(
+		"""SELECT * FROM Game 
+		ORDER BY game_created_at desc, 
+			game_updated_at desc, 
+			game_order desc;"""
+	)
+
+
+func get_normal_games_ordered_by_clicks():
+	return db.fetch_array(
+		"""SELECT * 
+		FROM Game 
+		WHERE game_type='normal' 
+		ORDER BY game_order desc;"""
+	)
+
+
+func get_gesture_games_ordered_by_clicks():
+	return db.fetch_array(
+		"""SELECT * 
+		FROM Game 
+		WHERE game_type='gestos' 
+		ORDER BY game_order desc;"""
+	)
+
+
 func get_game(game_id):
 	var result = db.fetch_array(
 		"SELECT * FROM Game where game_id=" + str(game_id) + ";"
@@ -58,9 +85,9 @@ func update_game_and_expressions(game):
 	print("Updating existing game...")
 	var ok = db.query_with_args("""
 		UPDATE Game 
-		SET game_title=?, game_description=?, game_updated_at=?, game_created_at=?, game_order=? 
+		SET game_title=?, game_description=?, game_type=?, game_updated_at=?, game_created_at=?, game_order=? 
 		WHERE game_id=?;
-	""", [game.title, game.description, game.updated_at, game.created_at, game.order, game.id]
+	""", [game.title, game.description, game.game_type, game.updated_at, game.created_at, game.order, game.id]
 	)
 	if not ok:
 		return ok
@@ -85,9 +112,9 @@ func update_game_order(game):
 func insert_game(game):
 	print("Inserting new game...")
 	var ok = db.query_with_args("""
-		INSERT INTO Game (game_id, game_title, game_description, game_updated_at, game_created_at, game_order) 
-		VALUES (?, ?, ?, ?, ?, ?);
-	""", [game.id, game.title, game.description, game.updated_at, game.created_at, game.order]
+		INSERT INTO Game (game_id, game_title, game_description, game_type, game_updated_at, game_created_at, game_order) 
+		VALUES (?, ?, ?, ?, ?, ?, ?);
+	""", [game.id, game.title, game.description, game.game_type, game.updated_at, game.created_at, game.order]
 	)
 	if not ok:
 		return ok
