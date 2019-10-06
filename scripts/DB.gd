@@ -1,4 +1,4 @@
-extends Node
+extends HTTPRequest
 
 const SQLite = preload("res://lib/gdsqlite.gdns")
 
@@ -9,8 +9,14 @@ var db_name = "user://DB.db"
 var recently_added = []
 var recently_modified = []
 
+signal database_updated
+
 
 func _ready():
+	var dir = Directory.new()
+	if not dir.dir_exists(Const.ICON_PATH):
+		dir.make_dir(Const.ICON_PATH)
+
 	open_db()
 
 
@@ -81,22 +87,28 @@ func get_game_expressions(game_id):
 	)
 
 
-func update_game_and_expressions(game):
+func update_game(game):
 	print("Updating existing game...")
+	var values = [game.id, game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order]
+	for value in values:
+		if value == null:
+			return false
 	var ok = db.query_with_args("""
 		UPDATE Game 
-		SET game_title=?, game_description=?, game_type=?, game_updated_at=?, game_created_at=?, game_order=? 
+		SET game_title=?, game_featured=?, game_type=?, game_updated_at=?, game_created_at=?, game_order=? 
 		WHERE game_id=?;
-	""", [game.title, game.description, game.game_type, game.updated_at, game.created_at, game.order, game.id]
+	""", values
 	)
+	return ok
+
+
+func update_game_expressions(game_id, game_expressions):
+	print("Updating expressions of game...")
+	var ok = remove_expressions(game_id)
 	if not ok:
 		return ok
 
-	ok = remove_expressions(game.id)
-	if not ok:
-		return ok
-
-	return insert_expressions(game.expressions, game.id)
+	return insert_expressions(game_expressions, game_id)
 
 
 func update_game_order(game):
@@ -109,15 +121,29 @@ func update_game_order(game):
 	)
 
 
+func update_game_image(game, body):
+	var image_path = save_image(str(game.id) + ".png", body)
+	print("Updating icon path...")
+	return db.query_with_args("""
+		UPDATE Game 
+		SET game_icon_path=? 
+		WHERE game_id=?;
+	""", [image_path, game.id]
+	)
+
 func insert_game(game):
 	print("Inserting new game...")
+	var values = [game.id, game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order]
+	for value in values:
+		if value == null:
+			return false
 	var ok = db.query_with_args("""
-		INSERT INTO Game (game_id, game_title, game_description, game_type, game_updated_at, game_created_at, game_order) 
+		INSERT INTO Game (game_id, game_title, game_featured, game_type, game_updated_at, game_created_at, game_order) 
 		VALUES (?, ?, ?, ?, ?, ?, ?);
-	""", [game.id, game.title, game.description, game.game_type, game.updated_at, game.created_at, game.order]
+	""", values
 	)
 	if not ok:
-		return ok
+		return false
 	return insert_expressions(game.expressions, game.id)
 
 
@@ -147,32 +173,53 @@ func remove_expressions(game_id):
 
 
 func update_database(games):
+	var ok = false
 	for i in range(games.size()):
 		var game = games[i]
 		if game.id == null:
 			continue
 		game.order = game.clicks
 		print("Processing game %s..." % game.id)
-		var ok
 		var stored_game = get_game(game.id)
 		if stored_game == null:
 			# insert new game
 			ok = insert_game(game)
 			if ok:
 				recently_added.append(game.id)
-		elif game.has("expressions"):
-			# update game and expressions
-			ok = update_game_and_expressions(game)
-			if ok:
-				recently_modified.append(game.id)
+		elif game.has('updated_at'):
+			# update game
+			ok = update_game(game)
+
+			if game.has("expressions"):
+				ok = update_game_expressions(game.id, game.expressions)
+				if ok:
+					recently_modified.append(game.id)
 		else:
 			# update game order
 			ok = update_game_order(game)
+
+		if game.has("icon") and game.icon.has("url") and game.icon.url != null:
+			request(game.icon.url)
+			# result, response_code, headers, body
+			var res = yield(self, 'request_completed')
+			if res[1] == 200:
+				update_game_image(game, res[3])
+
 		print("Result: ", ok)
-		if not ok:
-			return false
-	return true
+	emit_signal("database_updated", ok)
 
 
 func close_db():
 	return db.close()
+
+
+func save_image(filename, body):
+	var image_path = Const.ICON_PATH + filename
+	var image = Image.new()
+	var res = image.load_png_from_buffer(body)
+	if res != OK:
+		return false
+	res = image.save_png(image_path)
+	if res != OK:
+		return false
+	return image_path

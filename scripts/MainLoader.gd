@@ -19,15 +19,21 @@ func check_for_updates():
 	ApiRequest.send_request(Const.API_GAME_ENDPOINT, {"since_datetime": Status.last_update_timestamp})
 
 
-func handle_partial_update_response(result, status_code):
+func handle_partial_update_response(result, status_code, next):
 	if typeof(result) == TYPE_ARRAY and result.size() > 0:
-		var ok = DB.update_database(result)
+		var state = DB.update_database(result)
+		var ok
+		if state is GDScriptFunctionState:
+			ok = yield(DB, "database_updated")
+		else:
+			ok = state
 		if not ok:
 			print("There was an error during the DB update")
 
 	$LoadingScreen.grow_bar(
 		(ApiRequest.request_count / ApiRequest.total_requests) * 100
 	)
+	ApiRequest.request(next)
 
 
 func handle_failed_response(message, status_code):
@@ -37,9 +43,14 @@ func handle_failed_response(message, status_code):
 
 
 func handle_update_response(result, status_code):
-	Status.last_update_timestamp = OS.get_unix_time()
+	Status.last_update_timestamp = ApiRequest.last_request_timestamp
 	if typeof(result) == TYPE_ARRAY and result.size() > 0:
-		var ok = DB.update_database(result)
+		var state = DB.update_database(result)
+		var ok
+		if state is GDScriptFunctionState:
+			ok = yield(DB, "database_updated")
+		else:
+			ok = state
 		if not ok:
 			print("There was an error during the DB update")
 		else:

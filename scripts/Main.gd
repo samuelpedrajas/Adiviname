@@ -31,7 +31,6 @@ func load_game(game_id):
 	var expression_screen = expression_screen_scene.instance()
 	expression_screen.game_id = game_id
 	expression_screen.title = game.game_title
-	expression_screen.description = game.game_description
 	expression_screen.expressions = DB.get_game_expressions(game_id)
 
 	var game_screen = root.get_node("MainScreen/GameScreen")

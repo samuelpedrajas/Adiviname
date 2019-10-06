@@ -5,7 +5,6 @@ const vibration_threshold = 5
 
 var game_id
 var title
-var description
 var expressions
 
 var countdown = 5

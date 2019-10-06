@@ -1,6 +1,7 @@
 extends Control
 
 var game_id
+var featured = false
 
 
 func set_notification():
@@ -19,12 +20,16 @@ func set_notification():
 		return
 
 
-func setup(game_id, game_title, game_description):
+func set_featured():
+	self.featured = true
+	$Button.set_self_modulate(Color(0.7, 1.0, 1.0, 1.0))
+
+
+func setup(game_id, game_title):
 	self.game_id = game_id
 
 	set_notification()
 	$Button/Title.set_text(game_title)
-	$Button/Description.set_text(game_description)
 
 
 func _on_Button_pressed():

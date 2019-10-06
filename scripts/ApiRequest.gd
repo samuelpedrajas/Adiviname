@@ -1,5 +1,6 @@
 extends HTTPRequest
 
+var last_request_timestamp
 var total_requests = 0
 var request_count = 0
 var method = HTTPClient.METHOD_GET
@@ -14,6 +15,7 @@ func _ready():
 
 
 func send_request(url, params={}, headers=PoolStringArray([]), method=HTTPClient.METHOD_GET):
+	print("Sending request to %s params: %s" % [url, params])
 	request_count = 0
 	request(url + dict_to_qstring(params), headers, false, method)
 
@@ -39,6 +41,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		if json_response.error != OK:
 			print("Some error while parsing the JSON")
 		elif json_response.result != null:
+			if json_response.result.has("timestamp"):
+				last_request_timestamp = json_response.result.timestamp
+
 			if json_response.result.has("results"):
 				api_result = json_response.result["results"]
 
@@ -48,11 +53,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 					total_requests = ceil(count / api_result.size())
 				request_count += 1
 				print("Remaining requests: ", request_count)
-				emit_signal("api_request_progress", api_result, response_code)
-				request(json_response.result["next"])
+				emit_signal("api_request_progress", api_result, response_code, json_response.result["next"])
 			else:
 				emit_signal("api_request_completed", api_result, response_code)
 	else:
-
 		print("Status different than 200: ", response_code)
 		emit_signal("api_request_failed", "Cannot update", response_code)
