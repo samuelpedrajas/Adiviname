@@ -1,12 +1,12 @@
 extends Control
 
-onready var vbox = $GameListBg/GameContainer/VBoxContainer
+onready var grid_container = $GameListBg/GameContainer/VBoxContainer/GridContainer
 var GameListItem = preload("res://scenes/GameListItem.tscn")
 
 
 func setup(results):
 	print("Removing existing items")
-	for item in vbox.get_children():
+	for item in grid_container.get_children():
 		item.queue_free()
 		yield(item, "tree_exited")
 	print("Game list is clean")
@@ -21,4 +21,4 @@ func setup(results):
 		)
 		if int(game_info["game_featured"]) > 0:
 			game_list_item.set_featured()
-		$GameListBg/GameContainer/VBoxContainer.add_child(game_list_item)
+		$GameListBg/GameContainer/VBoxContainer/GridContainer.add_child(game_list_item)
