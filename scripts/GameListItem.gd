@@ -25,14 +25,25 @@ func set_featured():
 	$Button.set_self_modulate(Color(0.7, 1.0, 1.0, 1.0))
 
 
-func setup(game_id, game_title):
+func set_icon(game_icon_path):
+    var img = Image.new()
+    var itex = ImageTexture.new()
+    img.load(game_icon_path)
+    itex.create_from_image(img)
+    $Button/TextureRect.texture = itex
+
+
+func setup(game_id, game_title, game_icon_path):
 	self.game_id = game_id
+
+	if game_icon_path != null:
+		set_icon(game_icon_path)
 
 	set_notification()
 	$Button/Title.set_text(game_title)
 
 
 func _on_Button_pressed():
-	if not get_parent().get_parent().swiping:
+	if not get_parent().get_parent().get_parent().swiping:
 		Main.load_game(game_id)
 		$Button/NotificationRect.hide()

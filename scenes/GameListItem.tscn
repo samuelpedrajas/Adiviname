@@ -1,10 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/GameListItem.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://saved_images/2.png" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
-size = 60
+size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
@@ -33,6 +34,7 @@ rect_min_size = Vector2( 360, 360 )
 [node name="Title" type="Label" parent="Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 291.0
 custom_fonts/font = SubResource( 1 )
 text = "Game Name"
 align = 1
@@ -56,4 +58,16 @@ custom_fonts/font = SubResource( 3 )
 text = "UPDATED!"
 align = 1
 valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="Button"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -110.0
+margin_top = -126.0
+margin_right = 110.0
+margin_bottom = 94.0
+texture = ExtResource( 3 )
+expand = true
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

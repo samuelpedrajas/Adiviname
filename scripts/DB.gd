@@ -89,7 +89,7 @@ func get_game_expressions(game_id):
 
 func update_game(game):
 	print("Updating existing game...")
-	var values = [game.id, game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order]
+	var values = [game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order, game.id]
 	for value in values:
 		if value == null:
 			return false
@@ -207,6 +207,7 @@ func update_database(games):
 
 		print("Result: ", ok)
 	emit_signal("database_updated", ok)
+	return ok
 
 
 func close_db():
