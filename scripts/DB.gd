@@ -178,6 +178,8 @@ func update_database(games):
 		var game = games[i]
 		if game.id == null:
 			continue
+		elif game.has('featured'):
+			game.featured = int(game.featured)
 		game.order = game.clicks
 		print("Processing game %s..." % game.id)
 		var stored_game = get_game(game.id)

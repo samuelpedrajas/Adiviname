@@ -20,6 +20,9 @@ func setup(results):
 			game_info["game_title"],
 			game_info["game_icon_path"]
 		)
+
+		var grid_container = $GameListBg/GameContainer/VBoxContainer/GridContainer
+		grid_container.add_child(game_list_item)
 		if int(game_info["game_featured"]) > 0:
 			game_list_item.set_featured()
-		$GameListBg/GameContainer/VBoxContainer/GridContainer.add_child(game_list_item)
+			grid_container.move_child(game_list_item, 0)

@@ -22,7 +22,7 @@ func set_notification():
 
 func set_featured():
 	self.featured = true
-	$Button.set_self_modulate(Color(0.7, 1.0, 1.0, 1.0))
+	$Button.set_self_modulate(Color(0, 0, 0, 1.0))
 
 
 func set_icon(game_icon_path):
