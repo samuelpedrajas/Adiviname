@@ -181,7 +181,7 @@ func update_database(games):
 		game.order = game.clicks
 		print("Processing game %s..." % game.id)
 		var stored_game = get_game(game.id)
-		if stored_game == null:
+		if stored_game == null and game.has('title'):
 			# insert new game
 			ok = insert_game(game)
 			if ok:
@@ -192,7 +192,7 @@ func update_database(games):
 
 			if game.has("expressions"):
 				ok = update_game_expressions(game.id, game.expressions)
-				if ok:
+				if ok and stored_game.game_updated_at < int(game.updated_at):
 					recently_modified.append(game.id)
 		else:
 			# update game order
