@@ -8,7 +8,7 @@ var title
 var expressions
 
 var countdown = 5
-var remaining_time = 10
+var remaining_time = 30
 var current_expression
 var pending_expressions = []
 var displayed = []
@@ -28,15 +28,17 @@ func _process(delta):
 
 	if abs(gyro[1] + gyro[2]) < Const.GyroAnswer.YZ_THRESHOLD:
 		if  Const.GyroAnswer.MIN_CORRECT < gyro[0] and gyro[0] < Const.GyroAnswer.MAX_CORRECT:
-			$CorrectBg.show()
 			answer(true)
 		elif Const.GyroAnswer.MIN_INCORRECT < gyro[0] and gyro[0] < Const.GyroAnswer.MAX_INCORRECT:
-			$IncorrectBg.show()
 			answer(false)
 
 
 func answer(correct):
 	blocked = true
+	if correct:
+		$CorrectBg.show()
+	else:
+		$IncorrectBg.show()
 
 	if displayed.size() < 1:
 		print("There was some error in the answer function")
@@ -53,12 +55,13 @@ func set_next_expression():
 		pending_expressions = expressions.duplicate()
 		pending_expressions.shuffle()
 
-	current_expression = pending_expressions.pop_front()["text"]
+	var current_expression_dict = pending_expressions.pop_front()
+	current_expression = current_expression_dict["text"]
 
 	# this can happen if pending_expressions was empty and we had bad luck when shuffling
 	if displayed.size() > 0 and displayed.back()["text"] == current_expression:
-		pending_expressions.append(current_expression)
-		current_expression = pending_expressions.pop_front()
+		pending_expressions.append(current_expression_dict)
+		current_expression = pending_expressions.pop_front()["text"]
 
 	displayed.append({ "text": current_expression, "correct": false })
 
@@ -69,7 +72,7 @@ func _on_GameTimer_timeout():
 	remaining_time -= 1
 	$GameControls/Time.set_text(str(remaining_time))
 	if remaining_time < 1:
-		Main.load_main()
+		end_game()
 
 	if remaining_time <= vibration_threshold:
 		Main.vibrate(vibration_time)
@@ -88,15 +91,18 @@ func _on_CountdownTimer_timeout():
 	if countdown > 1:
 		countdown -= 1
 		$Countdown.set_text(str(countdown))
+		Main.vibrate(vibration_time)
 	else:
 		$Countdown.hide()
 		$GameControls.show()
 		$CountdownTimer.stop()
 		$GameTimer.start()
+		if OS.get_name() == "X11":
+			$LinuxOnly.show()
 		blocked = false
 
 
-func finish():
+func end_game():
 	ApiRequest.send_request(
 		Const.API_GAME_CLICK_ENDPOINT + str(game_id),
 		{},
@@ -105,4 +111,15 @@ func finish():
 	)
 	$GameTimer.stop()
 	$NextExpressionTimer.stop()
+	$Results.setup(displayed)
+	$Results.show()
+	$LinuxOnly.hide()
+	$GameControls.hide()
+	$CorrectBg.hide()
+	$IncorrectBg.hide()
+	OS.set_screen_orientation(1)
+
+
+func finish():
 	queue_free()
+	

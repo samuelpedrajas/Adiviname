@@ -9,7 +9,8 @@ var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 
 
 func _ready():
-	get_viewport().set_disable_input(true)
+	if not Const.DEBUG:
+		get_viewport().set_disable_input(true)
 
 	if Engine.has_singleton("Vibration"):
 		vibration = Engine.get_singleton("Vibration")
@@ -38,6 +39,7 @@ func load_game(game_id):
 
 	var main_menu = root.get_node("MainScreen/MainMenu")
 	main_menu.hide()
+	print("OR ", OS.get_screen_orientation())
 
 	OS.set_screen_orientation(0)
 

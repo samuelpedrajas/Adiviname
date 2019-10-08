@@ -1,20 +1,29 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scripts/ExpressionScreen.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/ExpressionScreen.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Results.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
-size = 160
-font_data = ExtResource( 2 )
+size = 60
+font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 160
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 240
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [node name="ExpressionScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+theme = SubResource( 2 )
+script = ExtResource( 2 )
 
 [node name="CorrectBg" type="ColorRect" parent="."]
 visible = false
@@ -36,7 +45,7 @@ anchor_bottom = 1.0
 [node name="Time" type="Label" parent="GameControls"]
 anchor_right = 1.0
 margin_bottom = 299.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "60"
 align = 1
 valign = 1
@@ -44,7 +53,7 @@ valign = 1
 [node name="Expression" type="Label" parent="GameControls"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Expression"
 align = 1
 valign = 1
@@ -52,7 +61,7 @@ valign = 1
 [node name="Countdown" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "5"
 align = 1
 valign = 1
@@ -64,6 +73,38 @@ autostart = true
 
 [node name="NextExpressionTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="LinuxOnly" type="HBoxContainer" parent="."]
+editor/display_folded = true
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -245.0
+margin_bottom = 5.0
+custom_constants/separation = 100
+alignment = 1
+
+[node name="Yes" type="Button" parent="LinuxOnly"]
+margin_left = 240.0
+margin_right = 490.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 250, 250 )
+custom_constants/hseparation = 100
+text = "YES"
+
+[node name="No" type="Button" parent="LinuxOnly"]
+margin_left = 590.0
+margin_right = 840.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 250, 250 )
+custom_constants/hseparation = 100
+text = "NO"
+
+[node name="Results" parent="." instance=ExtResource( 3 )]
+visible = false
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_CountdownTimer_timeout"]
 [connection signal="timeout" from="NextExpressionTimer" to="." method="_on_NextExpressionTimer_timeout"]
+[connection signal="pressed" from="LinuxOnly/Yes" to="." method="answer" binds= [ true ]]
+[connection signal="pressed" from="LinuxOnly/No" to="." method="answer" binds= [ false ]]
