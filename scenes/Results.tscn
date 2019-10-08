@@ -25,11 +25,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -540.0
+margin_left = -530.0
 margin_top = -689.0
-margin_right = 540.0
+margin_right = 530.0
 margin_bottom = 689.0
 custom_styles/bg = SubResource( 3 )
+scroll_horizontal_enabled = false
 script = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]

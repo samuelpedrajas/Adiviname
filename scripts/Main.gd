@@ -39,7 +39,6 @@ func load_game(game_id):
 
 	var main_menu = root.get_node("MainScreen/MainMenu")
 	main_menu.hide()
-	print("OR ", OS.get_screen_orientation())
 
 	OS.set_screen_orientation(0)
 

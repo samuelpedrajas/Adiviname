@@ -13,6 +13,8 @@ signal database_updated
 
 
 func _ready():
+	if Const.DEBUG:
+		return
 	var dir = Directory.new()
 	if not dir.dir_exists(Const.ICON_PATH):
 		dir.make_dir(Const.ICON_PATH)
