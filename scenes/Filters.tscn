@@ -26,35 +26,35 @@ alignment = 1
 [node name="Home" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 53.0
-margin_right = 293.0
+margin_left = 54.0
+margin_right = 294.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
 custom_fonts/font = SubResource( 1 )
 toggle_mode = true
-text = "Home"
+text = "Inicio"
 
 [node name="LastAdded" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 297.0
-margin_right = 537.0
+margin_left = 298.0
+margin_right = 538.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
 custom_fonts/font = SubResource( 1 )
 toggle_mode = true
-text = "Last Added"
+text = "Novedades"
 
 [node name="Description" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 541.0
+margin_left = 542.0
 margin_right = 782.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
 custom_fonts/font = SubResource( 1 )
 toggle_mode = true
-text = "Descripciones"
+text = "Descripción"
 
 [node name="Gestures" type="Button" parent="HBoxContainer" groups=[
 "filter",
@@ -65,7 +65,7 @@ margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
 custom_fonts/font = SubResource( 1 )
 toggle_mode = true
-text = "Gestures"
+text = "Gestos"
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_Home_pressed"]
 [connection signal="pressed" from="HBoxContainer/LastAdded" to="." method="_on_LastAdded_pressed"]
 [connection signal="pressed" from="HBoxContainer/Description" to="." method="_on_Description_pressed"]
