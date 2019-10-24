@@ -1,4 +1,4 @@
 *.db-journal
 lib/*
 export_presets.cfg
-.import
+*.import
