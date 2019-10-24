@@ -1,23 +1,26 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://scenes/GameList.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/Filters.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=5]
+[ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
+[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://img/gui/question_icon.png" type="Texture" id=4]
+[ext_resource path="res://scenes/GameList.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Filters.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 60
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -37,27 +40,52 @@ color = Color( 1, 0.584314, 0, 1 )
 anchor_right = 1.0
 margin_bottom = 169.0
 
+[node name="Results" type="TextureButton" parent="MainMenu/Title"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 50.0
+margin_top = -64.0
+margin_right = 178.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 2 )
+
 [node name="TitleLabel" type="Label" parent="MainMenu/Title"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 232.0
+margin_right = -231.0
 custom_fonts/font = SubResource( 1 )
 text = "ADIVÍNAME"
 align = 1
 valign = 1
 
-[node name="GameList" parent="MainMenu" instance=ExtResource( 3 )]
+[node name="Help" type="TextureButton" parent="MainMenu/Title"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -178.0
+margin_top = -64.0
+margin_right = -50.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 4 )
 
-[node name="Filters" parent="MainMenu" instance=ExtResource( 4 )]
+[node name="GameList" parent="MainMenu" instance=ExtResource( 5 )]
+
+[node name="Filters" parent="MainMenu" instance=ExtResource( 6 )]
 
 [node name="GameScreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
+[node name="ResultsScreen" parent="." instance=ExtResource( 7 )]
+visible = false
+
 [node name="LoadingScreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 5 )
+script = ExtResource( 8 )
 
 [node name="ColorRect" type="ColorRect" parent="LoadingScreen"]
 anchor_right = 1.0
@@ -84,3 +112,9 @@ custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 text = "Cargando..."
 align = 1
 valign = 1
+
+[node name="Popups" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+[connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]

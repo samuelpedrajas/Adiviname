@@ -67,8 +67,13 @@ func _finish_loading():
 	filters.set_home_filter()
 	$LoadingScreen.hide()
 	get_viewport().set_disable_input(false)
+	# $Popups/PlayGame.popup_centered()
 
 
 func load_games():
 	var stored_games = filters.get_games()  # set to home by default
 	$"MainMenu/GameList".setup(stored_games)
+
+
+func _on_Results_pressed():
+	$ResultsScreen.show()
