@@ -18,6 +18,7 @@ func setup(results):
 		game_list_item.setup(
 			game_info["game_id"],
 			game_info["game_title"],
+			game_info["game_description"],
 			game_info["game_icon_path"]
 		)
 

@@ -113,8 +113,10 @@ text = "Cargando..."
 align = 1
 valign = 1
 
-[node name="Popups" type="Control" parent="."]
+[node name="Popups" type="ColorRect" parent="."]
+pause_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.572549 )
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]

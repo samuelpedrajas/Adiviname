@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://img/gui/radio_check.png" type="Texture" id=1]
 [ext_resource path="res://img/gui/radio_uncheck.png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://img/gui/bar.png" type="Texture" id=9]
 [ext_resource path="res://img/gui/grabber.png" type="Texture" id=10]
 [ext_resource path="res://img/gui/grabber_highlight.png" type="Texture" id=11]
+[ext_resource path="res://img/gui/close.png" type="Texture" id=12]
+[ext_resource path="res://img/gui/close_highlight.png" type="Texture" id=13]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 4 )
@@ -25,28 +27,28 @@ content_margin_top = 20.0
 content_margin_bottom = 20.0
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=3]
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=4]
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
 
 [sub_resource type="StyleBoxEmpty" id=10]
 
-[sub_resource type="StyleBoxEmpty" id=11]
-
-[sub_resource type="StyleBoxEmpty" id=12]
-
-[sub_resource type="StyleBoxEmpty" id=15]
-
-[sub_resource type="StyleBoxEmpty" id=14]
-
-[sub_resource type="DynamicFont" id=3]
-size = 60
+[sub_resource type="DynamicFont" id=11]
+size = 40
 font_data = ExtResource( 5 )
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
+[sub_resource type="Theme" id=12]
+default_font = SubResource( 11 )
 BoxContainer/constants/separation = 4
 Button/colors/font_color = Color( 0, 0, 0, 1 )
 Button/colors/font_color_disabled = Color( 0, 0, 0, 1 )
@@ -976,9 +978,9 @@ TextEdit/colors/caret_color = Color( 0, 0, 0, 1 )
 TextEdit/colors/font_color = Color( 0, 0, 0, 1 )
 TextEdit/colors/selection_color = Color( 0, 0, 0, 1 )
 TextEdit/icons/tab = null
-TextEdit/styles/focus = SubResource( 6 )
-TextEdit/styles/normal = SubResource( 7 )
-TextEdit/styles/read_only = SubResource( 8 )
+TextEdit/styles/focus = SubResource( 3 )
+TextEdit/styles/normal = SubResource( 4 )
+TextEdit/styles/read_only = SubResource( 5 )
 ToolButton/colors/font_color = Color( 0, 0, 0, 1 )
 ToolButton/colors/font_color_hover = Color( 0, 0, 0, 1 )
 ToolButton/colors/font_color_pressed = Color( 0, 0, 0, 1 )
@@ -1032,11 +1034,11 @@ VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 10 )
-VScrollBar/styles/grabber_highlight = SubResource( 11 )
-VScrollBar/styles/grabber_pressed = SubResource( 12 )
-VScrollBar/styles/scroll = SubResource( 15 )
-VScrollBar/styles/scroll_focus = SubResource( 14 )
+VScrollBar/styles/grabber = SubResource( 6 )
+VScrollBar/styles/grabber_highlight = SubResource( 7 )
+VScrollBar/styles/grabber_pressed = SubResource( 8 )
+VScrollBar/styles/scroll = SubResource( 9 )
+VScrollBar/styles/scroll_focus = SubResource( 10 )
 VSeparator/styles/separator = null
 VSlider/icons/grabber = null
 VSlider/icons/grabber_highlight = null
@@ -1054,20 +1056,20 @@ WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=13]
 size = 34
 font_data = ExtResource( 5 )
 
-[node name="PlayGamePopup" type="Control"]
+[node name="ConfigureGamePopup" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -423.0
-margin_top = -492.0
-margin_right = 424.0
-margin_bottom = 355.0
-theme = SubResource( 4 )
+margin_left = -510.0
+margin_top = -561.0
+margin_right = 512.0
+margin_bottom = 424.0
+theme = SubResource( 12 )
 script = ExtResource( 6 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -1091,7 +1093,7 @@ texture = ExtResource( 8 )
 [node name="Label" type="Label" parent="Header"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 13 )
 text = "CONFIGURAR PARTIDA"
 align = 1
 valign = 1
@@ -1105,13 +1107,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -335.5
+margin_left = -350.5
 margin_top = -279.5
-margin_right = 333.5
+margin_right = 349.5
 margin_bottom = 280.5
 
 [node name="Label" type="Label" parent="Content/VBoxContainer"]
-margin_right = 669.0
+margin_right = 700.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 text = "Introduce el nombre de la partida:"
@@ -1119,14 +1121,14 @@ valign = 1
 
 [node name="TextEdit" type="TextEdit" parent="Content/VBoxContainer"]
 margin_top = 84.0
-margin_right = 669.0
+margin_right = 700.0
 margin_bottom = 144.0
 rect_min_size = Vector2( 0, 60 )
 text = "23-10-2019 14:55:00"
 
 [node name="Label2" type="Label" parent="Content/VBoxContainer"]
 margin_top = 148.0
-margin_right = 669.0
+margin_right = 700.0
 margin_bottom = 248.0
 rect_min_size = Vector2( 0, 100 )
 text = "Introduce el número de equipos:"
@@ -1134,7 +1136,7 @@ valign = 2
 
 [node name="NTeams" type="Label" parent="Content/VBoxContainer"]
 margin_top = 252.0
-margin_right = 669.0
+margin_right = 700.0
 margin_bottom = 312.0
 rect_min_size = Vector2( 0, 60 )
 text = "5"
@@ -1143,7 +1145,7 @@ valign = 1
 
 [node name="HSlider" type="HSlider" parent="Content/VBoxContainer"]
 margin_top = 316.0
-margin_right = 669.0
+margin_right = 700.0
 margin_bottom = 396.0
 rect_min_size = Vector2( 0, 80 )
 custom_icons/tick = ExtResource( 9 )
@@ -1156,11 +1158,21 @@ value = 5.0
 tick_count = 9
 ticks_on_borders = true
 
-[node name="Label3" type="Label" parent="Content/VBoxContainer"]
+[node name="Game" type="Label" parent="Content/VBoxContainer"]
 margin_top = 400.0
-margin_right = 669.0
-margin_bottom = 560.0
-rect_min_size = Vector2( 0, 160 )
+margin_right = 700.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 0, 130 )
+custom_colors/font_color = Color( 0.207843, 0.207843, 0.207843, 1 )
+text = "Nombre del Juego"
+align = 1
+valign = 1
+
+[node name="Turn" type="Label" parent="Content/VBoxContainer"]
+margin_top = 534.0
+margin_right = 700.0
+margin_bottom = 614.0
+rect_min_size = Vector2( 0, 80 )
 custom_colors/font_color = Color( 0, 0.0156863, 1, 1 )
 text = "Turno para el Equipo 1"
 align = 1
@@ -1175,5 +1187,17 @@ margin_left = -177.5
 margin_top = -124.0
 margin_right = 179.5
 margin_bottom = -39.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Jugar"
+
+[node name="CloseButton" type="TextureButton" parent="Content"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -62.0
+margin_top = -14.0
+margin_right = 18.0
+margin_bottom = 66.0
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
 [connection signal="value_changed" from="Content/VBoxContainer/HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]

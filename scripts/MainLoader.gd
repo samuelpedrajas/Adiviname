@@ -76,4 +76,4 @@ func load_games():
 
 
 func _on_Results_pressed():
-	$ResultsScreen.show()
+	$ResultsScreen.open()

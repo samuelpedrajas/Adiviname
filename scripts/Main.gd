@@ -6,7 +6,8 @@ var vibration
 var current_scene = "main"
 
 var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
-
+var play_game_popup_scene = preload("res://scenes/PlayGamePopup.tscn")
+var configure_game_popup_scene = preload("res://scenes/ConfigureGamePopup.tscn")
 
 func _ready():
 	if not Const.DEBUG:
@@ -27,6 +28,7 @@ func vibrate(duration):
 
 func load_game(game_id):
 	current_scene = "expression_screen"
+	close_popups()
 
 	var game = DB.get_game(game_id)
 	var expression_screen = expression_screen_scene.instance()
@@ -55,6 +57,34 @@ func load_main():
 		screen.finish()
 
 	OS.set_screen_orientation(1)
+
+
+func open_play_game_popup(game_list_item):
+	var play_game_popup = play_game_popup_scene.instance()
+	play_game_popup.set_game_info(game_list_item)
+	_open_popup(play_game_popup)
+
+
+func open_game_configuration_popup(game_list_item):
+	var ogc_popup = configure_game_popup_scene.instance()
+	ogc_popup.setup(game_list_item)
+	_open_popup(ogc_popup)
+
+
+func _open_popup(popup):
+	close_popups()
+	root.get_tree().set_pause(true)
+	var popups = root.get_node("MainScreen/Popups")
+	popups.add_child(popup)
+	popups.show()
+
+
+func close_popups():
+	var popups = root.get_node("MainScreen/Popups")
+	for popup in popups.get_children():
+		popup.queue_free()
+	popups.hide()
+	root.get_tree().set_pause(false)
 
 
 func quit_game():

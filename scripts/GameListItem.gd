@@ -1,6 +1,9 @@
 extends Control
 
 var game_id
+var game_title
+var game_description
+var game_icon_texture
 var featured = false
 
 
@@ -25,19 +28,22 @@ func set_featured():
 	$Button.set_self_modulate(Color(0, 0, 0, 1.0))
 
 
-func set_icon(game_icon_path):
-    var img = Image.new()
-    var itex = ImageTexture.new()
-    img.load(game_icon_path)
-    itex.create_from_image(img)
-    $Button/TextureRect.texture = itex
+func get_icon_texture(game_icon_path):
+	var img = Image.new()
+	var itex = ImageTexture.new()
+	img.load(game_icon_path)
+	itex.create_from_image(img)
+	return itex
 
 
-func setup(game_id, game_title, game_icon_path):
+func setup(game_id, game_title, game_description, game_icon_path):
 	self.game_id = game_id
+	self.game_title = game_title
+	self.game_description = game_description
 
 	if game_icon_path != null:
-		set_icon(game_icon_path)
+		self.game_icon_texture = get_icon_texture(game_icon_path)
+		$Button/TextureRect.texture = game_icon_texture
 
 	set_notification()
 	$Button/Title.set_text(game_title)
@@ -45,5 +51,5 @@ func setup(game_id, game_title, game_icon_path):
 
 func _on_Button_pressed():
 	if not get_parent().get_parent().get_parent().swiping:
-		Main.load_game(game_id)
+		Main.open_play_game_popup(self)
 		$Button/NotificationRect.hide()

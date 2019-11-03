@@ -20,6 +20,15 @@ var swipe_mouse_positions := []
 var tween : Tween
 
 
+func configure_custom_scrollbar():
+	var vscrollbar = get_v_scrollbar()
+	if vscrollbar != null:
+		var scrollbar_position = vscrollbar.get_position()
+		scrollbar_position.x = -10
+		scrollbar_position.y = -1
+		vscrollbar.set_position(scrollbar_position)
+
+
 func _input(ev) -> void:
 	if !is_visible_in_tree():
 		return
