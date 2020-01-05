@@ -1178,7 +1178,7 @@ text = "Turno para el Equipo 1"
 align = 1
 valign = 1
 
-[node name="Button" type="Button" parent="Content"]
+[node name="PlayButton" type="Button" parent="Content"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -1200,4 +1200,5 @@ margin_bottom = 66.0
 texture_normal = ExtResource( 12 )
 texture_pressed = ExtResource( 13 )
 [connection signal="value_changed" from="Content/VBoxContainer/HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Content/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]

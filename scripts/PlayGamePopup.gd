@@ -31,7 +31,7 @@ func _on_CloseButton_pressed():
 
 func _on_Button_pressed():
 	if self.new_game:
-		Main.open_game_configuration_popup(game_list_item)
+		Main.open_game_configuration_popup(game_list_item, game_list_item.game_id)
 	else:
 		Main.load_game(game_list_item.game_id)
 

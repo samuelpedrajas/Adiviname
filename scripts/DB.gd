@@ -236,3 +236,53 @@ func get_saved_games():
 		FROM SavedGame  
 		ORDER BY saved_game_created_at desc;"""
 	)
+
+
+func get_saved_game_teams(saved_game_id):
+	return db.fetch_array(
+		"""SELECT * 
+		FROM SavedGameTeam 
+		WHERE saved_game_id=? 
+		ORDER BY saved_game_team_number asc;""",
+		saved_game_id
+	)
+
+
+func insert_saved_game(n_teams, saved_game):
+	print("Inserting new saved game...")
+	var values = [saved_game, OS.get_unix_time(), 0]
+	for value in values:
+		if value == null:
+			return false
+	var ok = db.query_with_args("""
+		INSERT INTO SavedGame (saved_game_name, saved_game_created_at, saved_game_next_team) 
+		VALUES (?, ?, ?);
+	""", values
+	)
+	if not ok:
+		return false
+	var saved_game_id = db.fetch_array("""
+		SELECT max(saved_game_id) from SavedGame;
+	"""
+	)
+	print("Max id: ", saved_game_id[0][0])
+	return insert_saved_game_teams(n_teams, saved_game_id[0][0])
+  
+
+func insert_saved_game_teams(n_teams, saved_game_id):
+	if n_teams < 2:
+		print("Less than 2 teams")
+		return true
+	print("Inserting new teams...")
+	var ok
+	for i in range(n_teams):
+		ok = db.query_with_args("""
+			INSERT INTO SavedGameTeam (
+				saved_game_team_number, saved_game_team_saved_game, 
+				saved_game_team_score
+			) VALUES (?, ?, ?);
+		""", [i, saved_game_id, 0]
+		)
+		if not ok:
+			return ok
+	return ok

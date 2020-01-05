@@ -65,9 +65,9 @@ func open_play_game_popup(game_list_item):
 	_open_popup(play_game_popup)
 
 
-func open_game_configuration_popup(game_list_item):
+func open_game_configuration_popup(game_list_item, game_id):
 	var ogc_popup = configure_game_popup_scene.instance()
-	ogc_popup.setup(game_list_item)
+	ogc_popup.setup(game_list_item, game_id)
 	_open_popup(ogc_popup)
 
 
