@@ -8,7 +8,7 @@ var title
 var expressions
 
 var countdown = 5
-var remaining_time = 30
+var remaining_time = 10
 var current_expression
 var pending_expressions = []
 var displayed = []

@@ -39,7 +39,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		var json_response = JSON.parse(body.get_string_from_utf8())
 
 		if json_response.error != OK:
-			print("Some error while parsing the JSON")
+			print("Some error while parsing the JSON: ", OK)
 		elif json_response.result != null:
 			if json_response.result.has("timestamp"):
 				last_request_timestamp = json_response.result.timestamp

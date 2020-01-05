@@ -19,8 +19,27 @@ func _ready():
 	if Engine.has_singleton("Vibration"):
 		vibration = Engine.get_singleton("Vibration")
 
+func add_score(score):
+	if not team_mode:
+		return
+	print("Updating score of team ", saved_game.saved_game_next_team)
+	DB.add_score(
+		saved_game.saved_game_id,
+		saved_game.saved_game_next_team,
+		score
+	)
+	saved_game.results[saved_game.saved_game_next_team].saved_game_team_score += score
+	saved_game.saved_game_next_team = (
+		(saved_game.saved_game_next_team + 1) % saved_game.results.size()
+	)
+	DB.next_team(
+		saved_game.saved_game_id,
+		saved_game.saved_game_next_team
+	)
+	print("Next player: ", saved_game.saved_game_next_team)
+
 func load_saved_game(saved_game):
-	print("Enabling team mode: ", saved_game)
+	print("Enabling team mode")
 	self.saved_game = saved_game
 	self.team_mode = true
 

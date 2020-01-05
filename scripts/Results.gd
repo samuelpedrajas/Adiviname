@@ -39,4 +39,5 @@ func setup(displayed):
 
 
 func _on_Continue_pressed():
+	Main.add_score(score)
 	Main.load_main()

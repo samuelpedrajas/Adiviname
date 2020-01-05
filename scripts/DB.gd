@@ -308,3 +308,20 @@ func format_unix_time(unix_time):
 	var date = str(datetime["day"]) + "-" + str(datetime["month"]) + "-" + str(datetime["year"])
 	var time = str(datetime["hour"]) + ":" + str(datetime["minute"]) + ":" + str(datetime["second"])
 	return date + " " + time
+
+
+func add_score(saved_game_id, team_number, score):
+	return db.query_with_args(
+		"""UPDATE SavedGameTeam SET saved_game_team_score=saved_game_team_score+? 
+		WHERE saved_game_team_saved_game = ? AND 
+		saved_game_team_number = ?
+		""", [score, saved_game_id, team_number]
+	)
+
+
+func next_team(saved_game_id, team_number):
+	return db.query_with_args(
+		"""UPDATE SavedGame SET saved_game_next_team=? 
+		WHERE saved_game_id = ? 
+		""", [team_number, saved_game_id]
+	)

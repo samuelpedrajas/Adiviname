@@ -1119,9 +1119,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -510.0
-margin_top = -561.0
+margin_top = -670.0
 margin_right = 512.0
-margin_bottom = 424.0
+margin_bottom = 532.0
 theme = SubResource( 5 )
 script = ExtResource( 7 )
 
@@ -1170,9 +1170,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = 59.0
-margin_top = -352.5
+margin_top = -413.5
 margin_right = -60.0
-margin_bottom = -288.5
+margin_bottom = -349.5
 custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.231373, 0.231373, 0.231373, 1 )
 text = "Título del juego"
@@ -1186,9 +1186,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -78.0
-margin_top = -268.5
+margin_top = -329.5
 margin_right = 78.0
-margin_bottom = -112.5
+margin_bottom = -173.5
 texture = ExtResource( 12 )
 expand = true
 
@@ -1197,9 +1197,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = 59.0
-margin_top = -80.5
+margin_top = -141.5
 margin_right = -60.0
-margin_bottom = 24.5
+margin_bottom = -36.5
 custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0.231373, 0.231373, 0.231373, 1 )
 text = "Descripción del juego"
@@ -1212,9 +1212,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -256.0
-margin_top = 21.5
+margin_top = -39.5
 margin_right = 156.0
-margin_bottom = 116.5
+margin_bottom = 55.5
 focus_mode = 0
 custom_icons/checked = ExtResource( 13 )
 custom_icons/unchecked = ExtResource( 5 )
@@ -1238,18 +1238,6 @@ custom_styles/bg_focus = SubResource( 10 )
 custom_styles/bg = SubResource( 10 )
 items = [ "Nueva Patida", null, false ]
 
-[node name="Button" type="Button" parent="Content"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -177.5
-margin_top = -124.0
-margin_right = 179.5
-margin_bottom = -39.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Jugar"
-
 [node name="SaveGameList" type="ColorRect" parent="Content"]
 visible = false
 anchor_left = 0.5
@@ -1257,9 +1245,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -393.0
-margin_top = 133.5
+margin_top = 72.5
 margin_right = 393.0
-margin_bottom = 314.5
+margin_bottom = 253.5
 script = SubResource( 11 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Content/SaveGameList"]
@@ -1277,8 +1265,36 @@ rect_min_size = Vector2( 786, 0 )
 margin_right = 786.0
 margin_bottom = 80.0
 selected = true
+
+[node name="Turno" type="Label" parent="Content"]
+visible = false
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 178.0
+margin_top = 301.0
+margin_right = -177.0
+margin_bottom = 434.0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.231373, 0.231373, 0.231373, 1 )
+text = "Turno para el Equipo 1"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Button" type="Button" parent="Content"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -177.5
+margin_top = -124.0
+margin_right = 179.5
+margin_bottom = -39.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Jugar"
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="toggled" from="Content/CheckBox" to="." method="_on_CheckBox_toggled"]
-[connection signal="pressed" from="Content/Button" to="." method="_on_Button_pressed"]
 [connection signal="list_updated" from="Content/SaveGameList" to="." method="_on_SaveGameList_list_updated"]
 [connection signal="item_selected" from="Content/SaveGameList/ScrollContainer/List/NewGame" to="Content/SaveGameList" method="item_selected"]
+[connection signal="pressed" from="Content/Button" to="." method="_on_Button_pressed"]
