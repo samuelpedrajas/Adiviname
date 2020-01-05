@@ -3,6 +3,8 @@ extends Control
 export(int) var save_game_id = -1
 export(bool) var selected = false
 
+var save_game
+
 signal item_selected
 
 func _ready():
@@ -10,9 +12,10 @@ func _ready():
 		set_selected()
 
 
-func setup(save_game_id, name):
-	self.save_game_id = save_game_id
-	$Button.set_text(name)
+func setup(save_game):
+	self.save_game_id = save_game.saved_game_id
+	self.save_game = save_game
+	$Button.set_text(save_game.saved_game_name)
 
 
 func set_selected():

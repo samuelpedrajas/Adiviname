@@ -1074,30 +1074,43 @@ script/source = "extends ColorRect
 
 var list_item_scene = preload(\"res://scenes/VBoxContainerItem.tscn\")
 onready var selected_item = $ScrollContainer/List/NewGame
+var selected_index = -1
+var num_items = 0
 
 signal list_updated
 
+func _ready():
+	call_deferred(\"fix_scroll\")
 
 func get_selected():
 	return self.selected_item
-
 
 func item_selected(item):
 	self.selected_item.unset_selected()
 	self.selected_item = item
 	item.set_selected()
-	emit_signal(\"list_updated\")
-
+	emit_signal(\"list_updated\", item)
 
 func setup(saved_games):
+	self.selected_index = -1
+	self.num_items = saved_games.size()
+	var i = 0
 	for saved_game in saved_games:
 		var list_item = list_item_scene.instance()
-		list_item.setup(
-			saved_game.saved_game_id, 
-			saved_game.saved_game_name
-		)
+		list_item.setup(saved_game)
+		if Main.team_mode and saved_game.saved_game_id == Main.saved_game.saved_game_id:
+			item_selected(list_item)
+			selected_index = i
 		list_item.connect(\"item_selected\", self, \"item_selected\")
 		$ScrollContainer/List.add_child(list_item)
+		i += 1
+
+func fix_scroll():
+	yield(get_tree(), \"idle_frame\")
+	var scroll_bar = $ScrollContainer.get_v_scrollbar()
+	var percentage = (selected_index + 1.0) / num_items * (scroll_bar.get_max() - scroll_bar.get_page())
+	print(\"SET \", percentage)
+	scroll_bar.set_value(percentage)
 "
 
 [node name="PlayGamePopup" type="Control"]

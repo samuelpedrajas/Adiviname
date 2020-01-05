@@ -9,6 +9,9 @@ var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 var play_game_popup_scene = preload("res://scenes/PlayGamePopup.tscn")
 var configure_game_popup_scene = preload("res://scenes/ConfigureGamePopup.tscn")
 
+var team_mode = false
+var saved_game
+
 func _ready():
 	if not Const.DEBUG:
 		get_viewport().set_disable_input(true)
@@ -16,15 +19,21 @@ func _ready():
 	if Engine.has_singleton("Vibration"):
 		vibration = Engine.get_singleton("Vibration")
 
+func load_saved_game(saved_game):
+	print("Enabling team mode: ", saved_game)
+	self.saved_game = saved_game
+	self.team_mode = true
+
+func solo_mode():
+	print("Enabling solo mode")
+	self.team_mode = false
 
 func setup():
 	root = get_tree().get_root()
 
-
 func vibrate(duration):
 	if vibration:
 		vibration.vibrate(duration)
-
 
 func load_game(game_id):
 	current_scene = "expression_screen"
