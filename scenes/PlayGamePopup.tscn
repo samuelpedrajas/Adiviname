@@ -1106,6 +1106,8 @@ func setup(saved_games):
 		i += 1
 
 func fix_scroll():
+	if num_items == 0:
+		return
 	yield(get_tree(), \"idle_frame\")
 	var scroll_bar = $ScrollContainer.get_v_scrollbar()
 	var percentage = (selected_index + 1.0) / num_items * (scroll_bar.get_max() - scroll_bar.get_page())

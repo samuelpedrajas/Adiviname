@@ -26,5 +26,6 @@ func _on_CloseButton_pressed():
 func _on_PlayButton_pressed():
 	var game_name = $Content/VBoxContainer/TextEdit.get_text()
 	var n_teams = $Content/VBoxContainer/HSlider.get_value()
-	DB.insert_saved_game(n_teams, game_name)
+	var saved_game = DB.insert_saved_game(n_teams, game_name)
+	Main.load_saved_game(saved_game)
 	Main.load_game(game_id)

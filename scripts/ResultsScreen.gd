@@ -13,7 +13,7 @@ func open():
 	$SavedGames/ScrollContainer.configure_custom_scrollbar()
 	saved_game_list = $SavedGames/ScrollContainer/SavedGamesList
 	team_score_list = $TeamScores/Scores
-	saved_games = DB.get_saved_game_and_results()
+	saved_games = DB.get_saved_games_and_results()
 	if saved_games.size() > 0:
 		populate_saved_games()
 		populate_team_scores()

@@ -5,7 +5,7 @@ var game_list_item
 var saved_games
 
 func _ready():
-	saved_games = DB.get_saved_game_and_results()
+	saved_games = DB.get_saved_games_and_results()
 	$Content/SaveGameList.setup(saved_games)
 	$Content/CheckBox.set_pressed(Main.team_mode)
 	call_deferred("update_game_mode", Main.team_mode)
@@ -24,11 +24,13 @@ func update_game_mode(game_mode):
 		var selected_item = $Content/SaveGameList.selected_item
 		if selected_item.save_game_id != -1:
 			Main.load_saved_game(selected_item.save_game)
+			$Content/Turno.show()
 		$Content/SaveGameList.show()
 		_update_btn()
 	else:
 		Main.solo_mode()
 		$Content/SaveGameList.hide()
+		$Content/Turno.hide()
 		_set_play_game_btn()
 
 func _on_CloseButton_pressed():

@@ -266,7 +266,10 @@ func insert_saved_game(n_teams, saved_game):
 	"""
 	)
 	print("Max id: ", saved_game_id[0][0])
-	return insert_saved_game_teams(n_teams, saved_game_id[0][0])
+	ok = insert_saved_game_teams(n_teams, saved_game_id[0][0])
+	if not ok:
+		return false
+	return get_saved_game_and_results(saved_game_id[0][0])
   
 
 func insert_saved_game_teams(n_teams, saved_game_id):
@@ -288,11 +291,11 @@ func insert_saved_game_teams(n_teams, saved_game_id):
 	return ok
 
 
-func get_saved_game_and_results():
+func get_saved_games_and_results():
 	var saved_games = db.fetch_array(
 		"""SELECT * 
 		FROM SavedGame 
-		ORDER BY saved_game_created_at asc;"""
+		ORDER BY saved_game_created_at desc;"""
 	)
 	var saved_games_and_results = []
 	for saved_game in saved_games:
@@ -301,6 +304,18 @@ func get_saved_game_and_results():
 		saved_games_and_results.append(saved_game)
 
 	return saved_games_and_results
+
+
+func get_saved_game_and_results(saved_game_id):
+	var saved_game = db.fetch_array_with_args(
+		"""SELECT * 
+		FROM SavedGame 
+		WHERE saved_game_id=?;""", [saved_game_id]
+	)
+	var teams = get_saved_game_teams(saved_game_id)
+	saved_game[0]["results"] = teams
+
+	return saved_game[0]
 
 
 func format_unix_time(unix_time):
