@@ -1152,4 +1152,5 @@ margin_top = -38.5
 margin_right = 233.0
 margin_bottom = 38.5
 text = "Volver"
+[connection signal="pressed" from="TeamScores/Lower/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="Lower/Button" to="." method="_on_Button_pressed"]

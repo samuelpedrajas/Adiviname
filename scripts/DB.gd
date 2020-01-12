@@ -340,3 +340,18 @@ func next_team(saved_game_id, team_number):
 		WHERE saved_game_id = ? 
 		""", [team_number, saved_game_id]
 	)
+
+
+func remove_saved_game(saved_game_id):
+	var ok = db.query_with_args(
+		"""DELETE FROM SavedGame 
+		WHERE saved_game_id = ? 
+		""", [saved_game_id]
+	)
+	if not ok:
+		return ok
+	return db.query_with_args(
+		"""DELETE FROM SavedGameTeam 
+		WHERE saved_game_team_saved_game = ? 
+		""", [saved_game_id]
+	)
