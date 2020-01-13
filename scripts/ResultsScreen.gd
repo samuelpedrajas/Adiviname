@@ -18,9 +18,8 @@ func open():
 
 func update_list():
 	saved_games = DB.get_saved_games_and_results()
-	if saved_games.size() > 0:
-		populate_saved_games()
-		populate_team_scores()
+	populate_saved_games()
+	populate_team_scores()
 
 func populate_saved_games():
 	clear_game_list()
@@ -52,14 +51,20 @@ func update_selected(v):
 
 func populate_team_scores():
 	clear_score_list()
+	if not saved_game_exists(selected):
+		return
 	var saved_game = saved_games[selected]
 	for team in saved_game["results"]:
 		var team_score = team_score_scene.instance()
 		team_score.setup(
-			"Equipo " + str(team["saved_game_team_number"]),
+			"Equipo " + str(team["saved_game_team_number"] + 1),
 			team["saved_game_team_score"]
 		)
 		team_score_list.add_child(team_score)
+
+func saved_game_exists(index):
+	var n_saved_games = saved_games.size()
+	return index >=0 and index < n_saved_games
 
 func clear_game_list():
 	for child in saved_game_list.get_children():
@@ -76,6 +81,9 @@ func _on_Button_pressed():
 	close()
 
 func _on_Remove_pressed():
+	if not saved_game_exists(selected):
+		return
 	var saved_game_id = saved_games[selected]["saved_game_id"]
 	DB.remove_saved_game(saved_game_id)
+	selected = max(selected - 1, 0)
 	update_list()
