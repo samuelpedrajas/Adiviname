@@ -26,7 +26,7 @@ func _process(delta):
 		return
 	var gyro = Input.get_gyroscope()
 
-	if abs(gyro[1] + gyro[2]) < Const.GyroAnswer.YZ_THRESHOLD:
+	if abs(gyro[1]) + abs(gyro[2]) < Const.GyroAnswer.YZ_THRESHOLD:
 		if  Const.GyroAnswer.MIN_CORRECT < gyro[0] and gyro[0] < Const.GyroAnswer.MAX_CORRECT:
 			answer(true)
 		elif Const.GyroAnswer.MIN_INCORRECT < gyro[0] and gyro[0] < Const.GyroAnswer.MAX_INCORRECT:

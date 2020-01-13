@@ -9,10 +9,10 @@ const GameMode = {
 }
 
 const GyroAnswer = {
-	MAX_CORRECT = -3.5,
-	MIN_CORRECT = -5,
-	MAX_INCORRECT = 5,
-	MIN_INCORRECT = 3.5,
+	MAX_CORRECT = 10,
+	MIN_CORRECT = 3.5,
+	MAX_INCORRECT = -3.5,
+	MIN_INCORRECT = -10,
 	YZ_THRESHOLD = 1
 }
 
