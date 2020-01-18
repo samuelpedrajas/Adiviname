@@ -12,6 +12,8 @@ var configure_game_popup_scene = preload("res://scenes/ConfigureGamePopup.tscn")
 var team_mode = false
 var saved_game
 
+var go_back_locked = false
+
 func _ready():
 	if not Const.DEBUG:
 		get_viewport().set_disable_input(true)
@@ -122,13 +124,19 @@ func quit_game():
 
 
 func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+	print("button pressed: ", what)
+	print("current_scene: ", current_scene)
+
+	if go_back_locked:
+		print("go back locked")
+		return
+
+	var is_go_back_request = what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST or what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST
+	if is_go_back_request:
+		go_back_locked = true
 		if current_scene != "main":
 			load_main()
-		else:
-			quit_game()
-	elif what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST:
-		if current_scene != "main":
-			load_main()
+			yield(get_tree().create_timer(1), "timeout")
+			go_back_locked = false
 		else:
 			quit_game()
