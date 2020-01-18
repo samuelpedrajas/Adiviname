@@ -61,6 +61,9 @@ func populate_team_scores():
 			team["saved_game_team_score"]
 		)
 		team_score_list.add_child(team_score)
+	$TeamScores/Lower/Turno.set_text(
+		"Turno de Equipo " + str(saved_game["saved_game_next_team"] + 1)
+	)
 
 func saved_game_exists(index):
 	var n_saved_games = saved_games.size()
