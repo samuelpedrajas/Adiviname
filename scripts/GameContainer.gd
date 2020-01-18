@@ -8,7 +8,7 @@ Buttons inside should react to release, in order to be not activated during scro
 Does not work with Touch Screen Buttons as they handle the input before.
 """
 
-export (Vector2) var delta_for_swipe := Vector2(8, 8) 
+export (Vector2) var delta_for_swipe := Vector2(16, 16)
 
 
 var look_for_swipe := false
