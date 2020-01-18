@@ -87,3 +87,11 @@ func _on_Remove_pressed():
 	DB.remove_saved_game(saved_game_id)
 	selected = max(selected - 1, 0)
 	update_list()
+
+
+func _on_Undo_pressed():
+	if not saved_game_exists(selected):
+		return
+	var saved_game_id = saved_games[selected]["saved_game_id"]
+	DB.reset_saved_game(saved_game_id)
+	update_list()
