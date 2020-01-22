@@ -1199,6 +1199,7 @@ margin_right = 18.0
 margin_bottom = 66.0
 texture_normal = ExtResource( 12 )
 texture_pressed = ExtResource( 13 )
+[connection signal="text_changed" from="Content/VBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
 [connection signal="value_changed" from="Content/VBoxContainer/HSlider" to="." method="_on_HSlider_value_changed"]
 [connection signal="pressed" from="Content/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]
