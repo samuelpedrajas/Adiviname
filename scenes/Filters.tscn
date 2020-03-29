@@ -1,11 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/Filters.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
-
-[sub_resource type="DynamicFont" id=1]
-size = 36
-font_data = ExtResource( 2 )
+[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=2]
 
 [node name="Filters" type="ScrollContainer"]
 anchor_right = 1.0
@@ -26,44 +22,45 @@ alignment = 1
 [node name="Home" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 54.0
-margin_right = 294.0
+margin_left = 176.0
+margin_right = 416.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 text = "Inicio"
 
 [node name="LastAdded" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
+visible = false
 margin_left = 298.0
 margin_right = 538.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 text = "Novedades"
 
 [node name="Description" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 542.0
-margin_right = 782.0
+margin_left = 420.0
+margin_right = 660.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 text = "Descripción"
 
 [node name="Gestures" type="Button" parent="HBoxContainer" groups=[
 "filter",
 ]]
-margin_left = 786.0
-margin_right = 1026.0
+margin_left = 664.0
+margin_right = 904.0
 margin_bottom = 129.0
 rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 text = "Gestos"
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_Home_pressed"]

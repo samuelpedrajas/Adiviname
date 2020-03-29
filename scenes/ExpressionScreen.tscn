@@ -1,28 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/ExpressionScreen.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Results.tscn" type="PackedScene" id=3]
-
-[sub_resource type="DynamicFont" id=1]
-size = 60
-font_data = ExtResource( 1 )
-
-[sub_resource type="Theme" id=2]
-default_font = SubResource( 1 )
-
-[sub_resource type="DynamicFont" id=3]
-size = 160
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 240
-font_data = ExtResource( 1 )
+[ext_resource path="res://fonts/resources/numans240.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/Results.tscn" type="PackedScene" id=4]
 
 [node name="ExpressionScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 2 )
+theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="CorrectBg" type="ColorRect" parent="."]
@@ -45,7 +31,7 @@ anchor_bottom = 1.0
 [node name="Time" type="Label" parent="GameControls"]
 anchor_right = 1.0
 margin_bottom = 299.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = ExtResource( 3 )
 text = "60"
 align = 1
 valign = 1
@@ -53,7 +39,7 @@ valign = 1
 [node name="Expression" type="Label" parent="GameControls"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 text = "Expression"
 align = 1
 valign = 1
@@ -61,7 +47,8 @@ valign = 1
 [node name="Countdown" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "5"
 align = 1
 valign = 1
@@ -75,7 +62,6 @@ autostart = true
 one_shot = true
 
 [node name="LinuxOnly" type="HBoxContainer" parent="."]
-editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -101,7 +87,7 @@ rect_min_size = Vector2( 250, 250 )
 custom_constants/hseparation = 100
 text = "NO"
 
-[node name="Results" parent="." instance=ExtResource( 3 )]
+[node name="Results" parent="." instance=ExtResource( 4 )]
 visible = false
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_CountdownTimer_timeout"]

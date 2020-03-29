@@ -1,12 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/TeamScore.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/winner.png" type="Texture" id=2]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=3]
-
-[sub_resource type="DynamicFont" id=1]
-size = 50
-font_data = ExtResource( 3 )
+[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=3]
 
 [node name="TeamScore" type="HSplitContainer"]
 margin_right = 497.0
@@ -34,15 +30,19 @@ margin_top = 30.0
 margin_right = 540.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 400, 0 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Equipo 1:"
 align = 1
+valign = 1
 
 [node name="Score" type="Label" parent="."]
 margin_left = 412.0
-margin_top = 30.0
+margin_top = 36.0
 margin_right = 497.0
-margin_bottom = 90.0
-custom_fonts/font = SubResource( 1 )
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 1
+valign = 1

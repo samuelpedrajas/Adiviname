@@ -1,16 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/GameListItem.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/resources/numans24.tres" type="DynamicFont" id=2]
 [ext_resource path="res://saved_images/2.png" type="Texture" id=3]
-
-[sub_resource type="DynamicFont" id=1]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 30
-font_data = ExtResource( 2 )
 
 [node name="GameListItem" type="Control" groups=[
 "main_list_item",
@@ -35,7 +27,7 @@ rect_min_size = Vector2( 360, 360 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 291.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Game Name"
 align = 1
 valign = 1
@@ -54,7 +46,7 @@ color = Color( 1, 0.494118, 0.494118, 1 )
 [node name="Text" type="Label" parent="Button/NotificationRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 2 )
 text = "UPDATED!"
 align = 1
 valign = 1

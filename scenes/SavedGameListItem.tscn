@@ -1,11 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/SavedGameListItem.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
-
-[sub_resource type="DynamicFont" id=1]
-size = 32
-font_data = ExtResource( 2 )
+[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=2]
+[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=3]
 
 [node name="SavedGameListItem" type="Button"]
 anchor_right = 1.0
@@ -35,6 +32,8 @@ color = Color( 0.607843, 0.607843, 0.607843, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -53.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Nombre"
 align = 1
 valign = 1
@@ -44,7 +43,8 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -71.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "23-10-2019 17:57:00"
 align = 1
 valign = 1
