@@ -10,6 +10,8 @@ func _ready():
 	$Content/SaveGameList.setup(saved_games)
 	$Content/CheckBox.set_pressed(Main.team_mode)
 	original_w_size = $Content.get_size()
+	if Main.team_mode:
+		_set_extended_size()
 	call_deferred("update_game_mode", Main.team_mode)
 
 func set_game_info(game_list_item):
