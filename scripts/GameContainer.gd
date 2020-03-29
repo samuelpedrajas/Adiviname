@@ -18,6 +18,7 @@ var swipe_mouse_start : Vector2
 var swipe_mouse_times := []
 var swipe_mouse_positions := []
 var tween : Tween
+var scrollbar_width
 
 
 func configure_custom_scrollbar():
@@ -38,8 +39,13 @@ func _input(ev) -> void:
 		return
 		
 	if ev is InputEventMouseButton:
-		
-		if ev.pressed and get_global_rect().has_point(ev.global_position):
+		var scrollbar_width = get_v_scrollbar().get_global_rect().size.x
+		var global_rect = get_global_rect()
+		var event_rect = Rect2(
+			global_rect.position,
+			global_rect.size - Vector2(scrollbar_width, 0)
+		)
+		if ev.pressed and event_rect.has_point(ev.global_position):
 			look_for_swipe = true
 			swipe_mouse_start = ev.global_position
 			
