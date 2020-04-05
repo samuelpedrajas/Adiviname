@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=1]
+[ext_resource path="res://img/gui/subrayado.png" type="Texture" id=2]
+
+[node name="Filter" type="Button" groups=[
+"filter",
+]]
+margin_right = 158.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 158, 60 )
+focus_mode = 0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.458824, 0.321569, 0.380392, 1 )
+custom_colors/font_color_hover = Color( 0.458824, 0.321569, 0.380392, 1 )
+custom_colors/font_color_pressed = Color( 0.458824, 0.321569, 0.380392, 1 )
+toggle_mode = true
+action_mode = 0
+enabled_focus_mode = 0
+text = "Inicio"
+flat = true
+
+[node name="underline" type="NinePatchRect" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 27.0
+margin_top = -13.0
+margin_right = -26.0
+margin_bottom = -7.0
+rect_min_size = Vector2( 0, 6 )
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 9, 9 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3

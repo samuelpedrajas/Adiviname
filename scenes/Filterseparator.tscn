@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://img/gui/vseparator.png" type="Texture" id=1]
+
+[node name="separator" type="Control"]
+margin_left = 336.0
+margin_right = 366.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 30, 95 )
+
+[node name="ninepatch" type="NinePatchRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_right = 2.0
+rect_min_size = Vector2( 5, 52 )
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 6, 6 )
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2

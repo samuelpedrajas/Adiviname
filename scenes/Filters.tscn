@@ -1,69 +1,46 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Filters.gd" type="Script" id=1]
-[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/Filter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Filterseparator.tscn" type="PackedScene" id=3]
 
 [node name="Filters" type="ScrollContainer"]
 anchor_right = 1.0
-margin_top = 191.0
-margin_bottom = 320.0
+margin_top = 208.0
+margin_bottom = 303.0
 rect_min_size = Vector2( 1080, 60 )
 scroll_vertical_enabled = false
 script = ExtResource( 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 1080.0
-margin_bottom = 129.0
+margin_bottom = 95.0
 rect_min_size = Vector2( 1080, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Home" type="Button" parent="HBoxContainer" groups=[
-"filter",
-]]
-margin_left = 176.0
-margin_right = 416.0
-margin_bottom = 129.0
-rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = ExtResource( 2 )
-toggle_mode = true
-text = "Inicio"
+[node name="Home" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 161.0
+margin_right = 319.0
 
-[node name="LastAdded" type="Button" parent="HBoxContainer" groups=[
-"filter",
-]]
-visible = false
-margin_left = 298.0
-margin_right = 538.0
-margin_bottom = 129.0
-rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = ExtResource( 2 )
-toggle_mode = true
-text = "Novedades"
+[node name="separator" parent="HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 323.0
+margin_right = 353.0
 
-[node name="Description" type="Button" parent="HBoxContainer" groups=[
-"filter",
-]]
-margin_left = 420.0
-margin_right = 660.0
-margin_bottom = 129.0
-rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = ExtResource( 2 )
-toggle_mode = true
+[node name="Description" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 357.0
+margin_right = 681.0
 text = "Descripción"
 
-[node name="Gestures" type="Button" parent="HBoxContainer" groups=[
-"filter",
-]]
-margin_left = 664.0
-margin_right = 904.0
-margin_bottom = 129.0
-rect_min_size = Vector2( 240, 60 )
-custom_fonts/font = ExtResource( 2 )
-toggle_mode = true
+[node name="separator2" parent="HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 685.0
+margin_right = 715.0
+
+[node name="Gestures" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 719.0
+margin_right = 918.0
 text = "Gestos"
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_Home_pressed"]
-[connection signal="pressed" from="HBoxContainer/LastAdded" to="." method="_on_LastAdded_pressed"]
 [connection signal="pressed" from="HBoxContainer/Description" to="." method="_on_Description_pressed"]
 [connection signal="pressed" from="HBoxContainer/Gestures" to="." method="_on_Gestures_pressed"]

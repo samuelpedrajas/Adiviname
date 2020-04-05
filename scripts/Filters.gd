@@ -25,30 +25,30 @@ func get_games():
 
 func _untoggle_buttons():
 	for btn in get_tree().get_nodes_in_group("filter"):
-		btn.set_pressed(false)
+		btn.get_node("underline").hide()
 
 
 func set_home_filter():
 	_untoggle_buttons()
-	$HBoxContainer/Home.set_pressed(true)
+	$HBoxContainer/Home.get_node("underline").show()
 	current_filter = Filters.FILTER_HOME
 
 
 func set_last_added_filter():
 	_untoggle_buttons()
-	$HBoxContainer/LastAdded.set_pressed(true)
+	$HBoxContainer/LastAdded.get_node("underline").show()
 	current_filter = Filters.FILTER_RECENTLY_ADDED
 
 
 func set_description_filter():
 	_untoggle_buttons()
-	$HBoxContainer/Description.set_pressed(true)
+	$HBoxContainer/Description.get_node("underline").show()
 	current_filter = Filters.FILTER_NORMAL
 
 
 func set_gestures_filter():
 	_untoggle_buttons()
-	$HBoxContainer/Gestures.set_pressed(true)
+	$HBoxContainer/Gestures.get_node("underline").show()
 	current_filter = Filters.FILTER_GESTURES
 
 
