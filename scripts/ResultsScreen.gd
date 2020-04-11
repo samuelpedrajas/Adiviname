@@ -10,6 +10,7 @@ var team_score_scene = preload("res://scenes/TeamScore.tscn")
 
 
 func open():
+	$"../MainMenu".hide()
 	$SavedGames/ScrollContainer.configure_custom_scrollbar()
 	saved_game_list = $SavedGames/ScrollContainer/SavedGamesList
 	team_score_list = $TeamScores/Scores
@@ -78,6 +79,7 @@ func clear_score_list():
 		team_scores.queue_free()
 
 func close():
+	$"../MainMenu".show()
 	hide()
 
 func _on_Button_pressed():

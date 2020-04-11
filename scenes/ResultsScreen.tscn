@@ -2,15 +2,117 @@
 
 [ext_resource path="res://scripts/ResultsScreen.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://scripts/GameContainer.gd" type="Script" id=3]
-[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=4]
-[ext_resource path="res://img/gui/undo.png" type="Texture" id=5]
-[ext_resource path="res://img/gui/trash.png" type="Texture" id=6]
-[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=7]
+[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=3]
+[ext_resource path="res://img/gui/undo.png" type="Texture" id=4]
+[ext_resource path="res://img/gui/trash.png" type="Texture" id=5]
+[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
 font_data = ExtResource( 2 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends ScrollContainer
+
+\"\"\"
+Original: https://github.com/godotengine/godot/issues/21137
+
+Helper Script for ScrollContainer to let them scroll with InputListeners inside. 
+Buttons inside should react to release, in order to be not activated during scroll.
+Does not work with Touch Screen Buttons as they handle the input before.
+\"\"\"
+
+export (Vector2) var delta_for_swipe := Vector2(16, 16)
+
+
+var look_for_swipe := false
+var swiping := false
+var swipe_start : Vector2
+var swipe_mouse_start : Vector2
+var swipe_mouse_times := []
+var swipe_mouse_positions := []
+var tween : Tween
+var scrollbar_width
+
+
+func configure_custom_scrollbar():
+	var vscrollbar = get_v_scrollbar()
+	scrollbar_width = vscrollbar.get_global_rect().size.x
+	if vscrollbar != null:
+		var scrollbar_position = vscrollbar.get_position()
+		scrollbar_position.x = -scrollbar_width
+		scrollbar_position.y = 2
+		vscrollbar.set_position(scrollbar_position)
+
+
+func _input(ev) -> void:
+	if !is_visible_in_tree():
+		return
+		
+	if ev is InputEventScreenDrag and swiping:
+		accept_event()
+		return
+		
+	if ev is InputEventMouseButton:
+		var global_rect = get_global_rect()
+		var event_rect = Rect2(
+			global_rect.position + Vector2(scrollbar_width, 0),
+			global_rect.size - Vector2(scrollbar_width, 0)
+		)
+		if ev.pressed and event_rect.has_point(ev.global_position):
+			look_for_swipe = true
+			swipe_mouse_start = ev.global_position
+			
+		elif swiping:
+			swipe_mouse_times.append(OS.get_ticks_msec())
+			swipe_mouse_positions.append(ev.global_position)
+			var source := Vector2(get_h_scroll(), get_v_scroll())
+			var idx := swipe_mouse_times.size() - 1
+			var now := OS.get_ticks_msec()
+			var cutoff := now - 100
+			for i in range(swipe_mouse_times.size() - 1, -1, -1):
+				if swipe_mouse_times[i] >= cutoff: 
+					idx = i
+				else: break
+			var flick_start : Vector2 = swipe_mouse_positions[idx]
+			var flick_dur := min(0.3, (ev.global_position - flick_start).length() / 1000)
+			if flick_dur > 0.0:
+				tween = Tween.new()
+				add_child(tween)
+				var delta : Vector2 = ev.global_position - flick_start
+				var target := source - delta * flick_dur * 15.0
+				tween.interpolate_method(self, 'set_h_scroll', source.x, target.x, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				tween.interpolate_method(self, 'set_v_scroll', source.y, target.y, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				tween.interpolate_callback(tween, flick_dur, 'queue_free')
+				tween.start()
+			swiping = false
+			swipe_mouse_times = []
+			swipe_mouse_positions = []
+			
+		else:
+			look_for_swipe = false
+			
+	if ev is InputEventMouseMotion:
+			
+		if look_for_swipe:
+			var delta = ev.global_position - swipe_mouse_start
+			if abs(delta.x) > delta_for_swipe.x or abs(delta.y) > delta_for_swipe.y:
+				swiping = true
+				look_for_swipe = false
+				swipe_start = Vector2(get_h_scroll(), get_v_scroll())
+				swipe_mouse_start = ev.global_position
+				swipe_mouse_times = [OS.get_ticks_msec()]
+				swipe_mouse_positions = [swipe_mouse_start]
+				if is_instance_valid(tween) and tween is Tween:
+					tween.stop_all()
+		
+		if swiping:
+			var delta : Vector2 = ev.global_position - swipe_mouse_start
+			set_h_scroll(swipe_start.x - delta.x)
+			set_v_scroll(swipe_start.y - delta.y)
+			swipe_mouse_times.append(OS.get_ticks_msec())
+			swipe_mouse_positions.append(ev.global_position)
+			ev.position = Vector2.ZERO"
 
 [node name="ResultsScreen" type="Control"]
 anchor_right = 1.0
@@ -30,33 +132,36 @@ text = "Resultados"
 align = 1
 valign = 1
 
-[node name="SavedGames" type="ColorRect" parent="."]
+[node name="SavedGames" type="Control" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -540.0
 margin_top = -790.0
-margin_right = 29.0
+margin_right = 37.0
 margin_bottom = 660.0
-rect_pivot_offset = Vector2( 566, 725 )
+rect_clip_content = true
+
+[node name="Bg" type="ColorRect" parent="SavedGames"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color( 0.607843, 0.607843, 0.607843, 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SavedGames"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -2.0
-margin_bottom = -2.0
-rect_pivot_offset = Vector2( 566, 960 )
+margin_right = -22.0
+rect_clip_content = false
 scroll_horizontal_enabled = false
-script = ExtResource( 3 )
+script = SubResource( 2 )
 
 [node name="SavedGamesList" type="VBoxContainer" parent="SavedGames/ScrollContainer"]
-margin_right = 566.0
-rect_min_size = Vector2( 566, 0 )
+margin_right = 555.0
+rect_min_size = Vector2( 555, 0 )
 custom_constants/separation = 0
 
-[node name="TeamScores" type="ColorRect" parent="."]
+[node name="TeamScores" type="Control" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -65,15 +170,18 @@ margin_left = 15.0
 margin_top = -790.0
 margin_right = 540.0
 margin_bottom = 660.0
-rect_pivot_offset = Vector2( 0, 725 )
+rect_clip_content = true
+
+[node name="Bg" type="ColorRect" parent="TeamScores"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Scores" type="VBoxContainer" parent="TeamScores"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -2.0
-margin_right = 15.0
-margin_bottom = -162.0
-rect_min_size = Vector2( 540, 0 )
+margin_bottom = -160.0
+rect_min_size = Vector2( 525, 0 )
+custom_constants/separation = 0
 
 [node name="Lower" type="Control" parent="TeamScores"]
 anchor_top = 1.0
@@ -85,7 +193,7 @@ margin_bottom = -2.0
 [node name="Turno" type="Label" parent="TeamScores/Lower"]
 anchor_right = 1.0
 margin_bottom = 71.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Turno de Equipo 1"
 align = 1
@@ -107,13 +215,13 @@ alignment = 1
 margin_left = 168.0
 margin_right = 232.0
 margin_bottom = 64.0
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 4 )
 
 [node name="Remove" type="TextureButton" parent="TeamScores/Lower/HBoxContainer"]
 margin_left = 292.0
 margin_right = 356.0
 margin_bottom = 64.0
-texture_normal = ExtResource( 6 )
+texture_normal = ExtResource( 5 )
 
 [node name="Lower" type="Control" parent="."]
 anchor_top = 1.0
@@ -130,7 +238,7 @@ margin_left = -234.0
 margin_top = -38.5
 margin_right = 233.0
 margin_bottom = 38.5
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 6 )
 text = "Volver"
 [connection signal="pressed" from="TeamScores/Lower/HBoxContainer/Undo" to="." method="_on_Undo_pressed"]
 [connection signal="pressed" from="TeamScores/Lower/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
