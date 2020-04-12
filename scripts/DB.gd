@@ -9,6 +9,8 @@ var db_name = "user://DB.db"
 var recently_added = []
 var recently_modified = []
 
+var downloaded_icon_bases = []
+
 signal database_updated
 
 
@@ -138,11 +140,6 @@ func update_game_image(game, body):
 	)
 
 
-func file_exists(filepath):
-	var f = File.new()
-	return f.file_exists(filepath)
-
-
 func update_game_image_base(game, body):
 	var image_path = Const.ICON_BASE_PATH + game.icon_base.name + ".png"
 	if body != null:
@@ -234,11 +231,12 @@ func update_database(games):
 
 		if game.has("icon_base") and game.icon_base.has("url") and game.icon_base.url != null and game.icon_base.has("name") and game.icon_base.name != null:
 			var image_path = Const.ICON_BASE_PATH + game.icon_base.name + ".png"
-			if file_exists(image_path):
+			if game.icon_base.name in downloaded_icon_bases:
 				print("SKIPPING: Base image already exists")
 				update_game_image_base(game, null)
 			else:
 				print("Base image does not exist! Downloading...")
+				downloaded_icon_bases.append(game.icon_base.name)
 				request(game.icon_base.url)
 				# result, response_code, headers, body
 				var res = yield(self, 'request_completed')
