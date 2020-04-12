@@ -96,6 +96,7 @@ func _on_CountdownTimer_timeout():
 	else:
 		$Countdown.hide()
 		$GameControls.show()
+		adjust_word_size()
 		$CountdownTimer.stop()
 		$GameTimer.start()
 		if OS.get_name() == "X11":
@@ -124,28 +125,19 @@ func end_game():
 func adjust_word_size():
 	var expr_label = $GameControls/Expression
 	var font = expr_label.get_font("font")
-	var words = expr_label.text.split(" ",false)
+	var words = expr_label.text.split(" ", false)
 	var longest_word = ""
-	
 	for i in words:
 		if font.get_string_size(i).x > font.get_string_size(longest_word).x:
 			longest_word = i
-
 	var word_length = font.get_string_size(longest_word).x
-	expr_label.set_pivot_offset(Vector2(
-		expr_label.rect_size.x / 2.0,
-		expr_label.rect_size.y / 2.0
-	))
 
-	if word_length > OS.get_screen_size().y:
-		font.set_size(OS.get_screen_size().y / word_length * 220)
+	if word_length > rect_size.x:
+		font.set_size(rect_size.x / word_length * 220)
 	else:
 		font.set_size(240)
 
-	expr_label.set_position(Vector2(
-		(OS.get_screen_size().y - expr_label.rect_size.x) / 2.0,
-		(OS.get_screen_size().x - expr_label.rect_size.y) / 2.0
-	))
+	expr_label.set_position(Vector2(0, 0))
 
 
 func finish():
