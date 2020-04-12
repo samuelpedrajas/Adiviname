@@ -53,11 +53,12 @@ func get_games_ordered_alphabetically():
 	)
 
 
+# UNUSED
 func get_normal_games_ordered_alphabetically():
 	return db.fetch_array(
 		"""SELECT * 
 		FROM Game 
-		WHERE game_type='normal' 
+		WHERE game_type in ('normal', 'ambos') 
 		ORDER BY LOWER(game_title) asc;"""
 	)
 
@@ -66,8 +67,16 @@ func get_gesture_games_ordered_alphabetically():
 	return db.fetch_array(
 		"""SELECT * 
 		FROM Game 
-		WHERE game_type='gestos' 
+		WHERE game_type in ('gestos', 'ambos') 
 		ORDER BY LOWER(game_title) asc;"""
+	)
+
+func get_games_ordered_by_creation_date():
+	return db.fetch_array(
+		"""SELECT * FROM Game 
+		ORDER BY game_updated_at desc, 
+			game_created_at desc, 
+			game_order desc;"""
 	)
 
 
@@ -75,16 +84,6 @@ func get_gesture_games_ordered_alphabetically():
 func get_games_ordered_by_clicks():
 	return db.fetch_array(
 		"SELECT * FROM Game ORDER BY game_order desc;"
-	)
-
-
-# UNUSED
-func get_games_ordered_by_creation_date():
-	return db.fetch_array(
-		"""SELECT * FROM Game 
-		ORDER BY game_created_at desc, 
-			game_updated_at desc, 
-			game_order desc;"""
 	)
 
 

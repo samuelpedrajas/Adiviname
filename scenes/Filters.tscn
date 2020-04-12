@@ -21,26 +21,33 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Home" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 161.0
-margin_right = 319.0
+margin_left = 185.0
+margin_right = 343.0
 
 [node name="separator" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 323.0
-margin_right = 353.0
+margin_left = 347.0
+margin_right = 377.0
 
 [node name="Description" parent="HBoxContainer" instance=ExtResource( 2 )]
+visible = false
 margin_left = 357.0
 margin_right = 681.0
 text = "Descripción"
 
+[node name="LastAdded" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 381.0
+margin_right = 658.0
+text = "Recientes"
+
 [node name="separator2" parent="HBoxContainer" instance=ExtResource( 3 )]
-margin_left = 685.0
-margin_right = 715.0
+margin_left = 662.0
+margin_right = 692.0
 
 [node name="Gestures" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 719.0
-margin_right = 918.0
+margin_left = 696.0
+margin_right = 895.0
 text = "Gestos"
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_Home_pressed"]
 [connection signal="pressed" from="HBoxContainer/Description" to="." method="_on_Description_pressed"]
+[connection signal="pressed" from="HBoxContainer/LastAdded" to="." method="_on_LastAdded_pressed"]
 [connection signal="pressed" from="HBoxContainer/Gestures" to="." method="_on_Gestures_pressed"]
