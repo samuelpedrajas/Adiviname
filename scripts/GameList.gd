@@ -19,7 +19,8 @@ func setup(results):
 			game_info["game_id"],
 			game_info["game_title"],
 			game_info["game_description"],
-			game_info["game_icon_path"]
+			game_info["game_icon_path"],
+			game_info["game_icon_base_path"]
 		)
 
 		var grid_container = $GameListBg/GameContainer/VBoxContainer/GridContainer

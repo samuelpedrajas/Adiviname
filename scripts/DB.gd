@@ -15,9 +15,13 @@ signal database_updated
 func _ready():
 	if Const.DEBUG:
 		return
+
 	var dir = Directory.new()
 	if not dir.dir_exists(Const.ICON_PATH):
 		dir.make_dir(Const.ICON_PATH)
+
+	if not dir.dir_exists(Const.ICON_BASE_PATH):
+		dir.make_dir(Const.ICON_BASE_PATH)
 
 	open_db()
 
@@ -124,11 +128,30 @@ func update_game_order(game):
 
 
 func update_game_image(game, body):
-	var image_path = save_image(str(game.id) + ".png", body)
+	var image_path = save_image(Const.ICON_PATH + str(game.id) + ".png", body)
 	print("Updating icon path...")
 	return db.query_with_args("""
 		UPDATE Game 
 		SET game_icon_path=? 
+		WHERE game_id=?;
+	""", [image_path, game.id]
+	)
+
+
+func file_exists(filepath):
+	var f = File.new()
+	return f.file_exists(filepath)
+
+
+func update_game_image_base(game, body):
+	var image_path = Const.ICON_BASE_PATH + game.icon_base.name + ".png"
+	if body != null:
+		image_path = save_image(image_path, body)
+
+	print("Updating base icon path...")
+	return db.query_with_args("""
+		UPDATE Game 
+		SET game_icon_base_path=? 
 		WHERE game_id=?;
 	""", [image_path, game.id]
 	)
@@ -209,6 +232,19 @@ func update_database(games):
 			if res[1] == 200:
 				update_game_image(game, res[3])
 
+		if game.has("icon_base") and game.icon_base.has("url") and game.icon_base.url != null and game.icon_base.has("name") and game.icon_base.name != null:
+			var image_path = Const.ICON_BASE_PATH + game.icon_base.name + ".png"
+			if file_exists(image_path):
+				print("SKIPPING: Base image already exists")
+				update_game_image_base(game, null)
+			else:
+				print("Base image does not exist! Downloading...")
+				request(game.icon_base.url)
+				# result, response_code, headers, body
+				var res = yield(self, 'request_completed')
+				if res[1] == 200:
+					update_game_image_base(game, res[3])
+
 		print("Result: ", ok)
 	emit_signal("database_updated", ok)
 	return ok
@@ -218,8 +254,7 @@ func close_db():
 	return db.close()
 
 
-func save_image(filename, body):
-	var image_path = Const.ICON_PATH + filename
+func save_image(image_path, body):
 	var image = Image.new()
 	var res = image.load_png_from_buffer(body)
 	if res != OK:
