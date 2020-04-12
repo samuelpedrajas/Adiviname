@@ -17,6 +17,10 @@ func _ready():
 func set_game_info(game_list_item):
 	self.game_list_item = game_list_item
 	$Content/Title.set_text(game_list_item.game_title)
+	if game_list_item.game_title.length() > 20:
+		$Content/Title.set_scale(
+			Vector2(0.8, 0.8)
+		)
 	$Content/Icon.texture = game_list_item.game_icon_texture
 	$Content/Description.set_text(game_list_item.game_description)
 	$Content/Examples.set_text(
