@@ -19,6 +19,9 @@ func set_game_info(game_list_item):
 	$Content/Title.set_text(game_list_item.game_title)
 	$Content/Icon.texture = game_list_item.game_icon_texture
 	$Content/Description.set_text(game_list_item.game_description)
+	$Content/Examples.set_text(
+		"Ej: " + game_list_item.game_examples
+	)
 
 func _on_CheckBox_toggled(button_pressed):
 	if button_pressed:

@@ -3,6 +3,7 @@ extends Control
 var game_id
 var game_title
 var game_description
+var game_examples
 var game_icon_texture
 var game_base_icon_texture
 var featured = false
@@ -37,10 +38,11 @@ func get_icon_texture(game_icon_path):
 	return itex
 
 
-func setup(game_id, game_title, game_description, game_icon_path, game_base_icon_path):
+func setup(game_id, game_title, game_description, game_examples, game_icon_path, game_base_icon_path):
 	self.game_id = game_id
 	self.game_title = game_title
 	self.game_description = game_description
+	self.game_examples = game_examples
 
 	if game_icon_path != null:
 		self.game_icon_texture = get_icon_texture(game_icon_path)

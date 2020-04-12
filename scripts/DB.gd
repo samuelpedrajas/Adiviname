@@ -97,13 +97,13 @@ func get_game_expressions(game_id):
 
 func update_game(game):
 	print("Updating existing game...")
-	var values = [game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order, game.description, game.id]
+	var values = [game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order, game.description, game.examples, game.id]
 	for value in values:
 		if value == null:
 			return false
 	var ok = db.query_with_args("""
 		UPDATE Game 
-		SET game_title=?, game_featured=?, game_type=?, game_updated_at=?, game_created_at=?, game_order=?, game_description=? 
+		SET game_title=?, game_featured=?, game_type=?, game_updated_at=?, game_created_at=?, game_order=?, game_description=?, game_examples=? 
 		WHERE game_id=?;
 	""", values
 	)
@@ -155,13 +155,13 @@ func update_game_image_base(game, body):
 
 func insert_game(game):
 	print("Inserting new game...")
-	var values = [game.id, game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order, game.description]
+	var values = [game.id, game.title, game.featured, game.game_type, game.updated_at, game.created_at, game.order, game.description, game.examples]
 	for value in values:
 		if value == null:
 			return false
 	var ok = db.query_with_args("""
-		INSERT INTO Game (game_id, game_title, game_featured, game_type, game_updated_at, game_created_at, game_order, game_description) 
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+		INSERT INTO Game (game_id, game_title, game_featured, game_type, game_updated_at, game_created_at, game_order, game_description, game_examples) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 	""", values
 	)
 	if not ok:

@@ -15,25 +15,25 @@
 [ext_resource path="res://img/gui/boton_jugar.png" type="Texture" id=13]
 [ext_resource path="res://img/gui/boton_jugar_highlight.png" type="Texture" id=14]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 70
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 42
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 38
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=4]
 script/source = "extends ColorRect
 
 var list_item_scene = preload(\"res://scenes/VBoxContainerItem.tscn\")
@@ -119,11 +119,11 @@ texture_pressed = ExtResource( 5 )
 [node name="Title" type="Label" parent="Content"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -416.0
-margin_top = 334.0
-margin_right = 415.0
-margin_bottom = 452.0
-custom_fonts/font = SubResource( 3 )
+margin_left = -487.0
+margin_top = 326.0
+margin_right = 486.0
+margin_bottom = 444.0
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.458824, 0.321569, 0.380392, 1 )
 custom_colors/font_color_shadow = Color( 0.458824, 0.321569, 0.380392, 0 )
 text = "Título del juego"
@@ -146,14 +146,28 @@ expand = true
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -394.0
-margin_top = 477.0
+margin_top = 446.0
 margin_right = 392.0
-margin_bottom = 652.0
-custom_fonts/font = SubResource( 4 )
+margin_bottom = 570.0
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Descripción del juego"
 align = 1
 valign = 1
+autowrap = true
+
+[node name="Examples" type="Label" parent="Content"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -393.0
+margin_top = 599.0
+margin_right = 393.0
+margin_bottom = 702.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+text = "Descripción del juego"
+align = 1
 autowrap = true
 
 [node name="CheckBox" type="CheckBox" parent="Content"]
@@ -166,7 +180,7 @@ margin_bottom = 780.0
 focus_mode = 0
 custom_icons/checked = ExtResource( 8 )
 custom_icons/unchecked = ExtResource( 9 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_constants/hseparation = 20
 enabled_focus_mode = 0
@@ -180,7 +194,7 @@ margin_left = -393.0
 margin_top = 810.0
 margin_right = 393.0
 margin_bottom = 1123.0
-script = SubResource( 2 )
+script = SubResource( 4 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Content/SaveGameList"]
 anchor_right = 1.0
