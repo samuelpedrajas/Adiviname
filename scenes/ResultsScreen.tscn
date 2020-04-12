@@ -37,10 +37,10 @@ var scrollbar_width
 
 func configure_custom_scrollbar():
 	var vscrollbar = get_v_scrollbar()
-	scrollbar_width = vscrollbar.get_global_rect().size.x
 	if vscrollbar != null:
+		scrollbar_width = vscrollbar.get_global_rect().size.x
 		var scrollbar_position = vscrollbar.get_position()
-		scrollbar_position.x = -scrollbar_width
+		scrollbar_position.x = 0
 		scrollbar_position.y = 2
 		vscrollbar.set_position(scrollbar_position)
 

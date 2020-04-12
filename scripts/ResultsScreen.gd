@@ -11,11 +11,11 @@ var team_score_scene = preload("res://scenes/TeamScore.tscn")
 
 func open():
 	$"../MainMenu".hide()
-	$SavedGames/ScrollContainer.configure_custom_scrollbar()
 	saved_game_list = $SavedGames/ScrollContainer/SavedGamesList
 	team_score_list = $TeamScores/Scores
 	update_list()
 	show()
+	$SavedGames/ScrollContainer.configure_custom_scrollbar()
 
 func update_list():
 	saved_games = DB.get_saved_games_and_results()
