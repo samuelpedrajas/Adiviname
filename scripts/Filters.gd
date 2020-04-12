@@ -15,8 +15,8 @@ signal filters_changed
 func get_games():
 	if current_filter == Filters.FILTER_HOME:
 		return DB.get_games_ordered_by_clicks()
-	elif current_filter == Filters.FILTER_RECENTLY_ADDED:
-		return DB.get_games_ordered_by_creation_date()
+	#elif current_filter == Filters.FILTER_RECENTLY_ADDED:
+	#	return DB.get_games_ordered_by_creation_date()
 	elif current_filter == Filters.FILTER_NORMAL:
 		return DB.get_normal_games_ordered_by_clicks()
 	elif current_filter == Filters.FILTER_GESTURES:
