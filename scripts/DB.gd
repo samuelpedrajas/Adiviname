@@ -47,12 +47,38 @@ func open_db():
 	db.open(db_name)
 
 
+func get_games_ordered_alphabetically():
+	return db.fetch_array(
+		"SELECT * FROM Game ORDER BY LOWER(game_title) asc;"
+	)
+
+
+func get_normal_games_ordered_alphabetically():
+	return db.fetch_array(
+		"""SELECT * 
+		FROM Game 
+		WHERE game_type='normal' 
+		ORDER BY LOWER(game_title) asc;"""
+	)
+
+
+func get_gesture_games_ordered_alphabetically():
+	return db.fetch_array(
+		"""SELECT * 
+		FROM Game 
+		WHERE game_type='gestos' 
+		ORDER BY LOWER(game_title) asc;"""
+	)
+
+
+# UNUSED
 func get_games_ordered_by_clicks():
 	return db.fetch_array(
 		"SELECT * FROM Game ORDER BY game_order desc;"
 	)
 
 
+# UNUSED
 func get_games_ordered_by_creation_date():
 	return db.fetch_array(
 		"""SELECT * FROM Game 
@@ -62,6 +88,7 @@ func get_games_ordered_by_creation_date():
 	)
 
 
+# UNUSED
 func get_normal_games_ordered_by_clicks():
 	return db.fetch_array(
 		"""SELECT * 
@@ -71,6 +98,7 @@ func get_normal_games_ordered_by_clicks():
 	)
 
 
+# UNUSED
 func get_gesture_games_ordered_by_clicks():
 	return db.fetch_array(
 		"""SELECT * 
