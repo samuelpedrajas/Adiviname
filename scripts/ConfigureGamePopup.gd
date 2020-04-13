@@ -14,6 +14,17 @@ func setup(game_list_item, game_id):
 	)
 	self.game_id = game_id
 
+	var current_time = OS.get_datetime()
+	# 23-10-2019 14:55:00
+	$Content/VBoxContainer/TextEdit.set_text(
+		str(current_time.day).pad_zeros(2) + "-" + 
+		str(current_time.month).pad_zeros(2) + "-" +
+		str(current_time.year) + " " + 
+		str(current_time.hour).pad_zeros(2) + ":" +
+		str(current_time.minute).pad_zeros(2) + ":" + 
+		str(current_time.second).pad_zeros(2)
+	)
+
 
 func _on_HSlider_value_changed(value):
 	$Content/VBoxContainer/NTeams.set_text(str(int(value)))
