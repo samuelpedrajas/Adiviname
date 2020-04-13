@@ -8,16 +8,25 @@ var title
 var expressions
 
 var countdown = 5
-var remaining_time = 10
+var remaining_time = 60
 var current_expression
 var pending_expressions = []
 var displayed = []
+
+var expr_label
+var expression_size
+var font
+var font_size
 
 var blocked = true
 
 
 func _ready():
 	$GameControls/Time.set_text(str(remaining_time))
+	expr_label = $GameControls/Expression
+	expression_size = 1.0 * expr_label.rect_size
+	font = expr_label.get_font("font")
+	font_size = 1.0 * font.get_size()
 	set_next_expression()
 
 
@@ -65,8 +74,8 @@ func set_next_expression():
 
 	displayed.append({ "text": current_expression, "correct": false })
 
-	$GameControls/Expression.set_text(current_expression)
-	adjust_word_size()
+	font.set_size(font_size)
+	set_expression(current_expression)
 
 
 func _on_GameTimer_timeout():
@@ -96,7 +105,7 @@ func _on_CountdownTimer_timeout():
 	else:
 		$Countdown.hide()
 		$GameControls.show()
-		adjust_word_size()
+		adjust_font_size()
 		$CountdownTimer.stop()
 		$GameTimer.start()
 		if OS.get_name() == "X11":
@@ -105,6 +114,7 @@ func _on_CountdownTimer_timeout():
 
 
 func end_game():
+	font.set_size(font_size)
 	ApiRequest.send_request(
 		Const.API_GAME_CLICK_ENDPOINT + str(game_id),
 		{},
@@ -122,9 +132,13 @@ func end_game():
 	OS.set_screen_orientation(1)
 
 
-func adjust_word_size():
-	var expr_label = $GameControls/Expression
-	var font = expr_label.get_font("font")
+func set_expression(current_expression):
+	font.set_size(font_size)
+	expr_label.set_text(current_expression)
+	adjust_font_size()
+
+
+func adjust_font_size():
 	var words = expr_label.text.split(" ", false)
 	var longest_word = ""
 	for i in words:
@@ -132,11 +146,10 @@ func adjust_word_size():
 			longest_word = i
 	var word_length = font.get_string_size(longest_word).x
 
-	if word_length > rect_size.x:
-		font.set_size(rect_size.x / word_length * 220)
-	else:
-		font.set_size(240)
+	if word_length > expression_size.x:
+		font.set_size(expression_size.x / word_length * font_size * 0.90)
 
+	expr_label.rect_size = expression_size
 	expr_label.set_position(Vector2(0, 0))
 
 
