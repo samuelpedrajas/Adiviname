@@ -4,17 +4,19 @@ var new_game = false
 var game_list_item
 var saved_games
 var original_w_size
+var savegames_opened
 
 func _ready():
 	saved_games = DB.get_saved_games_and_results()
 	$Content/SaveGameList.setup(saved_games)
-	$Content/CheckBox.set_pressed(Main.team_mode)
+	$Content/CheckBox.set_pressed(Main.team_mode or savegames_opened)
 	original_w_size = $Content.get_size()
-	if Main.team_mode:
+	if Main.team_mode or savegames_opened:
 		_set_extended_size()
-	call_deferred("update_game_mode", Main.team_mode)
+	call_deferred("update_game_mode", Main.team_mode or savegames_opened)
 
-func set_game_info(game_list_item):
+func set_game_info(game_list_item, savegames_opened):
+	self.savegames_opened = savegames_opened
 	self.game_list_item = game_list_item
 	$Content/Title.set_text(game_list_item.game_title)
 	if game_list_item.game_title.length() > 20:

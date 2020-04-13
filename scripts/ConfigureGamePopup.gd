@@ -1,6 +1,7 @@
 extends Control
 
 var game_id
+var game_list_item
 
 
 func _ready():
@@ -9,6 +10,7 @@ func _ready():
 
 
 func setup(game_list_item, game_id):
+	self.game_list_item = game_list_item
 	$Content/VBoxContainer/Game.set_text(
 		game_list_item.game_title
 	)
@@ -32,6 +34,7 @@ func _on_HSlider_value_changed(value):
 
 func _on_CloseButton_pressed():
 	Main.close_popups()
+	Main.open_play_game_popup(game_list_item, true)
 
 
 func _on_PlayButton_pressed():

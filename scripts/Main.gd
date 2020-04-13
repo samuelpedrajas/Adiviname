@@ -89,9 +89,9 @@ func load_main():
 	OS.set_screen_orientation(1)
 
 
-func open_play_game_popup(game_list_item):
+func open_play_game_popup(game_list_item, savegames_opened=false):
 	var play_game_popup = play_game_popup_scene.instance()
-	play_game_popup.set_game_info(game_list_item)
+	play_game_popup.set_game_info(game_list_item, savegames_opened)
 	_open_popup(play_game_popup)
 
 
