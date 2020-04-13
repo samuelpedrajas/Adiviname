@@ -77,13 +77,14 @@ rect_min_size = Vector2( 0, 80 )
 text = "Introduce el nombre de la partida:"
 valign = 1
 
-[node name="TextEdit" type="TextEdit" parent="Content/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="Content/VBoxContainer"]
 margin_top = 84.0
 margin_right = 720.0
 margin_bottom = 144.0
 rect_min_size = Vector2( 0, 60 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "23-10-2019 14:55:00"
+max_length = 20
 
 [node name="Label2" type="Label" parent="Content/VBoxContainer"]
 margin_top = 148.0
@@ -139,5 +140,5 @@ valign = 1
 [connection signal="gui_input" from="." to="." method="_on_ConfigureGamePopup_gui_input"]
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Content/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="text_changed" from="Content/VBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
+[connection signal="text_changed" from="Content/VBoxContainer/LineEdit" to="." method="_on_LineEdit_text_changed"]
 [connection signal="value_changed" from="Content/VBoxContainer/HSlider" to="." method="_on_HSlider_value_changed"]
