@@ -46,7 +46,7 @@ func _on_PlayButton_pressed():
 
 # copied code
 
-export(int) var LIMIT = 30
+export(int) var LIMIT = 22
 var current_text = ''
 var cursor_line = 0
 var cursor_column = 0
