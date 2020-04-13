@@ -70,3 +70,8 @@ func _on_TextEdit_text_changed():
 		$Content/PlayButton.set_disabled(true)
 	else:
 		$Content/PlayButton.set_disabled(false)
+
+
+func _on_ConfigureGamePopup_gui_input(event):
+	if event is InputEventMouseButton:
+		Main.close_popups()

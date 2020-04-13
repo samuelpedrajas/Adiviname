@@ -104,3 +104,8 @@ func _on_SaveGameList_list_updated(item):
 		$Content/Turno.hide()
 		Main.solo_mode()
 	_update_btn()
+
+
+func _on_PlayGamePopup_gui_input(event):
+	if event is InputEventMouseButton:
+		Main.close_popups()

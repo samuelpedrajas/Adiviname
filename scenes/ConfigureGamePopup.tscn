@@ -136,6 +136,7 @@ custom_colors/font_color = Color( 0, 0.0156863, 1, 1 )
 text = "Turno para el Equipo 1"
 align = 1
 valign = 1
+[connection signal="gui_input" from="." to="." method="_on_ConfigureGamePopup_gui_input"]
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Content/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="text_changed" from="Content/VBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
