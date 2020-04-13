@@ -12,6 +12,10 @@ func _ready():
 		set_selected()
 
 
+func hide_underline():
+	$TextureRect.hide()
+
+
 func setup(save_game):
 	self.save_game_id = save_game.saved_game_id
 	self.save_game = save_game

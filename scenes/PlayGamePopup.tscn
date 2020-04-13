@@ -59,6 +59,7 @@ func setup(saved_games):
 	self.selected_index = -1
 	self.num_items = saved_games.size()
 	var i = 0
+	var latest = null
 	for saved_game in saved_games:
 		var list_item = list_item_scene.instance()
 		list_item.setup(saved_game)
@@ -68,6 +69,10 @@ func setup(saved_games):
 		list_item.connect(\"item_selected\", self, \"item_selected\")
 		$ScrollContainer/List.add_child(list_item)
 		i += 1
+		latest = list_item
+
+	if latest != null:
+		latest.hide_underline()
 
 func fix_scroll():
 	if num_items == 0:
