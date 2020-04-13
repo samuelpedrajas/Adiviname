@@ -74,4 +74,5 @@ func _on_TextEdit_text_changed():
 
 func _on_ConfigureGamePopup_gui_input(event):
 	if event is InputEventMouseButton:
-		Main.close_popups()
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			Main.close_popups()

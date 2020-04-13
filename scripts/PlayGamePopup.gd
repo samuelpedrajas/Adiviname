@@ -108,4 +108,5 @@ func _on_SaveGameList_list_updated(item):
 
 func _on_PlayGamePopup_gui_input(event):
 	if event is InputEventMouseButton:
-		Main.close_popups()
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			Main.close_popups()
