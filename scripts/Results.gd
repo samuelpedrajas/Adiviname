@@ -4,6 +4,7 @@ var results_record_scene = preload("res://scenes/ResultsRecord.tscn")
 var displayed
 var score = 0
 
+var go_back_locked = true
 
 func _ready():
 #	setup([
@@ -26,6 +27,7 @@ func selection_changed(i, correct):
 
 
 func setup(displayed):
+	Main.current_scene = "results"
 	self.displayed = displayed
 	for i in range(displayed.size()):
 		var answer = displayed[i]
@@ -39,5 +41,32 @@ func setup(displayed):
 
 
 func _on_Continue_pressed():
+	close()
+
+
+func close():
 	Main.add_score(score)
 	Main.load_main()
+
+
+func _notification(what):
+	if go_back_locked:
+		print("go back locked")
+		return
+
+	var is_go_back_request = what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST or what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST
+	if is_go_back_request:
+		var popups = Main.root.get_node("MainScreen/Popups")
+
+		if popups.get_children().size() > 0:
+			Main.close_popups()
+			Main.unlock_goback()
+		elif Main.current_scene == "results":
+			close()
+		elif Main.current_scene == "expression_screen":
+			Main.open_confirmation_popup(
+				"¿Seguro que quieres volver al menú principal?",
+				Main,
+				"go_back_main_menu",
+				null
+			)

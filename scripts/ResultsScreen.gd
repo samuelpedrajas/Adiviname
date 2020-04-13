@@ -10,6 +10,7 @@ var team_score_scene = preload("res://scenes/TeamScore.tscn")
 
 
 func open():
+	Main.current_scene = "savegames"
 	$"../MainMenu".hide()
 	saved_game_list = $SavedGames/ScrollContainer/SavedGamesList
 	team_score_list = $TeamScores/Scores
@@ -80,6 +81,7 @@ func clear_score_list():
 
 func close():
 	$"../MainMenu".show()
+	Main.current_scene = "main"
 	hide()
 
 func _on_Button_pressed():
@@ -88,6 +90,15 @@ func _on_Button_pressed():
 func _on_Remove_pressed():
 	if not saved_game_exists(selected):
 		return
+	Main.open_confirmation_popup(
+		"¿Seguro que quieres eliminar la partida guardada?",
+		self,
+		"remove_selected_game",
+		null
+	)
+
+
+func remove_selected_game():
 	var saved_game_id = saved_games[selected]["saved_game_id"]
 	DB.remove_saved_game(saved_game_id)
 	selected = max(selected - 1, 0)
@@ -97,6 +108,15 @@ func _on_Remove_pressed():
 func _on_Undo_pressed():
 	if not saved_game_exists(selected):
 		return
+	Main.open_confirmation_popup(
+		"¿Seguro que quieres reiniciar la partida guardada?",
+		self,
+		"reset_selected_game",
+		null
+	)
+
+
+func reset_selected_game():
 	var saved_game_id = saved_games[selected]["saved_game_id"]
 	DB.reset_saved_game(saved_game_id)
 	update_list()

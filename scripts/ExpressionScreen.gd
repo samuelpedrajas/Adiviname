@@ -7,27 +7,18 @@ var game_id
 var title
 var expressions
 
-var countdown = 5
+var max_countdown = 5
+var countdown = max_countdown
 var remaining_time = 10
 var current_expression
 var pending_expressions = []
 var displayed = []
 
 var expr_label
-var expression_size
 var font
 var font_size
 
 var blocked = true
-
-
-func _ready():
-	$GameControls/Time.set_text(str(remaining_time))
-	expr_label = $GameControls/Expression
-	expression_size = 1.0 * expr_label.rect_size
-	font = expr_label.get_font("font")
-	font_size = 1.0 * font.get_size()
-	set_next_expression()
 
 
 func _process(delta):
@@ -99,12 +90,19 @@ func _on_NextExpressionTimer_timeout():
 
 func _on_CountdownTimer_timeout():
 	if countdown > 1:
+		if countdown == max_countdown - 1:
+			$GameControls/Time.set_text(str(remaining_time))
+			expr_label = $GameControls/Expression
+			font = expr_label.get_font("font")
+			font_size = 1.0 * font.get_size()
+			set_next_expression()
+			Main.unlock_goback()
+			$Results.go_back_locked = false
 		countdown -= 1
 		$Countdown.set_text(str(countdown))
 		Main.vibrate(vibration_time)
 	else:
 		$Countdown.hide()
-		$GameControls.show()
 		adjust_font_size()
 		$CountdownTimer.stop()
 		$GameTimer.start()
@@ -126,7 +124,6 @@ func end_game():
 	$Results.setup(displayed)
 	$Results.show()
 	$LinuxOnly.hide()
-	$GameControls.hide()
 	$CorrectBg.hide()
 	$IncorrectBg.hide()
 	OS.set_screen_orientation(1)
@@ -146,6 +143,7 @@ func adjust_font_size():
 			longest_word = i
 	var word_length = font.get_string_size(longest_word).x
 
+	var expression_size = get_parent().rect_size
 	if word_length > expression_size.x:
 		font.set_size(expression_size.x / word_length * font_size * 0.90)
 

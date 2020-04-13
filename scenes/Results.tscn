@@ -15,6 +15,10 @@ anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
+[node name="Bg" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -55,7 +59,6 @@ anchor_bottom = 0.5
 margin_top = -164.5
 margin_bottom = -69.5
 custom_fonts/font = ExtResource( 4 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Corrige los posibles errores"
 align = 1
 valign = 1
@@ -69,7 +72,6 @@ margin_bottom = 270.0
 anchor_right = 1.0
 margin_bottom = 133.0
 custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Puntuación"
 align = 1
 valign = 2
@@ -79,7 +81,6 @@ anchor_right = 1.0
 margin_top = 135.0
 margin_bottom = 270.0
 custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "0"
 align = 1
 valign = 1

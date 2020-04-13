@@ -1,5 +1,109 @@
-[gd_scene format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/ConfirmationPopup.gd" type="Script" id=1]
+[ext_resource path="res://img/gui/popup.png" type="Texture" id=2]
+[ext_resource path="res://fonts/Numans-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://img/gui/green_btn.png" type="Texture" id=4]
+[ext_resource path="res://fonts/resources/numans60.tres" type="DynamicFont" id=5]
+[ext_resource path="res://img/gui/red_btn.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
 
 [node name="ConfirmationPopup" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Content" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -474.5
+margin_top = -250.0
+margin_right = 474.5
+margin_bottom = 250.0
+rect_pivot_offset = Vector2( 474, 250 )
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Content"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+
+[node name="Question" type="Label" parent="Content"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 84.5
+margin_top = 130.0
+margin_right = -84.5
+margin_bottom = -130.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "¿Seguro que quieres cerrar el juego?"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="Buttons" type="Control" parent="Content"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -198.5
+margin_top = -81.0
+margin_right = 200.5
+margin_bottom = 69.0
+rect_pivot_offset = Vector2( 270, 75 )
+mouse_filter = 2
+
+[node name="Yes" type="TextureButton" parent="Content/Buttons"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -75.0
+margin_right = 150.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 150, 150 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="Text" type="Label" parent="Content/Buttons/Yes"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.337255, 0.337255, 0.337255, 1 )
+text = "SÍ"
+align = 1
+valign = 1
+
+[node name="No" type="TextureButton" parent="Content/Buttons"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -75.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 150, 150 )
+texture_normal = ExtResource( 6 )
+expand = true
+
+[node name="Text" type="Label" parent="Content/Buttons/No"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.337255, 0.337255, 0.337255, 1 )
+text = "NO"
+align = 1
+valign = 1
+[connection signal="gui_input" from="." to="." method="_on_ConfirmationPopup_gui_input"]
+[connection signal="pressed" from="Content/Buttons/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="Content/Buttons/No" to="." method="_on_No_pressed"]

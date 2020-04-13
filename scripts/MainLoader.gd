@@ -67,6 +67,7 @@ func _finish_loading():
 	filters.set_home_filter()
 	$LoadingScreen.hide()
 	get_viewport().set_disable_input(false)
+	Main.go_back_locked = false
 	# $Popups/PlayGame.popup_centered()
 
 

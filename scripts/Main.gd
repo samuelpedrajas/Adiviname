@@ -8,11 +8,12 @@ var current_scene = "main"
 var expression_screen_scene = preload("res://scenes/ExpressionScreen.tscn")
 var play_game_popup_scene = preload("res://scenes/PlayGamePopup.tscn")
 var configure_game_popup_scene = preload("res://scenes/ConfigureGamePopup.tscn")
+var confirmation_popup_scene = preload("res://scenes/ConfirmationPopup.tscn")
 
 var team_mode = false
 var saved_game
 
-var go_back_locked = false
+var go_back_locked = true
 
 func _ready():
 	if not Const.DEBUG:
@@ -57,6 +58,7 @@ func vibrate(duration):
 		vibration.vibrate(duration)
 
 func load_game(game_id):
+	Main.go_back_locked = true
 	current_scene = "expression_screen"
 	close_popups()
 
@@ -101,6 +103,12 @@ func open_game_configuration_popup(game_list_item, game_id):
 	_open_popup(ogc_popup)
 
 
+func open_confirmation_popup(question, caller, yes_func_name, no_func_name):
+	var confirmation_popup = confirmation_popup_scene.instance()
+	confirmation_popup.setup(question, caller, yes_func_name, no_func_name)
+	_open_popup(confirmation_popup)
+
+
 func _open_popup(popup):
 	close_popups()
 	root.get_tree().set_pause(true)
@@ -134,9 +142,33 @@ func _notification(what):
 	var is_go_back_request = what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST or what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST
 	if is_go_back_request:
 		go_back_locked = true
-		if current_scene != "main":
-			load_main()
-			yield(get_tree().create_timer(1), "timeout")
-			go_back_locked = false
+		var popups = root.get_node("MainScreen/Popups")
+
+		if popups.get_children().size() > 0:
+			close_popups()
+			unlock_goback()
+		elif current_scene == "savegames":
+			var results_screen = root.get_node("MainScreen/ResultsScreen")
+			if results_screen != null:
+				results_screen.close()
+			unlock_goback()
+		elif current_scene == "main":
+			unlock_goback()
+			open_confirmation_popup(
+				"¿Seguro que quieres cerrar el juego?",
+				self,
+				"quit_game",
+				null
+			)
 		else:
-			quit_game()
+			unlock_goback()
+
+
+func unlock_goback():
+	go_back_locked = false
+
+
+func go_back_main_menu():
+	load_main()
+	yield(get_tree().create_timer(1), "timeout")
+	unlock_goback()
