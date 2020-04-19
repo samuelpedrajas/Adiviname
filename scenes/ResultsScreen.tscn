@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/ResultsScreen.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/SpartanMB-Regular.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=3]
 [ext_resource path="res://img/gui/undo.png" type="Texture" id=4]
 [ext_resource path="res://img/gui/trash.png" type="Texture" id=5]
-[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=6]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64

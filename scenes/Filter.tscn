@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://fonts/resources/numans34.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=1]
 [ext_resource path="res://img/gui/subrayado.png" type="Texture" id=2]
 
 [node name="Filter" type="Button" groups=[

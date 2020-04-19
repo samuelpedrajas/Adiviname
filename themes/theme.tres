@@ -5,7 +5,7 @@
 [ext_resource path="res://img/gui/arrow.png" type="Texture" id=3]
 [ext_resource path="res://img/gui/small_uncheck_disabled.png" type="Texture" id=4]
 [ext_resource path="res://img/gui/small_uncheck.png" type="Texture" id=5]
-[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=6]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=6]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 4 )

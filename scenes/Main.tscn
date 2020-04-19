@@ -8,8 +8,8 @@
 [ext_resource path="res://scenes/Filters.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=8]
-[ext_resource path="res://fonts/resources/numans40.tres" type="DynamicFont" id=9]
-[ext_resource path="res://fonts/resources/numans60.tres" type="DynamicFont" id=10]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=9]
+[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=10]
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -102,7 +102,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "Cargando..."
 align = 1
 valign = 1
