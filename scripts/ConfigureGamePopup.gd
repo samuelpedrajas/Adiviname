@@ -23,8 +23,7 @@ func setup(game_list_item, game_id):
 		str(current_time.month).pad_zeros(2) + "-" +
 		str(current_time.year) + " " + 
 		str(current_time.hour).pad_zeros(2) + ":" +
-		str(current_time.minute).pad_zeros(2) + ":" + 
-		str(current_time.second).pad_zeros(2)
+		str(current_time.minute).pad_zeros(2) + ":"
 	)
 
 

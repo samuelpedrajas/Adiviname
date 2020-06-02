@@ -380,8 +380,8 @@ func get_saved_game_and_results(saved_game_id):
 
 func format_unix_time(unix_time):
 	var datetime = OS.get_datetime_from_unix_time(unix_time)
-	var date = str(datetime["day"]) + "-" + str(datetime["month"]) + "-" + str(datetime["year"])
-	var time = str(datetime["hour"]) + ":" + str(datetime["minute"]) + ":" + str(datetime["second"])
+	var date = str(datetime["day"]).pad_zeros(2) + "-" + str(datetime["month"]).pad_zeros(2) + "-" + str(datetime["year"])
+	var time = str(datetime["hour"]).pad_zeros(2) + ":" + str(datetime["minute"]).pad_zeros(2)
 	return date + " " + time
 
 
