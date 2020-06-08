@@ -16,11 +16,13 @@ func update_selected():
 		$BgSelected.hide()
 		$Bg.show()
 
-func setup(name, unix_time, selected, i):
+func setup(name, unix_time, selected, current, i):
 	self.index = i
 	self.selected = selected
 	$Name.set_text(name)
 	$Date.set_text(DB.format_unix_time(unix_time))
+	if current:
+		$Current.show()
 
 func _on_SavedGameListItem_pressed():
 	print("Pressed")

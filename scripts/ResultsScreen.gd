@@ -28,10 +28,12 @@ func populate_saved_games():
 	var i = 0
 	for saved_game in saved_games:
 		var saved_game_item = saved_game_item_scene.instance()
+		var current = Main.team_mode and Main.saved_game != null and Main.saved_game['saved_game_id'] == saved_game['saved_game_id']
 		saved_game_item.setup(
 			saved_game["saved_game_name"],
 			saved_game["saved_game_created_at"],
 			i == selected,
+			current,
 			i
 		)
 		saved_game_item.connect("item_pressed", self, "select_game")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/ResultsScreen.gd" type="Script" id=1]
 [ext_resource path="res://fonts/resources/andhibath_title.tres" type="DynamicFont" id=2]
@@ -11,7 +11,42 @@
 [ext_resource path="res://img/gui/close.png" type="Texture" id=9]
 [ext_resource path="res://img/gui/close_highlight.png" type="Texture" id=10]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 15.0
+bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=5]
+content_margin_left = 15.0
+bg_color = Color( 0.560784, 0.560784, 0.560784, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 15.0
+bg_color = Color( 0.658824, 0.658824, 0.658824, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Theme" id=3]
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 1 )
+VScrollBar/styles/grabber_highlight = SubResource( 5 )
+VScrollBar/styles/grabber_pressed = SubResource( 5 )
+VScrollBar/styles/scroll = SubResource( 2 )
+VScrollBar/styles/scroll_focus = SubResource( 2 )
+
+[sub_resource type="GDScript" id=4]
 script/source = "extends ScrollContainer
 
 \"\"\"
@@ -33,16 +68,22 @@ var swipe_mouse_times := []
 var swipe_mouse_positions := []
 var tween : Tween
 var scrollbar_width
+var scrollbar_margin = 20
 
 
 func configure_custom_scrollbar():
 	var vscrollbar = get_v_scrollbar()
 	if vscrollbar != null:
-		scrollbar_width = vscrollbar.get_global_rect().size.x
+		var scrollbar_size = vscrollbar.get_size()
+		scrollbar_width = scrollbar_size.x
 		var scrollbar_position = vscrollbar.get_position()
-		scrollbar_position.x = 0
-		scrollbar_position.y = 2
+		scrollbar_position.x = 6
+		scrollbar_position.y = 10
 		vscrollbar.set_position(scrollbar_position)
+		scrollbar_size.y -= 20
+		vscrollbar.set_size(
+			scrollbar_size
+		)
 
 
 func _input(ev) -> void:
@@ -56,8 +97,8 @@ func _input(ev) -> void:
 	if ev is InputEventMouseButton:
 		var global_rect = get_global_rect()
 		var event_rect = Rect2(
-			global_rect.position + Vector2(scrollbar_width, 0),
-			global_rect.size - Vector2(scrollbar_width, 0)
+			global_rect.position + Vector2(scrollbar_width + scrollbar_margin, 0),
+			global_rect.size - Vector2(scrollbar_width - scrollbar_margin, 0)
 		)
 		if ev.pressed and event_rect.has_point(ev.global_position):
 			look_for_swipe = true
@@ -130,9 +171,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -322.0
-margin_top = -903.0
+margin_top = -923.0
 margin_right = 322.0
-margin_bottom = -781.0
+margin_bottom = -801.0
 
 [node name="Title" type="Label" parent="Title"]
 anchor_right = 1.0
@@ -151,7 +192,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -540.0
-margin_top = -790.0
+margin_top = -810.0
 margin_right = 37.0
 margin_bottom = 730.0
 rect_clip_content = true
@@ -166,8 +207,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -22.0
 rect_clip_content = false
+theme = SubResource( 3 )
 scroll_horizontal_enabled = false
-script = SubResource( 1 )
+script = SubResource( 4 )
 
 [node name="SavedGamesList" type="VBoxContainer" parent="SavedGames/ScrollContainer"]
 margin_right = 555.0
@@ -180,7 +222,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 15.0
-margin_top = -790.0
+margin_top = -810.0
 margin_right = 540.0
 margin_bottom = 730.0
 rect_clip_content = true
@@ -194,7 +236,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -374.0
 rect_min_size = Vector2( 525, 0 )
-custom_constants/separation = 0
+custom_constants/separation = 1
 
 [node name="Lower" type="Control" parent="TeamScores"]
 anchor_top = 1.0
@@ -210,7 +252,7 @@ margin_left = -262.5
 margin_right = 262.5
 margin_bottom = 99.0
 custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0.458824, 0.321569, 0.380392, 1 )
 text = "Turno Equipo 1"
 align = 1
 valign = 2
