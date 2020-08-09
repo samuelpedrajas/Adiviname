@@ -14,7 +14,13 @@ func _ready():
 #		{"text": "test 4", "correct": false},
 #		{"text": "test 5", "correct": true},
 #	])
-	pass
+	if not Main.team_mode:
+		var h = $Bottom/CurrentScores.get_size().y
+		$Bottom/CurrentScores.hide()
+		$Top.set_size(
+			$Top.get_size() + 
+			Vector2(0, h)
+		)
 
 func selection_changed(i, correct):
 	if correct != displayed[i]["correct"]:
@@ -23,7 +29,8 @@ func selection_changed(i, correct):
 		else:
 			score -= 1
 		displayed[i]["correct"] = correct
-		$Top/Score.set_text(str(score))
+		$Top/Score.set_text("PUNTUACIÓN: " + str(score))
+		$Bottom/CurrentScores.update_current_team(score)
 
 
 func setup(displayed):
@@ -36,8 +43,9 @@ func setup(displayed):
 		results_record.connect("selection_changed", self, "selection_changed")
 		if answer["correct"]:
 			score += 1
-		$ScrollContainer/VBoxContainer.add_child(results_record)
-	$Top/Score.set_text(str(score))
+		$Top/List/ScrollContainer/VBoxContainer.add_child(results_record)
+	$Top/Score.set_text("PUNTUACIÓN: " + str(score))
+	$Bottom/CurrentScores.set_scores(score)
 
 
 func _on_Continue_pressed():

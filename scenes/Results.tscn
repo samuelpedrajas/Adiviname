@@ -1,13 +1,144 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/Results.gd" type="Script" id=2]
-[ext_resource path="res://scripts/GameContainer.gd" type="Script" id=3]
-[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=4]
-[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=5]
+[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scripts/CurrentScores.gd" type="Script" id=4]
+[ext_resource path="res://img/gui/boton_jugar.png" type="Texture" id=5]
+[ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=6]
+[ext_resource path="res://img/gui/sombra.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+bg_color = Color( 1, 1, 1, 1 )
+border_width_right = 10
+border_color = Color( 0.8, 0.8, 0.8, 0 )
+expand_margin_left = 20.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 10.0
+content_margin_right = 5.0
+content_margin_top = 10.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.843137, 0.843137, 0.843137, 1 )
+expand_margin_left = 30.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="Theme" id=3]
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 1 )
+VScrollBar/styles/grabber_highlight = SubResource( 1 )
+VScrollBar/styles/grabber_pressed = SubResource( 1 )
+VScrollBar/styles/scroll = SubResource( 2 )
+VScrollBar/styles/scroll_focus = SubResource( 2 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends ScrollContainer
+
+\"\"\"
+Original: https://github.com/godotengine/godot/issues/21137
+
+Helper Script for ScrollContainer to let them scroll with InputListeners inside. 
+Buttons inside should react to release, in order to be not activated during scroll.
+Does not work with Touch Screen Buttons as they handle the input before.
+\"\"\"
+
+export (Vector2) var delta_for_swipe := Vector2(16, 16)
+
+
+var look_for_swipe := false
+var swiping := false
+var swipe_start : Vector2
+var swipe_mouse_start : Vector2
+var swipe_mouse_times := []
+var swipe_mouse_positions := []
+var tween : Tween
+var scrollbar_width
+
+
+func configure_custom_scrollbar():
+	var vscrollbar = get_v_scrollbar()
+	if vscrollbar != null:
+		var scrollbar_position = vscrollbar.get_position()
+		scrollbar_position.x = 10
+		scrollbar_position.y = -1
+		vscrollbar.set_position(scrollbar_position)
+
+
+func _input(ev) -> void:
+	if !is_visible_in_tree():
+		return
+		
+	if ev is InputEventScreenDrag and swiping:
+		accept_event()
+		return
+		
+	if ev is InputEventMouseButton:
+		var scrollbar_width = get_v_scrollbar().get_global_rect().size.x
+		var global_rect = get_global_rect()
+		var event_rect = Rect2(
+			global_rect.position,
+			global_rect.size - Vector2(scrollbar_width, 0)
+		)
+		if ev.pressed and event_rect.has_point(ev.global_position):
+			look_for_swipe = true
+			swipe_mouse_start = ev.global_position
+			
+		elif swiping:
+			swipe_mouse_times.append(OS.get_ticks_msec())
+			swipe_mouse_positions.append(ev.global_position)
+			var source := Vector2(get_h_scroll(), get_v_scroll())
+			var idx := swipe_mouse_times.size() - 1
+			var now := OS.get_ticks_msec()
+			var cutoff := now - 100
+			for i in range(swipe_mouse_times.size() - 1, -1, -1):
+				if swipe_mouse_times[i] >= cutoff: 
+					idx = i
+				else: break
+			var flick_start : Vector2 = swipe_mouse_positions[idx]
+			var flick_dur := min(0.3, (ev.global_position - flick_start).length() / 1000)
+			if flick_dur > 0.0:
+				tween = Tween.new()
+				add_child(tween)
+				var delta : Vector2 = ev.global_position - flick_start
+				var target := source - delta * flick_dur * 15.0
+				tween.interpolate_method(self, 'set_h_scroll', source.x, target.x, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				tween.interpolate_method(self, 'set_v_scroll', source.y, target.y, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				tween.interpolate_callback(tween, flick_dur, 'queue_free')
+				tween.start()
+			swiping = false
+			swipe_mouse_times = []
+			swipe_mouse_positions = []
+			
+		else:
+			look_for_swipe = false
+			
+	if ev is InputEventMouseMotion:
+			
+		if look_for_swipe:
+			var delta = ev.global_position - swipe_mouse_start
+			if abs(delta.x) > delta_for_swipe.x or abs(delta.y) > delta_for_swipe.y:
+				swiping = true
+				look_for_swipe = false
+				swipe_start = Vector2(get_h_scroll(), get_v_scroll())
+				swipe_mouse_start = ev.global_position
+				swipe_mouse_times = [OS.get_ticks_msec()]
+				swipe_mouse_positions = [swipe_mouse_start]
+				if is_instance_valid(tween) and tween is Tween:
+					tween.stop_all()
+		
+		if swiping:
+			var delta : Vector2 = ev.global_position - swipe_mouse_start
+			set_h_scroll(swipe_start.x - delta.x)
+			set_v_scroll(swipe_start.y - delta.y)
+			swipe_mouse_times.append(OS.get_ticks_msec())
+			swipe_mouse_positions.append(ev.global_position)
+			ev.position = Vector2.ZERO"
 
 [node name="Results" type="Control"]
 anchor_right = 1.0
@@ -19,69 +150,110 @@ script = ExtResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -530.0
-margin_top = -689.0
-margin_right = 530.0
-margin_bottom = 584.0
-custom_styles/bg = SubResource( 1 )
-scroll_horizontal_enabled = false
-script = ExtResource( 3 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-
-[node name="Bottom" type="Control" parent="."]
-anchor_top = 1.0
+[node name="Label" type="Label" parent="."]
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -332.0
-
-[node name="Continue" type="Button" parent="Bottom"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -234.0
-margin_top = -15.5
-margin_right = 234.0
-margin_bottom = 110.5
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Continuar"
-
-[node name="Label" type="Label" parent="Bottom"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -164.5
-margin_bottom = -69.5
-custom_fonts/font = ExtResource( 4 )
+margin_bottom = 169.0
+custom_fonts/font = ExtResource( 3 )
 text = "Corrige los posibles errores"
 align = 1
 valign = 1
 clip_text = true
 
-[node name="Top" type="Control" parent="."]
+[node name="Bottom" type="Control" parent="."]
+anchor_top = 1.0
 anchor_right = 1.0
-margin_bottom = 270.0
+anchor_bottom = 1.0
+margin_top = -723.0
 
-[node name="Text" type="Label" parent="Top"]
+[node name="Bg" type="ColorRect" parent="Bottom"]
 anchor_right = 1.0
-margin_bottom = 133.0
-custom_fonts/font = ExtResource( 5 )
-text = "Puntuación"
-align = 1
-valign = 2
+anchor_bottom = 1.0
+color = Color( 0.670588, 0.905882, 0.858824, 1 )
 
-[node name="Score" type="Label" parent="Top"]
+[node name="CurrentScores" type="GridContainer" parent="Bottom"]
 anchor_right = 1.0
-margin_top = 135.0
-margin_bottom = 270.0
-custom_fonts/font = ExtResource( 5 )
-text = "0"
+anchor_bottom = 1.0
+margin_left = 200.0
+margin_top = 68.0
+margin_right = -200.0
+margin_bottom = -230.0
+custom_constants/hseparation = 80
+columns = 2
+script = ExtResource( 4 )
+
+[node name="Continue" type="TextureButton" parent="Bottom"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -306.5
+margin_top = -205.0
+margin_right = 306.5
+margin_bottom = -27.0
+texture_normal = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Bottom/Continue"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.992157, 0.431373, 0.447059, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+text = "CONTINUAR"
 align = 1
 valign = 1
+uppercase = true
+
+[node name="Top" type="Control" parent="."]
+anchor_right = 1.0
+margin_top = 177.0
+margin_bottom = 1221.0
+
+[node name="Bg" type="ColorRect" parent="Top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="List" type="Control" parent="Top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -106.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Top/List"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -29.0
+theme = SubResource( 3 )
+scroll_horizontal_enabled = false
+script = SubResource( 4 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Top/List/ScrollContainer"]
+
+[node name="Score" type="Label" parent="Top"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -82.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.513726, 0.513726, 0.513726, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 0 )
+text = "PUNTUACIÓN: 0"
+align = 1
+valign = 1
+
+[node name="TopShadow" type="TextureRect" parent="Top/Score"]
+anchor_right = 1.0
+margin_top = -44.0
+margin_bottom = -24.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="BottomShadow" type="TextureRect" parent="Top/Score"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -5.0
+margin_bottom = 11.0
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( 540, 10 )
+texture = ExtResource( 7 )
+expand = true
 [connection signal="pressed" from="Bottom/Continue" to="." method="_on_Continue_pressed"]

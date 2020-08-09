@@ -1,17 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/ResultsRecord.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/check.png" type="Texture" id=2]
 [ext_resource path="res://img/gui/uncheck.png" type="Texture" id=3]
 [ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=4]
-[ext_resource path="res://fonts/SpartanMB-Regular.otf" type="DynamicFontData" id=5]
-
-[sub_resource type="DynamicFont" id=1]
-resource_local_to_scene = true
-size = 60
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 5 )
+[ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=5]
 
 [node name="ResultsRecord" type="Control"]
 anchor_left = 0.5
@@ -30,8 +23,8 @@ anchor_bottom = 0.5
 margin_left = -486.0
 margin_top = -104.0
 margin_right = 486.0
-margin_bottom = 104.0
-rect_min_size = Vector2( 972, 208 )
+margin_bottom = 111.0
+rect_min_size = Vector2( 972, 0 )
 focus_mode = 0
 custom_icons/checked = ExtResource( 2 )
 custom_icons/unchecked = ExtResource( 3 )
@@ -51,8 +44,9 @@ clip_text = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 211.0
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.317647, 0.317647, 0.317647, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Word Example"
 valign = 1
 autowrap = true
