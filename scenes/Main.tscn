@@ -65,6 +65,7 @@ margin_bottom = 39.5
 texture_normal = ExtResource( 4 )
 
 [node name="GameList" parent="MainMenu" instance=ExtResource( 5 )]
+margin_top = 320.0
 
 [node name="Filters" parent="MainMenu" instance=ExtResource( 6 )]
 
