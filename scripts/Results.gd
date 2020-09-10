@@ -13,6 +13,11 @@ func _ready():
 #		{"text": "test 3", "correct": false},
 #		{"text": "test 4", "correct": false},
 #		{"text": "test 5", "correct": true},
+#		{"text": "test 1", "correct": false},
+#		{"text": "test 2", "correct": true},
+#		{"text": "test 3", "correct": false},
+#		{"text": "test 4", "correct": false},
+#		{"text": "test 5", "correct": true},
 #	])
 	if not Main.team_mode:
 		var h = $Bottom/CurrentScores.get_size().y
