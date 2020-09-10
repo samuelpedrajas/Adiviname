@@ -78,11 +78,15 @@ func _set_new_game_btn():
 	# TODO
 	#$Content/Button.set_text("Nueva Partida")
 	new_game = true
+	$Content/NGButton.show()
+	$Content/PlayButton.hide()
 
 func _set_play_game_btn():
 	# TODO
 	#$Content/Button.set_text("Jugar")
 	new_game = false
+	$Content/NGButton.hide()
+	$Content/PlayButton.show()
 
 func _update_btn():
 	var item = $Content/SaveGameList.get_selected()

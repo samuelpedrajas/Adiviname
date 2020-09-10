@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/PlayGamePopup.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=12]
 [ext_resource path="res://img/gui/boton_jugar.png" type="Texture" id=13]
 [ext_resource path="res://img/gui/boton_jugar_highlight.png" type="Texture" id=14]
+[ext_resource path="res://img/gui/boton_crear.png" type="Texture" id=15]
+[ext_resource path="res://img/gui/boton_crear_highlight.png" type="Texture" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 70
@@ -21,7 +23,7 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=2]
 size = 42
 use_mipmaps = true
 use_filter = true
@@ -153,7 +155,7 @@ margin_left = -394.0
 margin_top = 446.0
 margin_right = 392.0
 margin_bottom = 570.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Descripción del juego"
 align = 1
@@ -167,7 +169,7 @@ margin_left = -393.0
 margin_top = 599.0
 margin_right = 393.0
 margin_bottom = 702.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Descripción del juego"
@@ -234,7 +236,7 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Button" type="TextureButton" parent="Content"]
+[node name="PlayButton" type="TextureButton" parent="Content"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -245,9 +247,23 @@ margin_right = 306.5
 margin_bottom = 80.0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
+
+[node name="NGButton" type="TextureButton" parent="Content"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -306.5
+margin_top = -98.0
+margin_right = 306.5
+margin_bottom = 80.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 16 )
 [connection signal="gui_input" from="." to="." method="_on_PlayGamePopup_gui_input"]
 [connection signal="pressed" from="Content/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="toggled" from="Content/CheckBox" to="." method="_on_CheckBox_toggled"]
 [connection signal="list_updated" from="Content/SaveGameList" to="." method="_on_SaveGameList_list_updated"]
 [connection signal="item_selected" from="Content/SaveGameList/ScrollContainer/List/NewGame" to="Content/SaveGameList" method="item_selected"]
-[connection signal="pressed" from="Content/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Content/PlayButton" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Content/NGButton" to="." method="_on_Button_pressed"]
