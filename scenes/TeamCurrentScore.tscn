@@ -9,7 +9,7 @@ var current_score = 0
 
 
 func set_team_and_score(team, score):
-	$Team.set_text(\"Equipo \" + str(team) + \":\")
+	$Team.set_text(\"Equipo \" + str(team + 1) + \":\")
 	set_score(score)
 
 

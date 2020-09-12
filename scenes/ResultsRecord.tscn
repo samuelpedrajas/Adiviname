@@ -7,11 +7,13 @@
 [ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=5]
 
 [node name="ResultsRecord" type="Control"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -530.0
-margin_right = 530.0
-margin_bottom = 200.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 10.0
+margin_top = -960.0
+margin_right = -10.0
+margin_bottom = -760.0
 rect_min_size = Vector2( 1060, 200 )
 script = ExtResource( 1 )
 
@@ -22,7 +24,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -486.0
 margin_top = -104.0
-margin_right = 486.0
+margin_right = 1860.0
 margin_bottom = 111.0
 rect_min_size = Vector2( 972, 0 )
 focus_mode = 0

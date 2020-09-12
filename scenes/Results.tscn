@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/Results.gd" type="Script" id=2]
 [ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scripts/CurrentScores.gd" type="Script" id=4]
-[ext_resource path="res://img/gui/boton_jugar.png" type="Texture" id=5]
+[ext_resource path="res://img/gui/base_boton.png" type="Texture" id=5]
 [ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=6]
 [ext_resource path="res://img/gui/sombra.png" type="Texture" id=7]
+[ext_resource path="res://img/gui/sombra_invertida.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 20.0
@@ -167,7 +168,7 @@ clip_text = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -723.0
+margin_top = -704.0
 
 [node name="Bg" type="ColorRect" parent="Bottom"]
 anchor_right = 1.0
@@ -175,18 +176,18 @@ anchor_bottom = 1.0
 color = Color( 0.670588, 0.905882, 0.858824, 1 )
 
 [node name="CurrentScores" type="GridContainer" parent="Bottom"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = 200.0
-margin_top = -293.5
-margin_right = -200.0
-margin_bottom = 131.5
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -340.0
+margin_top = 37.5
+margin_right = 340.0
+margin_bottom = 462.5
 custom_constants/hseparation = 80
 columns = 2
 script = ExtResource( 4 )
 
 [node name="Continue" type="TextureButton" parent="Bottom"]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -210,8 +211,9 @@ uppercase = true
 
 [node name="Top" type="Control" parent="."]
 anchor_right = 1.0
-margin_top = 177.0
-margin_bottom = 1221.0
+anchor_bottom = 1.0
+margin_top = 156.0
+margin_bottom = -699.0
 
 [node name="Bg" type="ColorRect" parent="Top"]
 anchor_right = 1.0
@@ -220,7 +222,7 @@ anchor_bottom = 1.0
 [node name="List" type="Control" parent="Top"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -106.0
+margin_bottom = -109.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Top/List"]
 anchor_right = 1.0
@@ -243,6 +245,11 @@ text = "PUNTUACIÓN: 0"
 align = 1
 valign = 1
 
+[node name="Bg" type="ColorRect" parent="Top/Score"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
 [node name="TopShadow" type="TextureRect" parent="Top/Score"]
 anchor_right = 1.0
 margin_top = -44.0
@@ -254,10 +261,8 @@ expand = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -5.0
-margin_bottom = 11.0
-rect_rotation = 180.0
+margin_bottom = 12.0
 rect_pivot_offset = Vector2( 540, 10 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 expand = true
 [connection signal="pressed" from="Bottom/Continue" to="." method="_on_Continue_pressed"]

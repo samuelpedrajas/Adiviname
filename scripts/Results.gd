@@ -19,13 +19,7 @@ func _ready():
 #		{"text": "test 4", "correct": false},
 #		{"text": "test 5", "correct": true},
 #	])
-	if not Main.team_mode:
-		var h = $Bottom/CurrentScores.get_size().y
-		$Bottom/CurrentScores.hide()
-		$Top.set_size(
-			$Top.get_size() + 
-			Vector2(0, h)
-		)
+	pass
 
 func selection_changed(i, correct):
 	if correct != displayed[i]["correct"]:
@@ -35,11 +29,22 @@ func selection_changed(i, correct):
 			score -= 1
 		displayed[i]["correct"] = correct
 		$Top/Score.set_text("PUNTUACIÓN: " + str(score))
-		$Bottom/CurrentScores.update_current_team(score)
+		if Main.team_mode:
+			$Bottom/CurrentScores.update_current_team(score)
 
 
 func setup(displayed):
 	Main.current_scene = "results"
+
+	if not Main.team_mode:
+		var scores = $Bottom/CurrentScores
+		var h = scores.get_size().y
+		$Bottom/CurrentScores.hide()
+		$Top.set_size(
+			$Top.get_size() + 
+			Vector2(0, h)
+		)
+
 	self.displayed = displayed
 	for i in range(displayed.size()):
 		var answer = displayed[i]

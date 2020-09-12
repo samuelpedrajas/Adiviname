@@ -27,15 +27,17 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 7
 
-[node name="BackButton" type="TextureButton" parent="."]
-anchor_left = 0.5
+[node name="BackButton" type="TextureButton" parent="TextureRect"]
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 345.832
-margin_top = -175.525
-margin_right = 445.832
-margin_bottom = -26.5249
+margin_left = -239.0
+margin_top = -190.0
+margin_right = -50.0
+margin_bottom = -10.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 4 )
-[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
+expand = true
+stretch_mode = 5
+[connection signal="pressed" from="TextureRect/BackButton" to="." method="_on_BackButton_pressed"]
