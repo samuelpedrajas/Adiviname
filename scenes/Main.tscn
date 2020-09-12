@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -7,9 +7,10 @@
 [ext_resource path="res://scenes/GameList.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Filters.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=8]
-[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=9]
-[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=10]
+[ext_resource path="res://scenes/Tutorial.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=9]
+[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=10]
+[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=11]
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -77,10 +78,13 @@ mouse_filter = 2
 [node name="ResultsScreen" parent="." instance=ExtResource( 7 )]
 visible = false
 
+[node name="Tutorial" parent="." instance=ExtResource( 8 )]
+visible = false
+
 [node name="LoadingScreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="ColorRect" type="ColorRect" parent="LoadingScreen"]
 anchor_right = 1.0
@@ -96,12 +100,12 @@ margin_left = 126.0
 margin_top = -57.0
 margin_right = -126.0
 margin_bottom = 58.0
-custom_fonts/font = ExtResource( 9 )
+custom_fonts/font = ExtResource( 10 )
 
 [node name="Text" type="Label" parent="LoadingScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "Cargando..."
@@ -115,3 +119,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.572549 )
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]
+[connection signal="pressed" from="MainMenu/Title/Help" to="." method="_on_Help_pressed"]

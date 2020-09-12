@@ -152,6 +152,11 @@ func _notification(what):
 			if results_screen != null:
 				results_screen.close()
 			unlock_goback()
+		elif current_scene == "tutorial":
+			var tutorial_screen = root.get_node("MainScreen/Tutorial")
+			if tutorial_screen != null:
+				tutorial_screen.close()
+			unlock_goback()
 		elif current_scene == "main":
 			unlock_goback()
 			open_confirmation_popup(

@@ -78,3 +78,7 @@ func load_games():
 
 func _on_Results_pressed():
 	$ResultsScreen.open()
+
+
+func _on_Help_pressed():
+	$Tutorial.open()
