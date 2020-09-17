@@ -249,14 +249,14 @@ func update_database(games):
 			# update game order
 			ok = update_game_order(game)
 
-		if game.has("icon") and game.icon.has("url") and game.icon.url != null:
+		if game.has("icon") and game.icon != null and game.icon.has("url") and game.icon.url != null:
 			request(game.icon.url)
 			# result, response_code, headers, body
 			var res = yield(self, 'request_completed')
 			if res[1] == 200:
 				update_game_image(game, res[3])
 
-		if game.has("icon_base") and game.icon_base.has("url") and game.icon_base.url != null and game.icon_base.has("name") and game.icon_base.name != null:
+		if game.has("icon_base") and game.icon_base != null and game.icon_base.has("url") and game.icon_base.url != null and game.icon_base.has("name") and game.icon_base.name != null:
 			var image_path = Const.ICON_BASE_PATH + game.icon_base.name + ".png"
 			if game.icon_base.name in downloaded_icon_bases:
 				print("SKIPPING: Base image already exists")
