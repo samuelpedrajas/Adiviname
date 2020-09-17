@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -9,8 +9,18 @@
 [ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Tutorial.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=9]
-[ext_resource path="res://fonts/resources/spartanMB40.tres" type="DynamicFont" id=10]
-[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=11]
+[ext_resource path="res://img/gui/loading-bar.png" type="Texture" id=10]
+[ext_resource path="res://img/gui/loading-bar_empty.png" type="Texture" id=11]
+[ext_resource path="res://fonts/resources/spartanMBBold30.tres" type="DynamicFont" id=12]
+[ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=13]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 692, 33 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 692, 33 )
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -92,22 +102,28 @@ anchor_bottom = 1.0
 color = Color( 0.670588, 0.905882, 0.858824, 1 )
 
 [node name="ProgressBar" type="ProgressBar" parent="LoadingScreen"]
-visible = false
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 126.0
-margin_top = -57.0
-margin_right = -126.0
-margin_bottom = 58.0
-custom_fonts/font = ExtResource( 10 )
+margin_left = -414.0
+margin_top = -21.0
+margin_right = 414.0
+margin_bottom = 21.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 0.290196, 0.290196, 0.290196, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 
 [node name="Text" type="Label" parent="LoadingScreen"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 11 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color = Color( 0.458824, 0.317647, 0.380392, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Cargando..."
 align = 1
 valign = 1
