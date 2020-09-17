@@ -1,17 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/ConfirmationPopup.gd" type="Script" id=1]
-[ext_resource path="res://img/gui/popup.png" type="Texture" id=2]
-[ext_resource path="res://fonts/SpartanMB-Regular.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://img/gui/popup_big.png" type="Texture" id=2]
+[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=3]
 [ext_resource path="res://img/gui/green_btn.png" type="Texture" id=4]
-[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=5]
-[ext_resource path="res://img/gui/red_btn.png" type="Texture" id=6]
-
-[sub_resource type="DynamicFont" id=1]
-size = 50
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 3 )
+[ext_resource path="res://img/gui/green_btn_pressed.png" type="Texture" id=5]
+[ext_resource path="res://fonts/resources/spartanMBBold50.tres" type="DynamicFont" id=6]
+[ext_resource path="res://img/gui/red_btn.png" type="Texture" id=7]
+[ext_resource path="res://img/gui/red_btn_pressed.png" type="Texture" id=8]
 
 [node name="ConfirmationPopup" type="Control"]
 anchor_right = 1.0
@@ -33,20 +29,22 @@ rect_pivot_offset = Vector2( 474, 250 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
-patch_margin_left = 100
-patch_margin_top = 100
-patch_margin_right = 100
-patch_margin_bottom = 100
+region_rect = Rect2( 0, 0, 396, 396 )
+patch_margin_left = 180
+patch_margin_top = 180
+patch_margin_right = 180
+patch_margin_bottom = 180
 
 [node name="Question" type="Label" parent="Content"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 84.5
-margin_top = 130.0
-margin_right = -84.5
-margin_bottom = -130.0
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+margin_left = 56.0
+margin_top = 70.0
+margin_right = -54.0
+margin_bottom = -90.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.458824, 0.321569, 0.380392, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "¿Seguro que quieres cerrar el juego?"
 align = 1
 valign = 1
@@ -73,13 +71,15 @@ margin_right = 150.0
 margin_bottom = 75.0
 rect_min_size = Vector2( 150, 150 )
 texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
 expand = true
 
 [node name="Text" type="Label" parent="Content/Buttons/Yes"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 0.337255, 0.337255, 0.337255, 1 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "SÍ"
 align = 1
 valign = 1
@@ -93,14 +93,16 @@ margin_left = -150.0
 margin_top = -75.0
 margin_bottom = 75.0
 rect_min_size = Vector2( 150, 150 )
-texture_normal = ExtResource( 6 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
 expand = true
 
 [node name="Text" type="Label" parent="Content/Buttons/No"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 0.337255, 0.337255, 0.337255, 1 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "NO"
 align = 1
 valign = 1

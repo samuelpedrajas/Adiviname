@@ -1,13 +1,15 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/Results.gd" type="Script" id=2]
-[ext_resource path="res://fonts/resources/spartanMB60.tres" type="DynamicFont" id=3]
-[ext_resource path="res://scripts/CurrentScores.gd" type="Script" id=4]
-[ext_resource path="res://img/gui/base_boton.png" type="Texture" id=5]
-[ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=6]
-[ext_resource path="res://img/gui/sombra.png" type="Texture" id=7]
-[ext_resource path="res://img/gui/sombra_invertida.png" type="Texture" id=8]
+[ext_resource path="res://fonts/resources/spartanMBBold38.tres" type="DynamicFont" id=3]
+[ext_resource path="res://img/gui/results_title_bg.png" type="Texture" id=4]
+[ext_resource path="res://img/gui/warning.png" type="Texture" id=5]
+[ext_resource path="res://scripts/CurrentScores.gd" type="Script" id=6]
+[ext_resource path="res://img/gui/base_boton.png" type="Texture" id=7]
+[ext_resource path="res://fonts/resources/spartanMB80.tres" type="DynamicFont" id=8]
+[ext_resource path="res://img/gui/sombra.png" type="Texture" id=9]
+[ext_resource path="res://img/gui/sombra_invertida.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 20.0
@@ -156,13 +158,38 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Label" type="Label" parent="."]
-anchor_right = 1.0
-margin_bottom = 169.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -305.0
+margin_top = 42.0
+margin_right = 305.0
+margin_bottom = 125.0
 custom_fonts/font = ExtResource( 3 )
-text = "Corrige los posibles errores"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+text = "    Corrige los posibles errores"
 align = 1
 valign = 1
 clip_text = true
+
+[node name="Bg" type="NinePatchRect" parent="Label"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 81, 81 )
+patch_margin_left = 27
+patch_margin_top = 27
+patch_margin_right = 27
+patch_margin_bottom = 27
+
+[node name="warning" type="TextureRect" parent="Label"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 29.0
+margin_top = -26.0
+margin_right = 90.0
+margin_bottom = 26.0
+texture = ExtResource( 5 )
 
 [node name="Bottom" type="Control" parent="."]
 anchor_top = 1.0
@@ -184,7 +211,7 @@ margin_right = 340.0
 margin_bottom = 462.5
 custom_constants/hseparation = 80
 columns = 2
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 
 [node name="Continue" type="TextureButton" parent="Bottom"]
 editor/display_folded = true
@@ -196,12 +223,12 @@ margin_left = -306.5
 margin_top = -205.0
 margin_right = 306.5
 margin_bottom = -27.0
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="Bottom/Continue"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 0.992157, 0.431373, 0.447059, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "CONTINUAR"
@@ -238,7 +265,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -82.0
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 0.513726, 0.513726, 0.513726, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 0 )
 text = "PUNTUACIÓN: 0"
@@ -254,7 +281,7 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 margin_top = -44.0
 margin_bottom = -24.0
-texture = ExtResource( 7 )
+texture = ExtResource( 9 )
 expand = true
 
 [node name="BottomShadow" type="TextureRect" parent="Top/Score"]
@@ -263,6 +290,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 12.0
 rect_pivot_offset = Vector2( 540, 10 )
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 [connection signal="pressed" from="Bottom/Continue" to="." method="_on_Continue_pressed"]
