@@ -13,15 +13,13 @@ func set_notification():
 	var i = DB.recently_added.find(game_id)
 	if game_id in DB.recently_added:
 		DB.recently_added.erase(i)
-		$Button/NotificationRect/Text.set_text("NEW!")
-		$Button/NotificationRect.show()
+		$Button/NotificationRect/New.show()
 		return
 
 	i = DB.recently_modified.find(game_id)
 	if game_id in DB.recently_modified:
 		DB.recently_modified.erase(i)
-		$Button/NotificationRect/Text.set_text("UPDATED!")
-		$Button/NotificationRect.show()
+		$Button/NotificationRect/Updated.show()
 		return
 
 

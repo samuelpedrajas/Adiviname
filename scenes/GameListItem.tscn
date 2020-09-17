@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/GameListItem.gd" type="Script" id=1]
 [ext_resource path="res://saved_images/bases/yellow.png" type="Texture" id=2]
 [ext_resource path="res://fonts/resources/spartanMB34.tres" type="DynamicFont" id=3]
-[ext_resource path="res://saved_images/2.png" type="Texture" id=4]
+[ext_resource path="res://img/gui/actualizado.png" type="Texture" id=4]
+[ext_resource path="res://img/gui/nuevo.png" type="Texture" id=5]
+[ext_resource path="res://saved_images/2.png" type="Texture" id=6]
 
 [node name="GameListItem" type="Control" groups=[
 "main_list_item",
@@ -39,24 +41,26 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="NotificationRect" type="ColorRect" parent="Button"]
-visible = false
+[node name="NotificationRect" type="Control" parent="Button"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -195.0
-margin_top = 5.0
-margin_right = -4.0
-margin_bottom = 45.0
-mouse_filter = 2
-color = Color( 1, 0.494118, 0.494118, 1 )
+mouse_filter = 1
 
-[node name="Text" type="Label" parent="Button/NotificationRect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 3 )
-text = "UPDATED!"
-align = 1
-valign = 1
+[node name="Updated" type="TextureRect" parent="Button/NotificationRect"]
+visible = false
+margin_left = -246.099
+margin_top = 5.11922
+margin_right = 15.9011
+margin_bottom = 74.1192
+texture = ExtResource( 4 )
+
+[node name="New" type="TextureRect" parent="Button/NotificationRect"]
+visible = false
+margin_left = -164.0
+margin_top = 5.0
+margin_right = 17.0
+margin_bottom = 74.0
+texture = ExtResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="Button"]
 anchor_left = 0.5
@@ -67,6 +71,6 @@ margin_left = -110.0
 margin_top = -148.093
 margin_right = 110.0
 margin_bottom = 71.907
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 expand = true
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

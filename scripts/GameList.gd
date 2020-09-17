@@ -4,7 +4,7 @@ onready var grid_container = $GameContainer/GridContainer
 var GameListItem = preload("res://scenes/GameListItem.tscn")
 
 
-func setup(results):
+func setup(results, featured):
 	print("Removing existing items")
 	for item in grid_container.get_children():
 		item.queue_free()
@@ -28,7 +28,8 @@ func setup(results):
 		grid_container.add_child(game_list_item)
 		if int(game_info["game_featured"]) > 0:
 			game_list_item.set_featured()
-			grid_container.move_child(game_list_item, 0)
+			if featured:
+				grid_container.move_child(game_list_item, 0)
 
 	call_deferred("resize")
 

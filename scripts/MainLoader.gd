@@ -73,7 +73,10 @@ func _finish_loading():
 
 func load_games():
 	var stored_games = filters.get_games()  # set to home by default
-	$"MainMenu/GameList".setup(stored_games)
+	var featured = true
+	if filters.current_filter == filters.Filters.FILTER_RECENTLY_ADDED:
+		featured = false
+	$"MainMenu/GameList".setup(stored_games, featured)
 
 
 func _on_Results_pressed():
