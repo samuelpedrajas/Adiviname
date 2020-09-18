@@ -1,6 +1,6 @@
 extends Node
 
-var last_update_timestamp = 0
+var last_update_timestamp = 1600456141
 
 
 func load_status():

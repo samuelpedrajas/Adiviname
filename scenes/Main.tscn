@@ -153,12 +153,13 @@ stream = ExtResource( 15 )
 
 [node name="Ding" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource( 16 )
+volume_db = -10.0
 
 [node name="DingDing" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource( 17 )
-volume_db = 5.0
 
 [node name="Error" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource( 18 )
+volume_db = -6.0
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]
 [connection signal="pressed" from="MainMenu/Title/Help" to="." method="_on_Help_pressed"]

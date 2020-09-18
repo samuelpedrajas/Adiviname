@@ -21,6 +21,10 @@ var font_size
 var blocked = true
 
 
+func _ready():
+	Main.play_sound("Countdown")
+
+
 func _process(delta):
 	if blocked:
 		return
@@ -77,8 +81,7 @@ func _on_GameTimer_timeout():
 	if remaining_time < 1:
 		Main.play_sound("DingDing")
 		end_game()
-
-	if remaining_time <= vibration_threshold:
+	elif remaining_time <= vibration_threshold:
 		Main.play_sound("Countdown")
 		Main.vibrate(vibration_time)
 
