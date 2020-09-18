@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/GameListItem.gd" type="Script" id=1]
-[ext_resource path="res://saved_images/bases/yellow.png" type="Texture" id=2]
+[ext_resource path="res://saved_images/bases/cuadroAmarillo.tres" type="Texture" id=2]
 [ext_resource path="res://fonts/resources/spartanMB34.tres" type="DynamicFont" id=3]
 [ext_resource path="res://img/gui/actualizado.png" type="Texture" id=4]
 [ext_resource path="res://img/gui/nuevo.png" type="Texture" id=5]
-[ext_resource path="res://saved_images/2.png" type="Texture" id=6]
+[ext_resource path="res://saved_images/1.tres" type="Texture" id=6]
 
 [node name="GameListItem" type="Control" groups=[
 "main_list_item",

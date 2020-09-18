@@ -29,12 +29,14 @@ func set_featured():
 
 
 func get_icon_texture(game_icon_path):
-	var img = Image.new()
-	var itex = ImageTexture.new()
-	img.load(game_icon_path)
-	itex.create_from_image(img)
-	return itex
-
+	if game_icon_path.ends_with(".png"):
+		var img = Image.new()
+		var itex = ImageTexture.new()
+		img.load(game_icon_path)
+		itex.create_from_image(img)
+		return itex
+	else:
+		return load(game_icon_path)
 
 func setup(game_id, game_title, game_description, game_examples, game_icon_path, game_base_icon_path):
 	self.game_id = game_id
