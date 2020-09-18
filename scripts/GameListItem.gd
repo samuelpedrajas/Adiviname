@@ -56,5 +56,6 @@ func setup(game_id, game_title, game_description, game_examples, game_icon_path,
 
 func _on_Button_pressed():
 	if not get_parent().get_parent().swiping:
+		Main.play_sound("Click")
 		Main.open_play_game_popup(self, false)
 		$Button/NotificationRect.hide()

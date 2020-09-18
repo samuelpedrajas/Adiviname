@@ -38,6 +38,7 @@ func _ready():
 
 func _on_CheckBox_toggled(button_pressed):
 	if not get_parent().get_parent().swiping:
+		Main.play_sound("Click")
 		emit_signal("selection_changed", record_index, button_pressed)
 	else:
 		$CheckBox.set_pressed(not button_pressed)

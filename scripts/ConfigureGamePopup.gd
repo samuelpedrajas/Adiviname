@@ -32,6 +32,7 @@ func _on_HSlider_value_changed(value):
 
 
 func _on_CloseButton_pressed():
+	Main.play_sound("Click")
 	Main.close_popups()
 	Main.open_play_game_popup(game_list_item, true)
 

@@ -87,11 +87,13 @@ func close():
 	hide()
 
 func _on_Button_pressed():
+	Main.play_sound("Click")
 	close()
 
 func _on_Remove_pressed():
 	if not saved_game_exists(selected):
 		return
+	Main.play_sound("Click")
 	Main.open_confirmation_popup(
 		"¿Seguro que quieres eliminar la partida guardada?",
 		self,
@@ -110,6 +112,7 @@ func remove_selected_game():
 func _on_Undo_pressed():
 	if not saved_game_exists(selected):
 		return
+	Main.play_sound("Click")
 	Main.open_confirmation_popup(
 		"¿Seguro que quieres reiniciar la partida guardada?",
 		self,

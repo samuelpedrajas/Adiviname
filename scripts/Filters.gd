@@ -53,20 +53,24 @@ func set_gestures_filter():
 
 
 func _on_Home_pressed():
+	Main.play_sound("Click")
 	set_home_filter()
 	emit_signal("filters_changed")
 
 
 func _on_LastAdded_pressed():
+	Main.play_sound("Click")
 	set_last_added_filter()
 	emit_signal("filters_changed")
 
 
 func _on_Description_pressed():
+	Main.play_sound("Click")
 	set_description_filter()
 	emit_signal("filters_changed")
 
 
 func _on_Gestures_pressed():
+	Main.play_sound("Click")
 	set_gestures_filter()
 	emit_signal("filters_changed")

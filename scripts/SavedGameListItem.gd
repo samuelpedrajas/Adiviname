@@ -26,4 +26,5 @@ func setup(name, unix_time, selected, current, i):
 
 func _on_SavedGameListItem_pressed():
 	print("Pressed")
+	Main.play_sound("Click")
 	emit_signal("item_pressed", index)

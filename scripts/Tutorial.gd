@@ -14,4 +14,5 @@ func close():
 
 
 func _on_BackButton_pressed():
+	Main.play_sound("Click")
 	close()

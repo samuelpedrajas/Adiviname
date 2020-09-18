@@ -30,6 +30,7 @@ func set_game_info(game_list_item, savegames_opened):
 	)
 
 func _on_CheckBox_toggled(button_pressed):
+	Main.play_sound("Click")
 	if button_pressed:
 		_set_extended_size()
 	else:
@@ -51,10 +52,12 @@ func update_game_mode(game_mode):
 		_set_play_game_btn()
 
 func _on_CloseButton_pressed():
+	Main.play_sound("Click")
 	Main.close_popups()
 
 func _on_Button_pressed():
 	if self.new_game:
+		Main.play_sound("Click")
 		Main.open_game_configuration_popup(game_list_item, game_list_item.game_id)
 	else:
 		Main.load_game(game_list_item.game_id)

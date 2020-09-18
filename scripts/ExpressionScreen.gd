@@ -36,8 +36,10 @@ func _process(delta):
 func answer(correct):
 	blocked = true
 	if correct:
+		Main.play_sound("Ding")
 		$CorrectBg.show()
 	else:
+		Main.play_sound("Error")
 		$IncorrectBg.show()
 
 	if displayed.size() < 1:
@@ -73,9 +75,11 @@ func _on_GameTimer_timeout():
 	remaining_time -= 1
 	$GameControls/Time.set_text(str(remaining_time))
 	if remaining_time < 1:
+		Main.play_sound("DingDing")
 		end_game()
 
 	if remaining_time <= vibration_threshold:
+		Main.play_sound("Countdown")
 		Main.vibrate(vibration_time)
 
 
@@ -100,6 +104,7 @@ func _on_CountdownTimer_timeout():
 			$Results.go_back_locked = false
 		countdown -= 1
 		$Countdown.set_text(str(countdown))
+		Main.play_sound("Countdown")
 		Main.vibrate(vibration_time)
 	else:
 		$Countdown.hide()

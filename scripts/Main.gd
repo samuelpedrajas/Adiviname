@@ -142,6 +142,7 @@ func _notification(what):
 	var is_go_back_request = what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST or what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST
 	if is_go_back_request:
 		go_back_locked = true
+		play_sound("Click")
 		var popups = root.get_node("MainScreen/Popups")
 
 		if popups.get_children().size() > 0:
@@ -177,3 +178,10 @@ func go_back_main_menu():
 	load_main()
 	yield(get_tree().create_timer(1), "timeout")
 	unlock_goback()
+
+func play_sound(name):
+	if not root:
+		return
+
+	var sound_player = root.get_node("MainScreen/SoundPlayer")
+	sound_player.play_sound(name)

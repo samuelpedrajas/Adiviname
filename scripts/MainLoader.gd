@@ -80,8 +80,10 @@ func load_games():
 
 
 func _on_Results_pressed():
+	Main.play_sound("Click")
 	$ResultsScreen.open()
 
 
 func _on_Help_pressed():
+	Main.play_sound("Click")
 	$Tutorial.open()

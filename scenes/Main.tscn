@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -13,6 +13,12 @@
 [ext_resource path="res://img/gui/loading-bar_empty.png" type="Texture" id=11]
 [ext_resource path="res://fonts/resources/spartanMBBold30.tres" type="DynamicFont" id=12]
 [ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=13]
+[ext_resource path="res://scripts/SoundPlayer.gd" type="Script" id=14]
+[ext_resource path="res://sound_effects/Click.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound_effects/Countdown.wav" type="AudioStream" id=16]
+[ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=17]
+[ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=18]
+[ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=19]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 10 )
@@ -134,5 +140,25 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.572549 )
+
+[node name="SoundPlayer" type="Node" parent="."]
+pause_mode = 2
+script = ExtResource( 14 )
+
+[node name="Click" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 15 )
+
+[node name="Countdown" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 16 )
+
+[node name="Ding" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 17 )
+
+[node name="DingDing" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 18 )
+volume_db = 5.0
+
+[node name="Error" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 19 )
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]
 [connection signal="pressed" from="MainMenu/Title/Help" to="." method="_on_Help_pressed"]

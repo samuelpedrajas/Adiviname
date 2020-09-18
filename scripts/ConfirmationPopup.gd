@@ -54,6 +54,7 @@ func _on_Yes_pressed():
 	var _caller = caller
 	var _yes_func_name = yes_func_name
 	Main.close_popups()
+	Main.play_sound("Click")
 	if _yes_func_name != null:
 		_caller.call(_yes_func_name)
 
@@ -62,6 +63,7 @@ func _on_No_pressed():
 	var _caller = caller
 	var _no_func_name = no_func_name
 	Main.close_popups()
+	Main.play_sound("Click")
 	if _no_func_name != null:
 		_caller.call(_no_func_name)
 

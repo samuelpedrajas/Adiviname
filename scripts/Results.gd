@@ -59,6 +59,7 @@ func setup(displayed):
 
 
 func _on_Continue_pressed():
+	Main.play_sound("Click")
 	close()
 
 
@@ -74,6 +75,7 @@ func _notification(what):
 
 	var is_go_back_request = what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST or what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST
 	if is_go_back_request:
+		Main.play_sound("Click")
 		var popups = Main.root.get_node("MainScreen/Popups")
 
 		if popups.get_children().size() > 0:

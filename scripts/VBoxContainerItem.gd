@@ -33,4 +33,5 @@ func unset_selected():
 
 
 func _on_Button_pressed():
+	Main.play_sound("Click")
 	emit_signal("item_selected", self)
