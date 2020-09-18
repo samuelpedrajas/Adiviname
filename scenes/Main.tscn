@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -9,24 +9,22 @@
 [ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Tutorial.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=9]
-[ext_resource path="res://img/gui/loading-bar.png" type="Texture" id=10]
-[ext_resource path="res://img/gui/loading-bar_empty.png" type="Texture" id=11]
-[ext_resource path="res://fonts/resources/spartanMBBold30.tres" type="DynamicFont" id=12]
-[ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=13]
-[ext_resource path="res://scripts/SoundPlayer.gd" type="Script" id=14]
-[ext_resource path="res://sound_effects/Click.wav" type="AudioStream" id=15]
-[ext_resource path="res://sound_effects/Countdown.wav" type="AudioStream" id=16]
-[ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=17]
-[ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=18]
-[ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=19]
+[ext_resource path="res://img/GradientTexture.tres" type="Texture" id=10]
+[ext_resource path="res://fonts/resources/spartanMBBold30.tres" type="DynamicFont" id=11]
+[ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=12]
+[ext_resource path="res://scripts/SoundPlayer.gd" type="Script" id=13]
+[ext_resource path="res://sound_effects/Click.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound_effects/Countdown.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=16]
+[ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=17]
+[ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=18]
 
-[sub_resource type="StyleBoxTexture" id=1]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 10 )
-region_rect = Rect2( 0, 0, 692, 33 )
+region_rect = Rect2( 0, 0, 2048, 1 )
 
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 692, 33 )
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.866667, 0.866667, 0.866667, 1 )
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -116,17 +114,19 @@ margin_left = -414.0
 margin_top = -21.0
 margin_right = 414.0
 margin_bottom = 21.0
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
-custom_fonts/font = ExtResource( 12 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+custom_fonts/font = ExtResource( 11 )
 custom_colors/font_color = Color( 0.290196, 0.290196, 0.290196, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+step = 1.0
+rounded = true
 
 [node name="Text" type="Label" parent="LoadingScreen"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 13 )
+custom_fonts/font = ExtResource( 12 )
 custom_colors/font_color = Color( 0.458824, 0.317647, 0.380392, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
@@ -143,22 +143,22 @@ color = Color( 0, 0, 0, 0.572549 )
 
 [node name="SoundPlayer" type="Node" parent="."]
 pause_mode = 2
-script = ExtResource( 14 )
+script = ExtResource( 13 )
 
 [node name="Click" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 
 [node name="Countdown" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 16 )
+stream = ExtResource( 15 )
 
 [node name="Ding" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 17 )
+stream = ExtResource( 16 )
 
 [node name="DingDing" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 18 )
+stream = ExtResource( 17 )
 volume_db = 5.0
 
 [node name="Error" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 19 )
+stream = ExtResource( 18 )
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]
 [connection signal="pressed" from="MainMenu/Title/Help" to="." method="_on_Help_pressed"]
