@@ -72,7 +72,9 @@ func _finish_loading():
 
 
 func load_games():
+	#print("PRIMERO!!!  ", OS.get_datetime_from_unix_time(OS.get_unix_time()).second)
 	var stored_games = filters.get_games()  # set to home by default
+	#print("SEGUNDO!!!  ", OS.get_datetime_from_unix_time(OS.get_unix_time()).second)
 	var featured = true
 	if filters.current_filter == filters.Filters.FILTER_RECENTLY_ADDED:
 		featured = false
