@@ -161,6 +161,7 @@ custom_icons/tick = ExtResource( 9 )
 custom_icons/grabber_highlight = ExtResource( 10 )
 custom_icons/grabber = ExtResource( 10 )
 custom_styles/slider = SubResource( 3 )
+custom_styles/grabber_area_highlight = SubResource( 4 )
 custom_styles/grabber_area = SubResource( 4 )
 min_value = 2.0
 max_value = 10.0
