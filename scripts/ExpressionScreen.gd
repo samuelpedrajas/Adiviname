@@ -22,7 +22,16 @@ var blocked = true
 
 
 func _ready():
+	call_deferred("start")
+
+
+func start():
+	yield(get_tree().create_timer(2.0), "timeout")
+	$CountdownTimer.start()
+	$Countdown.set_text(str(max_countdown))
+	Main.vibrate(vibration_time)
 	Main.play_sound("Countdown")
+	prepare_game()
 
 
 func _process(delta):
@@ -94,17 +103,17 @@ func _on_NextExpressionTimer_timeout():
 
 	set_next_expression()
 
+func prepare_game():
+	$GameControls/Time.set_text(str(remaining_time))
+	expr_label = $GameControls/Expression
+	font = expr_label.get_font("font")
+	font_size = 1.0 * font.get_size()
+	set_next_expression()
+	Main.unlock_goback()
+	$Results.go_back_locked = false
 
 func _on_CountdownTimer_timeout():
 	if countdown > 1:
-		if countdown == max_countdown - 1:
-			$GameControls/Time.set_text(str(remaining_time))
-			expr_label = $GameControls/Expression
-			font = expr_label.get_font("font")
-			font_size = 1.0 * font.get_size()
-			set_next_expression()
-			Main.unlock_goback()
-			$Results.go_back_locked = false
 		countdown -= 1
 		$Countdown.set_text(str(countdown))
 		Main.play_sound("Countdown")

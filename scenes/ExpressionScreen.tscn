@@ -63,9 +63,11 @@ anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0.458824, 0.321569, 0.380392, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
-text = "5"
+text = "¡Prepárate!"
 align = 1
 valign = 1
+autowrap = true
+clip_text = true
 
 [node name="Bg" type="ColorRect" parent="Countdown"]
 show_behind_parent = true
@@ -76,7 +78,6 @@ color = Color( 0.670588, 0.905882, 0.858824, 1 )
 [node name="GameTimer" type="Timer" parent="."]
 
 [node name="CountdownTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="NextExpressionTimer" type="Timer" parent="."]
 one_shot = true
