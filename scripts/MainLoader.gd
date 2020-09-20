@@ -30,8 +30,10 @@ func handle_partial_update_response(result, status_code, next):
 		if not ok:
 			print("There was an error during the DB update")
 
-	$LoadingScreen.grow_bar(
-		(ApiRequest.request_count / ApiRequest.total_requests) * 100
+	var progress = ApiRequest.request_count / ApiRequest.total_requests * 100
+	$LoadingScreen.grow_bar(progress)
+	$LoadingScreen/ProgressBar/Percentage.set_text(
+		str(int(progress)) + "%"
 	)
 	ApiRequest.request(next)
 

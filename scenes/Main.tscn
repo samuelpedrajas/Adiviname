@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -9,22 +9,16 @@
 [ext_resource path="res://scenes/ResultsScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Tutorial.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/LoadingScreen.gd" type="Script" id=9]
-[ext_resource path="res://img/GradientTexture.tres" type="Texture" id=10]
-[ext_resource path="res://fonts/resources/spartanMBBold30.tres" type="DynamicFont" id=11]
-[ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=12]
-[ext_resource path="res://scripts/SoundPlayer.gd" type="Script" id=13]
-[ext_resource path="res://sound_effects/Click.wav" type="AudioStream" id=14]
-[ext_resource path="res://sound_effects/Countdown.wav" type="AudioStream" id=15]
-[ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=16]
-[ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=17]
-[ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=18]
-
-[sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 10 )
-region_rect = Rect2( 0, 0, 2048, 1 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.866667, 0.866667, 0.866667, 1 )
+[ext_resource path="res://fonts/resources/spartanMBBold70.tres" type="DynamicFont" id=10]
+[ext_resource path="res://img/gui/base_loading.png" type="Texture" id=11]
+[ext_resource path="res://img/gui/loading_complete.png" type="Texture" id=12]
+[ext_resource path="res://fonts/resources/spartanMBBold50.tres" type="DynamicFont" id=13]
+[ext_resource path="res://scripts/SoundPlayer.gd" type="Script" id=14]
+[ext_resource path="res://sound_effects/Click.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound_effects/Countdown.wav" type="AudioStream" id=16]
+[ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=17]
+[ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=18]
+[ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=19]
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -105,34 +99,43 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.670588, 0.905882, 0.858824, 1 )
 
-[node name="ProgressBar" type="ProgressBar" parent="LoadingScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -414.0
-margin_top = -21.0
-margin_right = 414.0
-margin_bottom = 21.0
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
-custom_fonts/font = ExtResource( 11 )
-custom_colors/font_color = Color( 0.290196, 0.290196, 0.290196, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
-step = 1.0
-rounded = true
-
 [node name="Text" type="Label" parent="LoadingScreen"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 12 )
+custom_fonts/font = ExtResource( 10 )
 custom_colors/font_color = Color( 0.458824, 0.317647, 0.380392, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
 text = "Cargando..."
 align = 1
 valign = 1
+
+[node name="ProgressBar" type="TextureProgress" parent="LoadingScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -112.0
+margin_top = -111.5
+margin_right = 112.0
+margin_bottom = 111.5
+texture_under = ExtResource( 11 )
+texture_over = ExtResource( 11 )
+texture_progress = ExtResource( 12 )
+fill_mode = 4
+
+[node name="Percentage" type="Label" parent="LoadingScreen/ProgressBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 11.0
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0 )
+text = "0%"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
 
 [node name="Popups" type="ColorRect" parent="."]
 pause_mode = 2
@@ -143,23 +146,23 @@ color = Color( 0, 0, 0, 0.572549 )
 
 [node name="SoundPlayer" type="Node" parent="."]
 pause_mode = 2
-script = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="Click" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 14 )
-
-[node name="Countdown" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource( 15 )
 
-[node name="Ding" type="AudioStreamPlayer" parent="SoundPlayer"]
+[node name="Countdown" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource( 16 )
+
+[node name="Ding" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource( 17 )
 volume_db = -10.0
 
 [node name="DingDing" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 17 )
+stream = ExtResource( 18 )
 
 [node name="Error" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource( 18 )
+stream = ExtResource( 19 )
 volume_db = -6.0
 [connection signal="pressed" from="MainMenu/Title/Results" to="." method="_on_Results_pressed"]
 [connection signal="pressed" from="MainMenu/Title/Help" to="." method="_on_Help_pressed"]
