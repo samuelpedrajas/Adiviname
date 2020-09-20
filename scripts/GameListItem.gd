@@ -33,6 +33,7 @@ func get_icon_texture(game_icon_path):
 		var img = Image.new()
 		var itex = ImageTexture.new()
 		img.load(game_icon_path)
+		itex.set_flags(ImageTexture.FLAG_FILTER)
 		itex.create_from_image(img)
 		return itex
 	else:

@@ -29,6 +29,7 @@ func get_texture(img_path):
 	if err != OK:
 		return
 	var texture = ImageTexture.new()
+	texture.set_flags(ImageTexture.FLAG_FILTER)
 	texture.create_from_image(image, 0)
 	return texture
 
