@@ -2,16 +2,15 @@ extends Control
 
 var record_index
 var text
-
+var is_ready = false
 signal selection_changed
 
 func setup(text, checked, record_index):
 	self.record_index = record_index
-	self.text = text
-	call_deferred("prepare_checkbox", checked)
-
-func prepare_checkbox(checked):
+	is_ready = false
 	$CheckBox.set_pressed(checked)
+	is_ready = true
+	self.text = text
 
 # after setup
 func _ready():
@@ -40,6 +39,8 @@ func _ready():
 
 
 func _on_CheckBox_toggled(button_pressed):
+	if not is_ready:
+		return
 	if not get_parent().get_parent().swiping:
 		Main.play_sound("Click")
 		emit_signal("selection_changed", record_index, button_pressed)
