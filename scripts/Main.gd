@@ -19,9 +19,6 @@ func _ready():
 	if not Const.DEBUG:
 		get_viewport().set_disable_input(true)
 
-	if Engine.has_singleton("Vibration"):
-		vibration = Engine.get_singleton("Vibration")
-
 func add_score(score):
 	if not team_mode:
 		return
@@ -54,8 +51,7 @@ func setup():
 	root = get_tree().get_root()
 
 func vibrate(duration):
-	if vibration:
-		vibration.vibrate(duration)
+	Input.vibrate_handheld(duration)
 
 func load_game(game_id):
 	Main.go_back_locked = true

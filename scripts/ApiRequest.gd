@@ -4,6 +4,7 @@ var last_request_timestamp
 var total_requests = 0
 var request_count = 0
 var method = HTTPClient.METHOD_GET
+var game_loaded = false
 
 signal api_request_progress(result, response_code)
 signal api_request_completed(result, response_code)
@@ -34,6 +35,9 @@ func dict_to_qstring(dict):
 	
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	if game_loaded:
+		return
+
 	var api_result = null
 	if(response_code == 200):
 		var json_response = JSON.parse(body.get_string_from_utf8())

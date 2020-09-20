@@ -58,6 +58,7 @@ func handle_update_response(result, status_code):
 		else:
 			print ("Saving status...")
 			Status.save_status()
+	ApiRequest.game_loaded = true
 	_finish_loading()
 	load_games()
 

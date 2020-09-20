@@ -7,8 +7,11 @@ signal selection_changed
 
 func setup(text, checked, record_index):
 	self.record_index = record_index
-	$CheckBox.set_pressed(checked)
 	self.text = text
+	call_deferred("prepare_checkbox", checked)
+
+func prepare_checkbox(checked):
+	$CheckBox.set_pressed(checked)
 
 # after setup
 func _ready():

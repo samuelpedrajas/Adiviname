@@ -2,3 +2,4 @@
 lib/*
 export_presets.cfg
 *.import
+android

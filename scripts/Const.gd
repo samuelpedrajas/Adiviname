@@ -3,8 +3,8 @@ extends Node
 const DEBUG = false
 
 const GameMode = {
-    NORMAL = 0,
-    GESTURES = 1,
+	NORMAL = 0,
+	GESTURES = 1,
 	SINGING = 2
 }
 

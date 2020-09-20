@@ -6,28 +6,28 @@ var saved_images_path = "res://saved_images/"
 var bases_path = "res://saved_images/bases/"
 
 func list_files_in_directory(path):
-    var files = []
-    var dir = Directory.new()
-    dir.open(path)
-    dir.list_dir_begin()
+	var files = []
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin()
 
-    while true:
-        var file = dir.get_next()
-        if file == "":
-            break
-        elif not file.begins_with("."):
-            files.append(file)
+	while true:
+		var file = dir.get_next()
+		if file == "":
+			break
+		elif not file.begins_with("."):
+			files.append(file)
 
-    dir.list_dir_end()
+	dir.list_dir_end()
 
-    return files
+	return files
 
 
 func get_texture(img_path):
 	var image = Image.new()
 	var err = image.load(img_path)
 	if err != OK:
-	    return
+		return
 	var texture = ImageTexture.new()
 	texture.create_from_image(image, 0)
 	return texture
