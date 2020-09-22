@@ -1,6 +1,6 @@
 extends Node
 
-var last_update_timestamp = 1600456141
+var last_update_timestamp = 1600802328
 
 
 func load_status():
@@ -10,7 +10,10 @@ func load_status():
 
 	save_game.open("user://savegame.save", File.READ)
 	while not save_game.eof_reached():
-		var current_line = parse_json(save_game.get_line())
+		var line = save_game.get_line()
+		if not line:
+			break
+		var current_line = parse_json(line)
 		if typeof(current_line) == TYPE_DICTIONARY and "last_update_timestamp" in current_line.keys():
 			last_update_timestamp = current_line["last_update_timestamp"]
 	save_game.close()

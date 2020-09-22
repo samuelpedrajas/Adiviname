@@ -53,6 +53,6 @@ func _run():
 	if not Engine.editor_hint:
 		return
 
-	#process_files(saved_images_path)
-	process_files(bases_path)
+	process_files(saved_images_path)
+	#process_files(bases_path)
 	print("SALIENDO")

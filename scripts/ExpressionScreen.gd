@@ -9,7 +9,7 @@ var expressions
 
 var max_countdown = 5
 var countdown = max_countdown
-var remaining_time = 10
+var remaining_time = 90
 var current_expression
 var pending_expressions = []
 var displayed = []
