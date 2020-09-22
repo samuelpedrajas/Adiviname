@@ -40,6 +40,12 @@ func populate_saved_games():
 		saved_game_list.add_child(saved_game_item)
 		i += 1
 
+	if i == 0:
+		$SavedGames/NoSavegames.show()
+		$TeamScores/Lower.hide()
+	else:
+		$SavedGames/NoSavegames.hide()
+		$TeamScores/Lower.show()
 
 func select_game(selected):
 	print("Selected: ", selected)

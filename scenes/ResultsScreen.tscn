@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/ResultsScreen.gd" type="Script" id=1]
 [ext_resource path="res://fonts/resources/HighSchool68.tres" type="DynamicFont" id=2]
@@ -10,8 +10,9 @@
 [ext_resource path="res://img/gui/trash_pressed.png" type="Texture" id=8]
 [ext_resource path="res://img/gui/close.png" type="Texture" id=9]
 [ext_resource path="res://img/gui/close_highlight.png" type="Texture" id=10]
+[ext_resource path="res://fonts/resources/spartanMBBold45.tres" type="DynamicFont" id=11]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 15.0
 bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
 corner_radius_top_left = 8
@@ -19,7 +20,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 15.0
 bg_color = Color( 0.560784, 0.560784, 0.560784, 1 )
 corner_radius_top_left = 8
@@ -27,7 +28,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=3]
 content_margin_left = 15.0
 bg_color = Color( 0.658824, 0.658824, 0.658824, 1 )
 corner_radius_top_left = 8
@@ -35,18 +36,18 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="Theme" id=5]
+[sub_resource type="Theme" id=4]
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 2 )
-VScrollBar/styles/grabber_highlight = SubResource( 3 )
-VScrollBar/styles/grabber_pressed = SubResource( 3 )
-VScrollBar/styles/scroll = SubResource( 4 )
-VScrollBar/styles/scroll_focus = SubResource( 4 )
+VScrollBar/styles/grabber = SubResource( 1 )
+VScrollBar/styles/grabber_highlight = SubResource( 2 )
+VScrollBar/styles/grabber_pressed = SubResource( 2 )
+VScrollBar/styles/scroll = SubResource( 3 )
+VScrollBar/styles/scroll_focus = SubResource( 3 )
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends ScrollContainer
 
 \"\"\"
@@ -206,14 +207,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -22.0
 rect_clip_content = false
-theme = SubResource( 5 )
+theme = SubResource( 4 )
 scroll_horizontal_enabled = false
-script = SubResource( 6 )
+script = SubResource( 5 )
 
 [node name="SavedGamesList" type="VBoxContainer" parent="SavedGames/ScrollContainer"]
 margin_right = 555.0
 rect_min_size = Vector2( 555, 0 )
 custom_constants/separation = 0
+
+[node name="NoSavegames" type="Label" parent="SavedGames"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -242.5
+margin_top = -506.0
+margin_right = 217.5
+margin_bottom = 506.0
+custom_fonts/font = ExtResource( 11 )
+text = "No hay partidas guardadas.
+
+Abre un juego y pulsa en \"Partida por equipos\" para crear una nueva."
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
 
 [node name="TeamScores" type="Control" parent="."]
 anchor_left = 0.5
@@ -237,6 +256,7 @@ rect_min_size = Vector2( 525, 0 )
 custom_constants/separation = 1
 
 [node name="Lower" type="Control" parent="TeamScores"]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -303,6 +323,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -227.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="TextureButton" parent="Lower"]
 anchor_left = 0.5
