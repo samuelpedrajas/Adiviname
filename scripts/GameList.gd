@@ -13,7 +13,10 @@ func setup(results, featured):
 
 	#print("TERCERO!!!!!  ", OS.get_datetime_from_unix_time(OS.get_unix_time()).second)
 	print("Game list is clean")
-
+	$GameContainer.set_v_scroll(0)
+	$GameContainer.remove_child(grid_container)
+	grid_container = GridContainer.new()
+	$GameContainer.add_child(grid_container)
 	print("Adding games to list...")
 	for i in range(0, results.size()):
 		var game_info = results[i]
@@ -41,6 +44,10 @@ func setup(results, featured):
 	call_deferred("resize")
 
 func resize():
+	grid_container.set_columns(2)
+	call_deferred("resize2")
+
+func resize2():
 	$GameContainer.set_custom_minimum_size(
 		Vector2(
 			grid_container.get_size().x,
@@ -49,7 +56,7 @@ func resize():
 	)
 	$GameContainer.set_position(
 		Vector2(
-			get_parent().get_size().x / 2.0 - grid_container.get_size().x / 2.0,
+			get_parent().get_size().x / 2.0 - $GameContainer.get_size().x / 2.0,
 			0
 		)
 	)
