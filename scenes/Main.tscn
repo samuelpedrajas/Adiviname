@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scripts/MainLoader.gd" type="Script" id=1]
 [ext_resource path="res://img/gui/leaderboard_icon.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://sound_effects/Ding.wav" type="AudioStream" id=17]
 [ext_resource path="res://sound_effects/Ding_Ding.wav" type="AudioStream" id=18]
 [ext_resource path="res://sound_effects/Error.wav" type="AudioStream" id=19]
+[ext_resource path="res://img/gui/splash.png" type="Texture" id=21]
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -32,6 +33,9 @@ anchor_bottom = 1.0
 [node name="Bg" type="ColorRect" parent="MainMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" type="Control" parent="MainMenu"]
 anchor_right = 1.0
@@ -93,11 +97,28 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="LoadingScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.670588, 0.905882, 0.858824, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="LoadingScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -960.0
+margin_right = 540.0
+margin_bottom = 960.0
+texture = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Text" type="Label" parent="LoadingScreen"]
 visible = false
