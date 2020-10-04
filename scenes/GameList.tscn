@@ -93,8 +93,8 @@ func _input(ev) -> void:
 				add_child(tween)
 				var delta : Vector2 = ev.position - flick_start
 				var target := source - delta * flick_dur * 15.0
-				tween.interpolate_method(self, 'set_h_scroll', source.x, target.x, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-				tween.interpolate_method(self, 'set_v_scroll', source.y, target.y, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+				tween.interpolate_method(self, 'set_h_scroll', source.x, target.x, flick_dur, Tween.TRANS_QUAD, Tween.EASE_OUT)
+				tween.interpolate_method(self, 'set_v_scroll', source.y, target.y, flick_dur, Tween.TRANS_QUAD, Tween.EASE_OUT)
 				tween.interpolate_callback(tween, flick_dur, 'queue_free')
 				tween.start()
 			swiping = false
