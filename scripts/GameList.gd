@@ -16,7 +16,8 @@ func setup(results, featured):
 	$GameContainer.set_v_scroll(0)
 	$GameContainer.remove_child(grid_container)
 	grid_container = GridContainer.new()
-	$GameContainer.add_child(grid_container)
+	grid_container.set_columns(2)
+
 	print("Adding games to list...")
 	for i in range(0, results.size()):
 		var game_info = results[i]
@@ -40,19 +41,22 @@ func setup(results, featured):
 			game_list_item.set_featured()
 			if featured:
 				grid_container.move_child(game_list_item, 0)
+				
 	#print("CUARTO!!!!!!  ", OS.get_datetime_from_unix_time(OS.get_unix_time()).second)
+	$GameContainer.add_child(grid_container)
 	call_deferred("resize")
 
 func resize():
-	grid_container.set_columns(2)
-	call_deferred("resize2")
-
-func resize2():
-	$GameContainer.set_custom_minimum_size(
-		Vector2(
-			grid_container.get_size().x,
-			$GameContainer.get_custom_minimum_size().y
-		)
+	var w = grid_container.get_size().x
+	var h = get_size().y
+	if grid_container.get_size().y < h:
+		$GameContainer.set_enable_v_scroll(false)
+	else:
+		$GameContainer.set_enable_v_scroll(true)
+	print("Parent: ", get_size())
+	print("W: ", w, " H: ", h)
+	$GameContainer.set_size(
+		Vector2(w, h)
 	)
 	$GameContainer.set_position(
 		Vector2(
